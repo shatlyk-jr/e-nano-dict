@@ -15,15 +15,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Techno-dict',
       theme: ThemeData(
-          iconTheme: const IconThemeData(color: Colors.amber),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 36, 255, 7)),
           fontFamily: 'Berlin',
           textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: Colors.amber, fontSize: 20),
-            bodyMedium: TextStyle(color: Colors.amber, fontSize: 18),
+            bodyLarge: TextStyle(color: Color.fromARGB(255, 36, 255, 7), fontSize: 20),
+            bodyMedium: TextStyle(color: Color.fromARGB(255, 36, 255, 7), fontSize: 18),
           ),
           primaryColor: const Color.fromARGB(255, 7, 16, 35),
           primarySwatch: Colors.blueGrey),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

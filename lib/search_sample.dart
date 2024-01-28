@@ -1,10 +1,9 @@
 import 'dart:math';
 
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
-  const Search({Key? key}) : super(key: key);
+  const Search({super.key});
 
   @override
   SearchState createState() => SearchState();
@@ -28,10 +27,7 @@ class SearchState extends State<Search> {
       // if the search field is empty or only contains white-space, we'll display all users
       results = allUsers;
     } else {
-      results = allUsers
-          .where((word) =>
-              word["word"].toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
+      results = allUsers.where((word) => word["word"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
 
@@ -46,19 +42,18 @@ class SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white38,
+      backgroundColor: const Color.fromARGB(97, 41, 41, 41),
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.blueGrey[900],
         centerTitle: true,
-        title: const Text('Search terms'),
+        title: const Text(
+          'Search terms',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Column(
         children: [
-          Container(
-            height: 2,
-            width: double.infinity,
-            color: Colors.amber,
-          ),
           Container(
             height: 80,
             color: Colors.blueGrey[900],
@@ -71,42 +66,42 @@ class SearchState extends State<Search> {
                   onChanged: (value) {
                     _runFilter(value);
                   },
-                  style: const TextStyle(color: Colors.amberAccent),
-                  cursorColor: Colors.amber,
+                  style: const TextStyle(color: Color.fromARGB(255, 36, 255, 7)),
+                  cursorColor: const Color.fromARGB(255, 36, 255, 7),
                   controller: textEditingController,
                   decoration: InputDecoration(
-                      labelStyle: const TextStyle(color: Colors.amber),
-                      helperStyle: const TextStyle(color: Colors.amber),
-                      hintStyle: const TextStyle(color: Colors.amber),
-                      suffixStyle: const TextStyle(color: Colors.amber),
-                      focusColor: Colors.amber,
-                      iconColor: Colors.amber,
-                      prefixIconColor: Colors.amber,
+                      labelStyle: const TextStyle(color: Color.fromARGB(255, 36, 255, 7)),
+                      helperStyle: const TextStyle(color: Color.fromARGB(255, 36, 255, 7)),
+                      hintStyle: TextStyle(color: const Color.fromARGB(255, 36, 255, 7).withOpacity(.6)),
+                      suffixStyle: const TextStyle(color: Color.fromARGB(255, 36, 255, 7)),
+                      focusColor: const Color.fromARGB(255, 36, 255, 7),
+                      iconColor: const Color.fromARGB(255, 36, 255, 7),
+                      prefixIconColor: const Color.fromARGB(255, 36, 255, 7),
                       labelText: "Search",
                       hintText: "Type term that you looking for",
                       prefixIcon: const Icon(
                         Icons.search,
-                        color: Colors.amber,
+                        color: Color.fromARGB(255, 36, 255, 7),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14.0),
                         borderSide: BorderSide.merge(
-                          const BorderSide(color: Colors.amber),
-                          const BorderSide(color: Colors.amber),
+                          const BorderSide(color: Color.fromARGB(255, 36, 255, 7)),
+                          const BorderSide(color: Color.fromARGB(255, 36, 255, 7)),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14.0),
                         borderSide: BorderSide.merge(
-                          const BorderSide(color: Colors.amber),
-                          const BorderSide(color: Colors.amber),
+                          const BorderSide(color: Color.fromARGB(255, 36, 255, 7)),
+                          const BorderSide(color: Color.fromARGB(255, 36, 255, 7)),
                         ),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14.0),
                         borderSide: BorderSide.merge(
-                          const BorderSide(color: Colors.amber),
-                          const BorderSide(color: Colors.amber),
+                          const BorderSide(color: Color.fromARGB(255, 36, 255, 7)),
+                          const BorderSide(color: Color.fromARGB(255, 36, 255, 7)),
                         ),
                       )),
                 ),
@@ -114,31 +109,32 @@ class SearchState extends State<Search> {
             ),
           ),
           const Divider(
-            color: Colors.amber,
+            color: Color.fromARGB(255, 36, 255, 7),
             thickness: 1,
           ),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               shrinkWrap: true,
+              separatorBuilder: (context, index) => const Divider(
+                height: 4,
+              ),
               itemCount: _foundWords.length,
               itemBuilder: (context, index) {
-                return ExpansionTileCard(
+                return ExpansionTile(
                   key: ValueKey(Random().nextInt(_foundWords[index]["id"])),
-                  turnsCurve: Curves.bounceOut,
                   trailing: const Icon(
                     Icons.keyboard_arrow_down,
-                    color: Colors.amber,
+                    color: Color.fromARGB(255, 36, 255, 7),
                   ),
-                  animateTrailing: true,
-                  expandedTextColor: Colors.blueGrey[900],
-                  expandedColor: const Color.fromARGB(255, 48, 110, 111),
-                  borderRadius: BorderRadius.circular(10),
-                  baseColor: const Color.fromARGB(255, 4, 18, 26),
-                  initialPadding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                  finalPadding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  // turnsCurve: Curves.bounceOut,
+                  // animateTrailing: true,
+                  // expandedTextColor: Colors.blueGrey[900],
+                  // expandedColor: const Color.fromARGB(255, 48, 110, 111),
+                  // borderRadius: BorderRadius.circular(10),
+                  // baseColor: const Color.fromARGB(255, 4, 18, 26),
+                  // initialPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  // finalPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  // contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                   title: Text(
                     _foundWords[index]['word'],
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -146,7 +142,10 @@ class SearchState extends State<Search> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Text(_foundWords[index]['def']),
+                      child: Text(
+                        _foundWords[index]['def'],
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 );
@@ -162,8 +161,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "'A' Stage",
-      "def":
-          "The condition of low molecular weight of a resin polymer during which the resin is readily soluble and fusible.",
+      "def": "The condition of low molecular weight of a resin polymer during which the resin is readily soluble and fusible.",
     },
     {
       "id": 1,
@@ -184,14 +182,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "abrasion resistance",
-      "def":
-          "A measure of the ability of a wire or wire covering to resist damage by mechanical means.",
+      "def": "A measure of the ability of a wire or wire covering to resist damage by mechanical means.",
     },
     {
       "id": 1,
       "word": "absolute maximum ratings",
-      "def":
-          "Specifications that, if exceeded, could cause permanent damage to the converter. There are not continuous ratings, and proper operation is not implied.",
+      "def": "Specifications that, if exceeded, could cause permanent damage to the converter. There are not continuous ratings, and proper operation is not implied.",
     },
     {
       "id": 1,
@@ -214,14 +210,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "absorptive device",
-      "def":
-          "A circuit or device that absorbs power, i.e., converts incident electrical energy into heat or some other form of energy, rather than reflecting electrical energy back to the source.",
+      "def": "A circuit or device that absorbs power, i.e., converts incident electrical energy into heat or some other form of energy, rather than reflecting electrical energy back to the source.",
     },
     {
       "id": 1,
       "word": "absorptive filter",
-      "def":
-          "A lossy filter that absorbs and dissipates unwanted frequencies as heat. AMP QuietLine filters are absorptive.",
+      "def": "A lossy filter that absorbs and dissipates unwanted frequencies as heat. AMP QuietLine filters are absorptive.",
     },
     {
       "id": 1,
@@ -232,20 +226,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "AC filter",
-      "def":
-          "A filter circuit that removes unwanted frequencies (harmonics) from a mostly AC current. This would include some EMI filters.",
+      "def": "A filter circuit that removes unwanted frequencies (harmonics) from a mostly AC current. This would include some EMI filters.",
     },
     {
       "id": 1,
       "word": "AC flux density",
-      "def":
-          "Number of flux lines per unit of cross-sectional area generated by an alternating magnetic field; Gauss",
+      "def": "Number of flux lines per unit of cross-sectional area generated by an alternating magnetic field; Gauss",
     },
     {
       "id": 1,
       "word": "ACA",
-      "def":
-          "Designation for synthetic tapes, felted asbestos wire with glazed cotton or glass braid overall, 1000V, 90?C.",
+      "def": "Designation for synthetic tapes, felted asbestos wire with glazed cotton or glass braid overall, 1000V, 90?C.",
     },
     {
       "id": 1,
@@ -256,14 +247,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "accelerator",
-      "def":
-          "A chemical additive which hastens a chemical reaction under specific conditions. Another term is promoter.",
+      "def": "A chemical additive which hastens a chemical reaction under specific conditions. Another term is promoter.",
     },
     {
       "id": 1,
       "word": "acceptance angle",
-      "def":
-          "The half-angle of the cone within which incident light is totally internally reflected by the fiber core. It is equal to arcsin (NA).",
+      "def": "The half-angle of the cone within which incident light is totally internally reflected by the fiber core. It is equal to arcsin (NA).",
     },
     {
       "id": 1,
@@ -280,14 +269,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "access provider",
-      "def":
-          "Organization providing and maintaining network services for subscribers.",
+      "def": "Organization providing and maintaining network services for subscribers.",
     },
     {
       "id": 1,
       "word": "access rate",
-      "def":
-          "The transmission speed, in bits per second, of the physical access circuit between the end user and the network.",
+      "def": "The transmission speed, in bits per second, of the physical access circuit between the end user and the network.",
     },
     {
       "id": 1,
@@ -298,14 +285,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "accessories",
-      "def":
-          "Mechanical devices, such as cable clamps and jackscrews, added to connectors to make up the total connector configuration.",
+      "def": "Mechanical devices, such as cable clamps and jackscrews, added to connectors to make up the total connector configuration.",
     },
     {
       "id": 1,
       "word": "accumulator",
-      "def":
-          "Device used for temporary data storage in arithmetic or logic operation. Usually stores one quantity and, on receipt of another, forms the sum and temporarily stores the result.",
+      "def": "Device used for temporary data storage in arithmetic or logic operation. Usually stores one quantity and, on receipt of another, forms the sum and temporarily stores the result.",
     },
     {
       "id": 1,
@@ -315,8 +300,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Action Pin contact",
-      "def":
-          "Any of several style contacts manufactured exclusively by AMP, having a split pin to provide gastight retention in a printed circuit board plated thru hole without solder.",
+      "def": "Any of several style contacts manufactured exclusively by AMP, having a split pin to provide gastight retention in a printed circuit board plated thru hole without solder.",
     },
     {
       "id": 1,
@@ -350,8 +334,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "active substrate",
-      "def":
-          "A substrate in which active elements are formed. Silicon is an active substrate in monolithic integrated circuits.",
+      "def": "A substrate in which active elements are formed. Silicon is an active substrate in monolithic integrated circuits.",
     },
     {
       "id": 1,
@@ -368,26 +351,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "adapter",
-      "def":
-          "A device usually attached to the rear of connectors that provides for the attachment of harnessing components, such as strain-relief clamps, heat-shrinkable boots, and braid.",
+      "def": "A device usually attached to the rear of connectors that provides for the attachment of harnessing components, such as strain-relief clamps, heat-shrinkable boots, and braid.",
     },
     {
       "id": 1,
       "word": "adder",
-      "def":
-          "A digital circuit which forms the sum and carry of two or more numbers.",
+      "def": "A digital circuit which forms the sum and carry of two or more numbers.",
     },
     {
       "id": 1,
       "word": "address",
-      "def":
-          "A specific location where data is stored in a memory; a numerical or alphabetical designation of the storage location of data.",
+      "def": "A specific location where data is stored in a memory; a numerical or alphabetical designation of the storage location of data.",
     },
     {
       "id": 1,
       "word": "address field",
-      "def":
-          "That part of an instruction or word containing an address or operand.",
+      "def": "That part of an instruction or word containing an address or operand.",
     },
     {
       "id": 1,
@@ -398,20 +377,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "adhesive liner",
-      "def":
-          "Lining that melts and flows inside a sleeve or molded part, filling any voids in between the substrate and the sleeve or molded part. DuraSeal has an adhesive liner.",
+      "def": "Lining that melts and flows inside a sleeve or molded part, filling any voids in between the substrate and the sleeve or molded part. DuraSeal has an adhesive liner.",
     },
     {
       "id": 1,
       "word": "admittance",
-      "def":
-          "The ratio of current to voltage, the reciprocal of impedance. The unit of admittance is the siemens (S). Admittance is typically abbreviated as 'y' or 'Y.'",
+      "def": "The ratio of current to voltage, the reciprocal of impedance. The unit of admittance is the siemens (S). Admittance is typically abbreviated as 'y' or 'Y.'",
     },
     {
       "id": 1,
       "word": "ADSL",
-      "def":
-          "A new method of transmitting at speeds up to 7 Mbps in one direction over a single copper telephone line, with up to 640 kbps in the other direction.",
+      "def": "A new method of transmitting at speeds up to 7 Mbps in one direction over a single copper telephone line, with up to 640 kbps in the other direction.",
     },
     {
       "id": 1,
@@ -444,8 +420,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "air core inductance",
-      "def":
-          "The inductance that would be measured if the core had unity permeability and the flux distribution remained unaltered. (A measure of the inductance of a coil without a core).",
+      "def": "The inductance that would be measured if the core had unity permeability and the flux distribution remained unaltered. (A measure of the inductance of a coil without a core).",
     },
     {
       "id": 1,
@@ -462,20 +437,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "aliphatic hydrocarbons",
-      "def":
-          "Saturated hydrocarbons, such as gasoline and propane, whose molecules do not have carbon atoms in a ring structure.",
+      "def": "Saturated hydrocarbons, such as gasoline and propane, whose molecules do not have carbon atoms in a ring structure.",
     },
     {
       "id": 1,
       "word": "alloy",
-      "def":
-          "In plastics, a blend of polymers with other polymers or copolymers.",
+      "def": "In plastics, a blend of polymers with other polymers or copolymers.",
     },
     {
       "id": 1,
       "word": "alphanumeric",
-      "def":
-          "Code structures using letters and numerals, often with added special symbols.",
+      "def": "Code structures using letters and numerals, often with added special symbols.",
     },
     {
       "id": 1,
@@ -486,14 +458,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "altitude immersion seal",
-      "def":
-          "A seal able to withstand substantial pressure change (for example, from sea level to 75,000 feet).",
+      "def": "A seal able to withstand substantial pressure change (for example, from sea level to 75,000 feet).",
     },
     {
       "id": 1,
       "word": "alumina",
-      "def":
-          "Refined form of aluminum oxide, pressed in molds and fired to produce a ceramic insulator useful as a substrate for hybrid integrated circuits.",
+      "def": "Refined form of aluminum oxide, pressed in molds and fired to produce a ceramic insulator useful as a substrate for hybrid integrated circuits.",
     },
     {
       "id": 1,
@@ -504,8 +474,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "AM",
-      "def":
-          "Amplitude Modulation - modulation in which the amplitude of a wave is the characteristic subject to variation.",
+      "def": "Amplitude Modulation - modulation in which the amplitude of a wave is the characteristic subject to variation.",
     },
     {
       "id": 1,
@@ -534,14 +503,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "amnesia",
-      "def":
-          "The tendency over time for a heat-shrinkable elastomeric tubing or molded part to fail to recover completely to its specified recovered size. See Shelf Life.",
+      "def": "The tendency over time for a heat-shrinkable elastomeric tubing or molded part to fail to recover completely to its specified recovered size. See Shelf Life.",
     },
     {
       "id": 1,
       "word": "amorphous",
-      "def":
-          "Having no definite order of crystalline structure. Refers to magnetic materials that are metallurgically non-crystalline in nature.",
+      "def": "Having no definite order of crystalline structure. Refers to magnetic materials that are metallurgically non-crystalline in nature.",
     },
     {
       "id": 1,
@@ -568,8 +535,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ampere turns",
-      "def":
-          "The product of current (I) flowing in the winding times the number of turns (N).",
+      "def": "The product of current (I) flowing in the winding times the number of turns (N).",
     },
     {
       "id": 1,
@@ -579,8 +545,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "amplifier",
-      "def":
-          "A circuit, device, or component which provides an output signal essentially identical to the input signal, but at a higher power or signal level.",
+      "def": "A circuit, device, or component which provides an output signal essentially identical to the input signal, but at a higher power or signal level.",
     },
     {
       "id": 1,
@@ -591,86 +556,72 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Amplitude Modulation",
-      "def":
-          "AM - The modification of the magnitude of a higher, constant frequency carrier signal controlled by the amplitude and phase of a lower frequency baseband or audio signal.",
+      "def": "AM - The modification of the magnitude of a higher, constant frequency carrier signal controlled by the amplitude and phase of a lower frequency baseband or audio signal.",
     },
     {
       "id": 1,
       "word": "amplitude permeability",
-      "def":
-          "The quotient of the peak value of flux density and peak value of applied field strength at a stated amplitude of either, with no static field present. (?a)",
+      "def": "The quotient of the peak value of flux density and peak value of applied field strength at a stated amplitude of either, with no static field present. (?a)",
     },
     {
       "id": 1,
       "word": "AMPS",
-      "def":
-          "Advanced Mobile Phone System. The original American standard for analog wireless phone systems, used primarily in North America, Latin America, Australia and parts of Russia and Asia.",
+      "def": "Advanced Mobile Phone System. The original American standard for analog wireless phone systems, used primarily in North America, Latin America, Australia and parts of Russia and Asia.",
     },
     {
       "id": 1,
       "word": "analog",
-      "def":
-          "A signal which is continuously variable and, unlike a digital signal, does not have discrete levels. (A slide rule is analog in function.)",
+      "def": "A signal which is continuously variable and, unlike a digital signal, does not have discrete levels. (A slide rule is analog in function.)",
     },
     {
       "id": 1,
       "word": "analog computer",
-      "def":
-          "Computer which represents numerical quantities as electrical and physical variables. Solutions to mathematical problems are accomplished by manipulating these variables.",
+      "def": "Computer which represents numerical quantities as electrical and physical variables. Solutions to mathematical problems are accomplished by manipulating these variables.",
     },
     {
       "id": 1,
       "word": "and gate",
-      "def":
-          "A logic circuit with two or more input variables. All inputs must be energized - or receive a signal simultaneously - for the output to be energized.",
+      "def": "A logic circuit with two or more input variables. All inputs must be energized - or receive a signal simultaneously - for the output to be energized.",
     },
     {
       "id": 1,
       "word": "anechoic chamber",
-      "def":
-          "A testing enclosure in which the walls are formed of specially designed material that absorbs incident energy and prevents it from reflecting.",
+      "def": "A testing enclosure in which the walls are formed of specially designed material that absorbs incident energy and prevents it from reflecting.",
     },
     {
       "id": 1,
       "word": "Angstrom",
-      "def":
-          "Unit of distance equal to 10-10 (10E-10) meter. Can be used as a measure of light wavelength, or to indicate the thickness of surface films or oxides. The symbol for angstrom is ?.",
+      "def": "Unit of distance equal to 10-10 (10E-10) meter. Can be used as a measure of light wavelength, or to indicate the thickness of surface films or oxides. The symbol for angstrom is ?.",
     },
     {
       "id": 1,
       "word": "angular misalignment",
-      "def":
-          "The loss of optical power caused by deviation from optimum alignment of fiber to fiber or fiber to waveguide.",
+      "def": "The loss of optical power caused by deviation from optimum alignment of fiber to fiber or fiber to waveguide.",
     },
     {
       "id": 1,
       "word": "anisotropic",
-      "def":
-          "A material whose electrical properties vary with different polarization of a traveling wave.",
+      "def": "A material whose electrical properties vary with different polarization of a traveling wave.",
     },
     {
       "id": 1,
       "word": "anneal",
-      "def":
-          "To heat a metal and cool slowly to relieve hardness or brittleness that may have occurred naturally or have been induced by pressure or bending.",
+      "def": "To heat a metal and cool slowly to relieve hardness or brittleness that may have occurred naturally or have been induced by pressure or bending.",
     },
     {
       "id": 1,
       "word": "anode",
-      "def":
-          "The positive lead or pole in batteries, plating apparatus, diodes, etc.",
+      "def": "The positive lead or pole in batteries, plating apparatus, diodes, etc.",
     },
     {
       "id": 1,
       "word": "anodize",
-      "def":
-          "Formation of a protective, insulating oxide layer on a metal (eg aluminum) by electrolytic action. Anodized finishes can be natural or any bright decorative color.",
+      "def": "Formation of a protective, insulating oxide layer on a metal (eg aluminum) by electrolytic action. Anodized finishes can be natural or any bright decorative color.",
     },
     {
       "id": 1,
       "word": "ANSI",
-      "def":
-          "American National Standards Institute Inc. - operates a voluntary certification program.",
+      "def": "American National Standards Institute Inc. - operates a voluntary certification program.",
     },
     {
       "id": 1,
@@ -686,14 +637,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "antenna",
-      "def":
-          "A structure that is intended to radiate electromagnetic waves into or collect electromagnetic energy from space.",
+      "def": "A structure that is intended to radiate electromagnetic waves into or collect electromagnetic energy from space.",
     },
     {
       "id": 1,
       "word": "antistatic",
-      "def":
-          "Of or pertaining to the ability to either prevent the accumulation of or to enable the dissipation of static charge.",
+      "def": "Of or pertaining to the ability to either prevent the accumulation of or to enable the dissipation of static charge.",
     },
     {
       "id": 1,
@@ -727,14 +676,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Arithmetic and Logic Unit",
-      "def":
-          "ALU - That portion of the digital computer hardware in which arithmetic and logic operations are performed.",
+      "def": "ALU - That portion of the digital computer hardware in which arithmetic and logic operations are performed.",
     },
     {
       "id": 1,
       "word": "Artificial Intelligence",
-      "def":
-          "AI - The ability of a computer to perform tasks, such as reasoning and learning, that human intelligence is capable of doing.",
+      "def": "AI - The ability of a computer to perform tasks, such as reasoning and learning, that human intelligence is capable of doing.",
     },
     {
       "id": 1,
@@ -745,20 +692,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "AS/400",
-      "def":
-          "A midrange IBM computer system. Originally implemented on twinaxial cable, now generally implemented on UTP cable using baluns.",
+      "def": "A midrange IBM computer system. Originally implemented on twinaxial cable, now generally implemented on UTP cable using baluns.",
     },
     {
       "id": 1,
       "word": "ASCII",
-      "def":
-          "American Standard Code for Information Interchange. A 7-bit code used to represent 128 unique letters, numbers, and special characters. An eighth bit is used for parity.",
+      "def": "American Standard Code for Information Interchange. A 7-bit code used to represent 128 unique letters, numbers, and special characters. An eighth bit is used for parity.",
     },
     {
       "id": 1,
       "word": "ASE",
-      "def":
-          "Designation for service entrance cable, above ground use. Some constructions are suitable for underground use. Covering is flame retardant, moisture resistant, and abuse resistant.",
+      "def": "Designation for service entrance cable, above ground use. Some constructions are suitable for underground use. Covering is flame retardant, moisture resistant, and abuse resistant.",
     },
     {
       "id": 1,
@@ -774,20 +718,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "asperities",
-      "def":
-          "Microscopic surface elevations due to surface roughness of a material.",
+      "def": "Microscopic surface elevations due to surface roughness of a material.",
     },
     {
       "id": 1,
       "word": "a-spots",
-      "def":
-          "Abbreviation for asperity spot, the point of physical contact between an asperity on one surface and another surface.",
+      "def": "Abbreviation for asperity spot, the point of physical contact between an asperity on one surface and another surface.",
     },
     {
       "id": 1,
       "word": "assembler",
-      "def":
-          "A program that converts the assembly language of a computer program into the machine language of the computer.",
+      "def": "A program that converts the assembly language of a computer program into the machine language of the computer.",
     },
     {
       "id": 1,
@@ -798,8 +739,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "assymetrical transmission",
-      "def":
-          "Transmission which sends data at different rates in each direction, faster downstream than upstream.",
+      "def": "Transmission which sends data at different rates in each direction, faster downstream than upstream.",
     },
     {
       "id": 1,
@@ -810,14 +750,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "asynchronous",
-      "def":
-          "Not all elements of a device or system operating at the same time, nor in a predetermined sequence.",
+      "def": "Not all elements of a device or system operating at the same time, nor in a predetermined sequence.",
     },
     {
       "id": 1,
       "word": "asynchronous transmission",
-      "def":
-          "Transmission in which time intervals between transmitted bits may be of unequal length. Transmission is controlled by start and stop bits which frame each character.",
+      "def": "Transmission in which time intervals between transmitted bits may be of unequal length. Transmission is controlled by start and stop bits which frame each character.",
     },
     {
       "id": 1,
@@ -839,8 +777,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "attenuation-limited operation",
-      "def":
-          "The condition in a fiber-optic link when operation is limited by the power of the received signal (rather than by bandwidth or by distortion).",
+      "def": "The condition in a fiber-optic link when operation is limited by the power of the received signal (rather than by bandwidth or by distortion).",
     },
     {
       "id": 1,
@@ -856,20 +793,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "audio amplifier",
-      "def":
-          "A circuit with one or more stages designed to amplify the audio frequency range (about 20 to 20,000 Hz).",
+      "def": "A circuit with one or more stages designed to amplify the audio frequency range (about 20 to 20,000 Hz).",
     },
     {
       "id": 1,
       "word": "autoclaves",
-      "def":
-          "Closed vessels used for vacuum pressure impregnating, high pressure curing, bonding, sealing, compressing, testing, etc.",
+      "def": "Closed vessels used for vacuum pressure impregnating, high pressure curing, bonding, sealing, compressing, testing, etc.",
     },
     {
       "id": 1,
       "word": "Automatic Frequency Control",
-      "def":
-          "AFC - In frequency modulated (fm) signal processing, a scheme for automatic tuning of circuitry to input signal. Often used to correct for drift in conventionally tuned B129circuits.",
+      "def": "AFC - In frequency modulated (fm) signal processing, a scheme for automatic tuning of circuitry to input signal. Often used to correct for drift in conventionally tuned B129circuits.",
     },
     {
       "id": 1,
@@ -880,8 +814,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "avalanche photodiode",
-      "def":
-          "A photodiode that exhibits internal amplification of photocurrent through avalanche multiplication of carriers in the junction region.",
+      "def": "A photodiode that exhibits internal amplification of photocurrent through avalanche multiplication of carriers in the junction region.",
     },
     {
       "id": 1,
@@ -902,14 +835,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "'B' stage",
-      "def":
-          "The condition of a resin polymer when it is more viscous, with higher molecular weight, being insoluble but plastic and fusible.",
+      "def": "The condition of a resin polymer when it is more viscous, with higher molecular weight, being insoluble but plastic and fusible.",
     },
     {
       "id": 1,
       "word": "B &amp; S",
-      "def":
-          "Brown &amp; Sharpe Gauge, a wire diameter standard that is the same as AWG.",
+      "def": "Brown &amp; Sharpe Gauge, a wire diameter standard that is the same as AWG.",
     },
     {
       "id": 1,
@@ -919,26 +850,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "back mounted",
-      "def":
-          "A connector attached to the inside of a panel or box with its mounting flanges inside the equipment.",
+      "def": "A connector attached to the inside of a panel or box with its mounting flanges inside the equipment.",
     },
     {
       "id": 1,
       "word": "backboard",
-      "def":
-          "Refers to a plywood panel mounted on the wall of a telecom closet. Used to mount the cross connect.",
+      "def": "Refers to a plywood panel mounted on the wall of a telecom closet. Used to mount the cross connect.",
     },
     {
       "id": 1,
       "word": "backbone",
-      "def":
-          "The part of the network that carries the heaviest traffic. It is the main trunk cable from which all connections to the network are made.",
+      "def": "The part of the network that carries the heaviest traffic. It is the main trunk cable from which all connections to the network are made.",
     },
     {
       "id": 1,
       "word": "backbone cabling",
-      "def":
-          "Cabling between floors in a building or between buildings in a campus.",
+      "def": "Cabling between floors in a building or between buildings in a campus.",
     },
     {
       "id": 1,
@@ -949,26 +876,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "back-mounted",
-      "def":
-          "A termination assembly mounted from the inside of a panel or box with its mounting flange inside the equipment.",
+      "def": "A termination assembly mounted from the inside of a panel or box with its mounting flange inside the equipment.",
     },
     {
       "id": 1,
       "word": "backplane",
-      "def":
-          "Area of a computer or other equipment where various logic and control elements are interconnected.",
+      "def": "Area of a computer or other equipment where various logic and control elements are interconnected.",
     },
     {
       "id": 1,
       "word": "backscattering",
-      "def":
-          "The return of a portion of scattered light to the input end of a fiber; the scattering of fight in the direction opposite to its original propagation.",
+      "def": "The return of a portion of scattered light to the input end of a fiber; the scattering of fight in the direction opposite to its original propagation.",
     },
     {
       "id": 1,
       "word": "bail lock",
-      "def":
-          "Spring members which are attached to the connector flanges and used to hold mated connectors together.",
+      "def": "Spring members which are attached to the connector flanges and used to hold mated connectors together.",
     },
     {
       "id": 1,
@@ -991,8 +914,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ball bond",
-      "def":
-          "A type of thermocompression bond in which a gold wire is flame-cut to produce a ball-shaped end. The ball-shaped end is then bonded to a metal pad by pressure and heat.",
+      "def": "A type of thermocompression bond in which a gold wire is flame-cut to produce a ball-shaped end. The ball-shaped end is then bonded to a metal pad by pressure and heat.",
     },
     {
       "id": 1,
@@ -1002,8 +924,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "balun",
-      "def":
-          "Balanced/Unbalanced - an impedance matching device to connect balanced twisted pair cabling with unbalanced coaxial cable.",
+      "def": "Balanced/Unbalanced - an impedance matching device to connect balanced twisted pair cabling with unbalanced coaxial cable.",
     },
     {
       "id": 1,
@@ -1014,14 +935,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "band marking",
-      "def":
-          "A continuous circumferential band applied to a wire at regular intervals for identification.",
+      "def": "A continuous circumferential band applied to a wire at regular intervals for identification.",
     },
     {
       "id": 1,
       "word": "Band Pass",
-      "def":
-          "The frequency range over which an inductor or capacitor exhibits a low impedance.",
+      "def": "The frequency range over which an inductor or capacitor exhibits a low impedance.",
     },
     {
       "id": 1,
@@ -1032,14 +951,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Band Reject Filter",
-      "def":
-          "BRF - A reactive circuit that rejects signals whose frequencies are within its 3 dB point frequencies and propagates signals whose frequencies are outside its 3 dB point frequencies.",
+      "def": "BRF - A reactive circuit that rejects signals whose frequencies are within its 3 dB point frequencies and propagates signals whose frequencies are outside its 3 dB point frequencies.",
     },
     {
       "id": 1,
       "word": "Band Stop",
-      "def":
-          "The frequency range over which an inductor or capacitor exhibits a high impedance.",
+      "def": "The frequency range over which an inductor or capacitor exhibits a high impedance.",
     },
     {
       "id": 1,
@@ -1067,8 +984,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "barrier block",
-      "def":
-          "An insulated mounting for terminal connections. Barrier blocks are available with threaded holes to accept threaded screws, or with threaded studs to accept fastening washers and nuts.",
+      "def": "An insulated mounting for terminal connections. Barrier blocks are available with threaded holes to accept threaded screws, or with threaded studs to accept fastening washers and nuts.",
     },
     {
       "id": 1,
@@ -1090,8 +1006,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "base metal",
-      "def":
-          "Metal from which the product or accessory is made, and on which one or more platings or coatings may be deposited.",
+      "def": "Metal from which the product or accessory is made, and on which one or more platings or coatings may be deposited.",
     },
     {
       "id": 1,
@@ -1126,14 +1041,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "baseband signal",
-      "def":
-          "A signal transmitted at its original frequency, without modulation.",
+      "def": "A signal transmitted at its original frequency, without modulation.",
     },
     {
       "id": 1,
       "word": "BASIC",
-      "def":
-          "Beginners All-purpose Symbolic Instruction Code. A simple, procedural programming language, popular in timesharing and in microcomputers.",
+      "def": "Beginners All-purpose Symbolic Instruction Code. A simple, procedural programming language, popular in timesharing and in microcomputers.",
     },
     {
       "id": 1,
@@ -1153,14 +1066,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Battery Backup",
-      "def":
-          "Subsystem for electronic equipment that provides power in the event of input power loss. Battery backed systems are a common application are for DC-DC converters.",
+      "def": "Subsystem for electronic equipment that provides power in the event of input power loss. Battery backed systems are a common application are for DC-DC converters.",
     },
     {
       "id": 1,
       "word": "baud",
-      "def":
-          "A unit of signaling speed equal to the number of signal symbols per second, which may or may not be equal to the data rate in bits per second.",
+      "def": "A unit of signaling speed equal to the number of signal symbols per second, which may or may not be equal to the data rate in bits per second.",
     },
     {
       "id": 1,
@@ -1171,8 +1082,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bcd",
-      "def":
-          "binary coded decimal - A coding system in which each decimal digit from 0 to 9 is represented by four bits.",
+      "def": "binary coded decimal - A coding system in which each decimal digit from 0 to 9 is represented by four bits.",
     },
     {
       "id": 1,
@@ -1188,8 +1098,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Beamsplitter",
-      "def":
-          "An optical device, such as a partially reflecting mirror, that splits a beam of light into two or more beams and that can be used in fiber optics for directional couplers.",
+      "def": "An optical device, such as a partially reflecting mirror, that splits a beam of light into two or more beams and that can be used in fiber optics for directional couplers.",
     },
     {
       "id": 1,
@@ -1206,8 +1115,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Bend loss",
-      "def":
-          "A form of increased attenuation in a fiber that results from bending a fiber around a restrictive curvature (a macrobend) or from minute distortions in the fiber (microbends).",
+      "def": "A form of increased attenuation in a fiber that results from bending a fiber around a restrictive curvature (a macrobend) or from minute distortions in the fiber (microbends).",
     },
     {
       "id": 1,
@@ -1218,20 +1126,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bezel",
-      "def":
-          "The frame (usually plastic) that holds the keyboard together and provides for key mounting and a general framework.",
+      "def": "The frame (usually plastic) that holds the keyboard together and provides for key mounting and a general framework.",
     },
     {
       "id": 1,
       "word": "B-H Curve",
-      "def":
-          "Curve to show characteristics of a magnetic material, in terms of magnetizing force (H) and resulting flux density.",
+      "def": "Curve to show characteristics of a magnetic material, in terms of magnetizing force (H) and resulting flux density.",
     },
     {
       "id": 1,
       "word": "BH Loop",
-      "def":
-          "A hysteresis loop showing magnetic characteristics of a magnetic material as an alternating current is applied.",
+      "def": "A hysteresis loop showing magnetic characteristics of a magnetic material as an alternating current is applied.",
     },
     {
       "id": 1,
@@ -1242,20 +1147,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Bias",
-      "def":
-          "The control voltage and/or current applied to a device that establishes or facilitates proper operation.",
+      "def": "The control voltage and/or current applied to a device that establishes or facilitates proper operation.",
     },
     {
       "id": 1,
       "word": "Bias Current",
-      "def":
-          "The (typically direct) current applied to an electronic device to control or facilitate its operation.",
+      "def": "The (typically direct) current applied to an electronic device to control or facilitate its operation.",
     },
     {
       "id": 1,
       "word": "bias voltage",
-      "def":
-          "A voltage used to establish the desired dc operating voltage for a semiconductor. Generally refers to the base voltage.",
+      "def": "A voltage used to establish the desired dc operating voltage for a semiconductor. Generally refers to the base voltage.",
     },
     {
       "id": 1,
@@ -1271,14 +1173,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bifurcated contact",
-      "def":
-          "A spring contact that has been split lengthwise to provide two independent contact surfaces. This redundancy assures two points of contact with the mating conductor element.",
+      "def": "A spring contact that has been split lengthwise to provide two independent contact surfaces. This redundancy assures two points of contact with the mating conductor element.",
     },
     {
       "id": 1,
       "word": "Bilateral",
-      "def":
-          "A circuit or component whose operation is unchanged when the input and output ports are interchanged",
+      "def": "A circuit or component whose operation is unchanged when the input and output ports are interchanged",
     },
     {
       "id": 1,
@@ -1288,20 +1188,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "binary code",
-      "def":
-          "A code in which each element may be either of two distinct values (eg the presence or absence of a pulse).",
+      "def": "A code in which each element may be either of two distinct values (eg the presence or absence of a pulse).",
     },
     {
       "id": 1,
       "word": "binary coded decimal",
-      "def":
-          "A coding system in which each decimal digit from 0 to 9 is represented by four bits.",
+      "def": "A coding system in which each decimal digit from 0 to 9 is represented by four bits.",
     },
     {
       "id": 1,
       "word": "Binder",
-      "def":
-          "A spiral wrapping of a thread to hold together the members of a cable.",
+      "def": "A spiral wrapping of a thread to hold together the members of a cable.",
     },
     {
       "id": 1,
@@ -1330,8 +1227,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bit density",
-      "def":
-          "Number of bits that can be placed, per unit area or volume, on a storage medium (eg bits per inch of magnetic tape).",
+      "def": "Number of bits that can be placed, per unit area or volume, on a storage medium (eg bits per inch of magnetic tape).",
     },
     {
       "id": 1,
@@ -1342,8 +1238,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Bits Per Second (bps)",
-      "def":
-          "The number of bits passing a point every second. The transmission rate for digital information.",
+      "def": "The number of bits passing a point every second. The transmission rate for digital information.",
     },
     {
       "id": 1,
@@ -1365,20 +1260,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "block",
-      "def":
-          "(1) Typically a contact housing used in a modular connector (2) A group of words or characters considered or transported as a unit, particularly with reference to input and output.",
+      "def": "(1) Typically a contact housing used in a modular connector (2) A group of words or characters considered or transported as a unit, particularly with reference to input and output.",
     },
     {
       "id": 1,
       "word": "blocking",
-      "def":
-          "The sticking together of insulated wires; usually caused by heat.",
+      "def": "The sticking together of insulated wires; usually caused by heat.",
     },
     {
       "id": 1,
       "word": "Bluetooth",
-      "def":
-          "A transmission standard operating at 2.4 GHz for connecting telephones, computers and other devices without the use of wires.",
+      "def": "A transmission standard operating at 2.4 GHz for connecting telephones, computers and other devices without the use of wires.",
     },
     {
       "id": 1,
@@ -1400,8 +1292,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bobbin core",
-      "def":
-          "A core with the shape of a bobbin or spool which contains flanges. Bobbin cores are available with and without leads and in the axial and radial form.",
+      "def": "A core with the shape of a bobbin or spool which contains flanges. Bobbin cores are available with and without leads and in the axial and radial form.",
     },
     {
       "id": 1,
@@ -1424,8 +1315,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bond wire",
-      "def":
-          "A conductive wire that connects a semiconductor die to an external circuit.",
+      "def": "A conductive wire that connects a semiconductor die to an external circuit.",
     },
     {
       "id": 1,
@@ -1436,20 +1326,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bonding area",
-      "def":
-          "A metallized region on the top surface of semiconductor die by which electrical connection to an external circuit is made by means of a bond wire.",
+      "def": "A metallized region on the top surface of semiconductor die by which electrical connection to an external circuit is made by means of a bond wire.",
     },
     {
       "id": 1,
       "word": "bonding pad",
-      "def":
-          "Metallized areas on the surface of a semiconductor device, wafer, or die, to which electrical leads may be connected or probes applied. Also referred to as bonding area.",
+      "def": "Metallized areas on the surface of a semiconductor device, wafer, or die, to which electrical leads may be connected or probes applied. Also referred to as bonding area.",
     },
     {
       "id": 1,
       "word": "bonding temperature",
-      "def":
-          "Temperature above which adhesive melts and flows sufficiently to form an adhesive bond between substrates.",
+      "def": "Temperature above which adhesive melts and flows sufficiently to form an adhesive bond between substrates.",
     },
     {
       "id": 1,
@@ -1478,8 +1365,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bounce time",
-      "def":
-          "The time interval between when the contact first makes, and when the last contact make occurs.",
+      "def": "The time interval between when the contact first makes, and when the last contact make occurs.",
     },
     {
       "id": 1,
@@ -1500,8 +1386,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "braid",
-      "def":
-          "A woven metallic or fiber layer used as a shield covering for an insulated conductor or group of insulated conductors. When flattened, a metal weave may be used as a grounding strap.",
+      "def": "A woven metallic or fiber layer used as a shield covering for an insulated conductor or group of insulated conductors. When flattened, a metal weave may be used as a grounding strap.",
     },
     {
       "id": 1,
@@ -1511,20 +1396,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "branched",
-      "def":
-          "Chemistry term referring to side chains attached to original chain (in a direction different from that of the original chain) in molecular structure of polymers.",
+      "def": "Chemistry term referring to side chains attached to original chain (in a direction different from that of the original chain) in molecular structure of polymers.",
     },
     {
       "id": 1,
       "word": "breadboard",
-      "def":
-          "A test board on which components are mounted to test the feasibility of prototype circuitry.",
+      "def": "A test board on which components are mounted to test the feasibility of prototype circuitry.",
     },
     {
       "id": 1,
       "word": "breadboard circuit",
-      "def":
-          "A circuit simulation using discrete components or partially integrated components to prove feasibility of a circuit.",
+      "def": "A circuit simulation using discrete components or partially integrated components to prove feasibility of a circuit.",
     },
     {
       "id": 1,
@@ -1535,8 +1417,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Breakout",
-      "def":
-          "A region in a harness assembly where a wire or a group of wires is detached to form a separate, terminated branch. Also known as a transition.",
+      "def": "A region in a harness assembly where a wire or a group of wires is detached to form a separate, terminated branch. Also known as a transition.",
     },
     {
       "id": 1,
@@ -1546,14 +1427,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Breakover Voltage",
-      "def":
-          "Maximum voltage across a SiBar device at breakdown measured under a specified voltage rate of rise and current rate of rise.",
+      "def": "Maximum voltage across a SiBar device at breakdown measured under a specified voltage rate of rise and current rate of rise.",
     },
     {
       "id": 1,
       "word": "breakpoint",
-      "def":
-          "A point of special interest in a computer routine requiring human communication prior to continuation.",
+      "def": "A point of special interest in a computer routine requiring human communication prior to continuation.",
     },
     {
       "id": 1,
@@ -1570,14 +1449,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bridge/router",
-      "def":
-          "A device that can provide the function of a bridge, router or both concurrently. Bridge/router can route one or more protocols, such as TCP/IP and/or XNS, and bridge all other traffic.",
+      "def": "A device that can provide the function of a bridge, router or both concurrently. Bridge/router can route one or more protocols, such as TCP/IP and/or XNS, and bridge all other traffic.",
     },
     {
       "id": 1,
       "word": "bridging",
-      "def":
-          "The act of connecting a (typically) high input impedance device in shunt across a transmission line or signal path to monitor or sample a signal.",
+      "def": "The act of connecting a (typically) high input impedance device in shunt across a transmission line or signal path to monitor or sample a signal.",
     },
     {
       "id": 1,
@@ -1588,32 +1465,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "brittle temperature",
-      "def":
-          "The temperature below which a material becomes brittle, often measured by a cold impact test.",
+      "def": "The temperature below which a material becomes brittle, often measured by a cold impact test.",
     },
     {
       "id": 1,
       "word": "broadband",
-      "def":
-          "Data transmission at a high rate, generally greater than T1 speeds (1.5 Mbps). This allows the transmission of voice, data and video signals over a single medium.",
+      "def": "Data transmission at a high rate, generally greater than T1 speeds (1.5 Mbps). This allows the transmission of voice, data and video signals over a single medium.",
     },
     {
       "id": 1,
       "word": "broadband EMI",
-      "def":
-          "Interference generated over a wide range of frequencies. For example, automotive ignition noise.",
+      "def": "Interference generated over a wide range of frequencies. For example, automotive ignition noise.",
     },
     {
       "id": 1,
       "word": "broadband signal",
-      "def":
-          "A signal transmitted by being impressed on a higher frequency carrier wave.",
+      "def": "A signal transmitted by being impressed on a higher frequency carrier wave.",
     },
     {
       "id": 1,
       "word": "brush",
-      "def":
-          "A conductor, usually composed in part of some form of the element carbon, serving to maintain an electrical connection between stationary and moving parts of a motor or apparatus.",
+      "def": "A conductor, usually composed in part of some form of the element carbon, serving to maintain an electrical connection between stationary and moving parts of a motor or apparatus.",
     },
     {
       "id": 1,
@@ -1623,14 +1495,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "BTS",
-      "def":
-          "Base transceiver station, or cellular base station for a wireless telephone system.",
+      "def": "Base transceiver station, or cellular base station for a wireless telephone system.",
     },
     {
       "id": 1,
       "word": "bubble",
-      "def":
-          "A raised protrusion of nonconductive film with a contact printed on the underside to provide, in most cases, tactile feel.",
+      "def": "A raised protrusion of nonconductive film with a contact printed on the underside to provide, in most cases, tactile feel.",
     },
     {
       "id": 1,
@@ -1665,14 +1535,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "buffer coating",
-      "def":
-          "A protective layer, such as an acrylic polymer, applied over the fiber cladding for protective purposes.",
+      "def": "A protective layer, such as an acrylic polymer, applied over the fiber cladding for protective purposes.",
     },
     {
       "id": 1,
       "word": "buffer tube",
-      "def":
-          "A hard plastic tube, having an inside diameter several times that of a fiber, that holds one or more fibers.",
+      "def": "A hard plastic tube, having an inside diameter several times that of a fiber, that holds one or more fibers.",
     },
     {
       "id": 1,
@@ -1682,8 +1550,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bulkhead",
-      "def":
-          "A term used to define a mounting style of connectors. Bulkhead connectors are designed to be inserted into a panel cutout from the rear (component side) of the panel.",
+      "def": "A term used to define a mounting style of connectors. Bulkhead connectors are designed to be inserted into a panel cutout from the rear (component side) of the panel.",
     },
     {
       "id": 1,
@@ -1699,14 +1566,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "burn in",
-      "def":
-          "Operation of a circuit or equipment to stabilize all components and reduce failure rates.",
+      "def": "Operation of a circuit or equipment to stabilize all components and reduce failure rates.",
     },
     {
       "id": 1,
       "word": "burnout",
-      "def":
-          "The failure mode in a device that is induced by excessive power dissipation in the device.",
+      "def": "The failure mode in a device that is induced by excessive power dissipation in the device.",
     },
     {
       "id": 1,
@@ -1717,32 +1582,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "bus bar",
-      "def":
-          "A heavy bar or strap (usually of copper) for carrying heavy currents, or serving as a common connection between several circuits.",
+      "def": "A heavy bar or strap (usually of copper) for carrying heavy currents, or serving as a common connection between several circuits.",
     },
     {
       "id": 1,
       "word": "bus network",
-      "def":
-          "A network topology in which nodes are all connected to a single line serving as the bus.",
+      "def": "A network topology in which nodes are all connected to a single line serving as the bus.",
     },
     {
       "id": 1,
       "word": "bus reactor",
-      "def":
-          "A current limiting reactor connected between two buses, or between two sections of one bus, to limit and localize any disturbance caused by either bus (or bus section).",
+      "def": "A current limiting reactor connected between two buses, or between two sections of one bus, to limit and localize any disturbance caused by either bus (or bus section).",
     },
     {
       "id": 1,
       "word": "bus-powered",
-      "def":
-          "Class of devices that derive their power from the main Hub. Examples include USB hubs, keyboards, mice, internet cameras.",
+      "def": "Class of devices that derive their power from the main Hub. Examples include USB hubs, keyboards, mice, internet cameras.",
     },
     {
       "id": 1,
       "word": "butt",
-      "def":
-          "When two conductors are placed together end-to-end with their axes in line, but not overlapping.",
+      "def": "When two conductors are placed together end-to-end with their axes in line, but not overlapping.",
     },
     {
       "id": 1,
@@ -1753,14 +1613,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "butt splice",
-      "def":
-          "A splice wherein two wires from opposite ends butt against each other, or against a stop, in the center of the splice.",
+      "def": "A splice wherein two wires from opposite ends butt against each other, or against a stop, in the center of the splice.",
     },
     {
       "id": 1,
       "word": "bypass filter",
-      "def":
-          "A filter or capacitor that provides a lowimpedance path for high frequencies around a circuit element such as an integrated circuit.",
+      "def": "A filter or capacitor that provides a lowimpedance path for high frequencies around a circuit element such as an integrated circuit.",
     },
     {
       "id": 1,
@@ -1770,8 +1628,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "'C' stage",
-      "def":
-          "The condition of a resin polymer when it is in the solid state, with high molecular weight, being insoluble and infusible.",
+      "def": "The condition of a resin polymer when it is in the solid state, with high molecular weight, being insoluble and infusible.",
     },
     {
       "id": 1,
@@ -1798,14 +1655,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "cable clamp",
-      "def":
-          "A device used to give mechanical support to a wire bundle or cable.",
+      "def": "A device used to give mechanical support to a wire bundle or cable.",
     },
     {
       "id": 1,
       "word": "cable clamp adapter",
-      "def":
-          "A mechanical adapter that attaches to the rear of a termination assembly to allow the attachment of a cable clamp.",
+      "def": "A mechanical adapter that attaches to the rear of a termination assembly to allow the attachment of a cable clamp.",
     },
     {
       "id": 1,
@@ -1815,38 +1670,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "cable sealing clamp",
-      "def":
-          "A device consisting of a gland nut designed to seal around the jacket of a cable.",
+      "def": "A device consisting of a gland nut designed to seal around the jacket of a cable.",
     },
     {
       "id": 1,
       "word": "cabler",
-      "def":
-          "A machine that mechanically assembles a group of insulated wires.",
+      "def": "A machine that mechanically assembles a group of insulated wires.",
     },
     {
       "id": 1,
       "word": "cabling",
-      "def":
-          "The act of twisting together two or more insulated components to form a cable.",
+      "def": "The act of twisting together two or more insulated components to form a cable.",
     },
     {
       "id": 1,
       "word": "CAD",
-      "def":
-          "Computer-aided design. Use of the computer in engineering design activities.",
+      "def": "Computer-aided design. Use of the computer in engineering design activities.",
     },
     {
       "id": 1,
       "word": "calender",
-      "def":
-          "Process in which film and sheet material is produced by squeezing heated, viscous material between two or more counter-rotating rolls.",
+      "def": "Process in which film and sheet material is produced by squeezing heated, viscous material between two or more counter-rotating rolls.",
     },
     {
       "id": 1,
       "word": "CAM",
-      "def":
-          "Computer-aided manufacture. Use of computer to aid and direct manufacturing activities.",
+      "def": "Computer-aided manufacture. Use of computer to aid and direct manufacturing activities.",
     },
     {
       "id": 1,
@@ -1863,14 +1712,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Canadian Standards Association",
-      "def":
-          "CSA - Independent organization that establishes and tests safety standards for electronic components and systems for the Canadian marketplace.",
+      "def": "CSA - Independent organization that establishes and tests safety standards for electronic components and systems for the Canadian marketplace.",
     },
     {
       "id": 1,
       "word": "CAP",
-      "def":
-          "Carrierless Amplitude Phase Modulation. A two-dimensional line code used in ADSL.",
+      "def": "Carrierless Amplitude Phase Modulation. A two-dimensional line code used in ADSL.",
     },
     {
       "id": 1,
@@ -1881,14 +1728,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "capacitive coupling",
-      "def":
-          "The coupling of energy from one conductor to another as a result of the distributed capacitance between them.",
+      "def": "The coupling of energy from one conductor to another as a result of the distributed capacitance between them.",
     },
     {
       "id": 1,
       "word": "capacitive decoupling",
-      "def":
-          "The establishment of AC ground or a low impedance point for AC signals at a point in a circuit as a result of the presence of capacitance between that point and ground.",
+      "def": "The establishment of AC ground or a low impedance point for AC signals at a point in a circuit as a result of the presence of capacitance between that point and ground.",
     },
     {
       "id": 1,
@@ -1905,14 +1750,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CAPs",
-      "def":
-          "Competitive Access Provider or Competitive Local Exchange Carrier. Alternative provider to Local Exchange Carrier.",
+      "def": "Competitive Access Provider or Competitive Local Exchange Carrier. Alternative provider to Local Exchange Carrier.",
     },
     {
       "id": 1,
       "word": "Carbonyl Iron",
-      "def":
-          "A relatively expensive iron powder used in low permeability, high frequency powdered iron cores.",
+      "def": "A relatively expensive iron powder used in low permeability, high frequency powdered iron cores.",
     },
     {
       "id": 1,
@@ -1923,20 +1766,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "carrier",
-      "def":
-          "(1) A group of strands or ends used to form a finished braid. (2) A higher frequency upon which voice or coded data can be superimposed (modulated).",
+      "def": "(1) A group of strands or ends used to form a finished braid. (2) A higher frequency upon which voice or coded data can be superimposed (modulated).",
     },
     {
       "id": 1,
       "word": "carrier sense multiple access with collision detection",
-      "def":
-          "A technique used to control the transmission channel of a local area network to ensure that there is no conflict between terminals that wish to transmit.",
+      "def": "A technique used to control the transmission channel of a local area network to ensure that there is no conflict between terminals that wish to transmit.",
     },
     {
       "id": 1,
       "word": "carrier suppression",
-      "def":
-          "The degree to which the carrier signal is reduced in amplitude in a modulator or mixer. Carrier suppression is usually expressed in dB.",
+      "def": "The degree to which the carrier signal is reduced in amplitude in a modulator or mixer. Carrier suppression is usually expressed in dB.",
     },
     {
       "id": 1,
@@ -1958,26 +1798,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "catalyst",
-      "def":
-          "A substance which initiates and/or accelerates a chemical reaction but normally does not enter into the reaction.",
+      "def": "A substance which initiates and/or accelerates a chemical reaction but normally does not enter into the reaction.",
     },
     {
       "id": 1,
       "word": "catastrophic failure",
-      "def":
-          "The complete loss of a device's ability to perform its required function. Most commonly associated with failures that are sudden or involve rapid deterioration.",
+      "def": "The complete loss of a device's ability to perform its required function. Most commonly associated with failures that are sudden or involve rapid deterioration.",
     },
     {
       "id": 1,
       "word": "Category 3",
-      "def":
-          "A performance classification for twisted pair cables, connectors and systems.Specified to 16 MHz.Suitable for voice and data applications up to 10 Mbps.",
+      "def": "A performance classification for twisted pair cables, connectors and systems.Specified to 16 MHz.Suitable for voice and data applications up to 10 Mbps.",
     },
     {
       "id": 1,
       "word": "Category 5",
-      "def":
-          "A performance classification for twisted pair cables, connectors and systems.Specified to 100 MHz.Suitable for voice and data applications up to 155 Mbps (possibly 1000 Mbps).",
+      "def": "A performance classification for twisted pair cables, connectors and systems.Specified to 100 MHz.Suitable for voice and data applications up to 155 Mbps (possibly 1000 Mbps).",
     },
     {
       "id": 1,
@@ -1988,8 +1824,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Category 6",
-      "def":
-          "A performance classification for twisted pair cables, connectors and systems.Specified up to 250 MHz.",
+      "def": "A performance classification for twisted pair cables, connectors and systems.Specified up to 250 MHz.",
     },
     {
       "id": 1,
@@ -2000,8 +1835,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "cathode-ray tube",
-      "def":
-          "The 'picture tube' found in television receivers, oscilloscopes, and computer and terminal displays.",
+      "def": "The 'picture tube' found in television receivers, oscilloscopes, and computer and terminal displays.",
     },
     {
       "id": 1,
@@ -2017,8 +1851,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CCD",
-      "def":
-          "Charge-coupled device. A volatile serial-access memory that stores bits as tiny packets of electric charge moving along the surface of a semiconductor chip.",
+      "def": "Charge-coupled device. A volatile serial-access memory that stores bits as tiny packets of electric charge moving along the surface of a semiconductor chip.",
     },
     {
       "id": 1,
@@ -2034,8 +1867,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CDMA",
-      "def":
-          "Code Division Multiple Access. A digital transmission technique based on direct sequence spread spectrum.",
+      "def": "Code Division Multiple Access. A digital transmission technique based on direct sequence spread spectrum.",
     },
     {
       "id": 1,
@@ -2045,14 +1877,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "cellular",
-      "def":
-          "A wireless phone system that uses a grid of 'cells', each managed by a base station. Often refers to such systems that operate in or around the 800 - 1,000 MHz band.",
+      "def": "A wireless phone system that uses a grid of 'cells', each managed by a base station. Often refers to such systems that operate in or around the 800 - 1,000 MHz band.",
     },
     {
       "id": 1,
       "word": "center fastener",
-      "def":
-          "A mechanical fastening device located in the center of mating connectors. Includes a threaded screw on one connector that engages a threaded bushing on the mating connector.",
+      "def": "A mechanical fastening device located in the center of mating connectors. Includes a threaded screw on one connector that engages a threaded bushing on the mating connector.",
     },
     {
       "id": 1,
@@ -2068,8 +1898,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "centro-symmetrical reflective optics",
-      "def":
-          "An optical technique in which a concave mirror is used to control coupling of light from one fiber to another.",
+      "def": "An optical technique in which a concave mirror is used to control coupling of light from one fiber to another.",
     },
     {
       "id": 1,
@@ -2086,20 +1915,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ceramic-based microminiature circuitry",
-      "def":
-          "Microminiature circuitry printed on a ceramic substrate. Usually consists of combinations of resistive, capacitive, or conductive elements fired on a wafer-like piece of ceramic.",
+      "def": "Microminiature circuitry printed on a ceramic substrate. Usually consists of combinations of resistive, capacitive, or conductive elements fired on a wafer-like piece of ceramic.",
     },
     {
       "id": 1,
       "word": "cermet",
-      "def":
-          "A mixture of materials used to produce high resistance conductors for thick and thin film circuits.",
+      "def": "A mixture of materials used to produce high resistance conductors for thick and thin film circuits.",
     },
     {
       "id": 1,
       "word": "CFM",
-      "def":
-          "Cubic feet per minute, which is a measure of the volume of air flowing in a system.",
+      "def": "Cubic feet per minute, which is a measure of the volume of air flowing in a system.",
     },
     {
       "id": 1,
@@ -2126,8 +1952,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "characteristic impedance",
-      "def":
-          "The impedance of a transmission line that is independent of length. Also, the ratio of voltage to current at any point along a transmission line on which there are no standing waves.",
+      "def": "The impedance of a transmission line that is independent of length. Also, the ratio of voltage to current at any point along a transmission line on which there are no standing waves.",
     },
     {
       "id": 1,
@@ -2138,14 +1963,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "chemically deposited printed circuit",
-      "def":
-          "A printed circuit formed on an insulating base by chemical reaction, providing a conductive pattern.",
+      "def": "A printed circuit formed on an insulating base by chemical reaction, providing a conductive pattern.",
     },
     {
       "id": 1,
       "word": "chemically reduced printed circuit",
-      "def":
-          "A printed circuit formed by the chemical erosion (etching) of portions of the metallic surface of a metalclad insulative material.",
+      "def": "A printed circuit formed by the chemical erosion (etching) of portions of the metallic surface of a metalclad insulative material.",
     },
     {
       "id": 1,
@@ -2155,20 +1978,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "chip",
-      "def":
-          "A single substrate on which all the active and passive circuit elements are fabricated by semiconductor manufacturing techniques. Its function can be simple or complex.",
+      "def": "A single substrate on which all the active and passive circuit elements are fabricated by semiconductor manufacturing techniques. Its function can be simple or complex.",
     },
     {
       "id": 1,
       "word": "chip carrier",
-      "def":
-          "A square semiconductor package having leads on all four sides and on .040 or .050in. centerlines.",
+      "def": "A square semiconductor package having leads on all four sides and on .040 or .050in. centerlines.",
     },
     {
       "id": 1,
       "word": "choke",
-      "def":
-          "An inductor which is intended to filter, or 'choke', out unwanted signals.",
+      "def": "An inductor which is intended to filter, or 'choke', out unwanted signals.",
     },
     {
       "id": 1,
@@ -2190,8 +2010,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "circuit speed",
-      "def":
-          "The time taken for a circuit to perform its function - from application of input to resulting output.",
+      "def": "The time taken for a circuit to perform its function - from application of input to resulting output.",
     },
     {
       "id": 1,
@@ -2202,8 +2021,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Circuit-Switched Network",
-      "def":
-          "Network that establishes a physical circuit temporarily, until it receives a disconnect signal.",
+      "def": "Network that establishes a physical circuit temporarily, until it receives a disconnect signal.",
     },
     {
       "id": 1,
@@ -2220,20 +2038,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Circulator",
-      "def":
-          "A multiport device that propagates signals from one port to the adjacent port with low loss in one direction and with high loss in the opposite direction.",
+      "def": "A multiport device that propagates signals from one port to the adjacent port with low loss in one direction and with high loss in the opposite direction.",
     },
     {
       "id": 1,
       "word": "cladding",
-      "def":
-          "An outer layer on a fiber core which promotes total internal reflection of light and also serves as a protection medium.",
+      "def": "An outer layer on a fiber core which promotes total internal reflection of light and also serves as a protection medium.",
     },
     {
       "id": 1,
       "word": "Cladding mode",
-      "def":
-          "A mode confined to the cladding; a light ray that propagates in the cladding.",
+      "def": "A mode confined to the cladding; a light ray that propagates in the cladding.",
     },
     {
       "id": 1,
@@ -2244,14 +2059,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CLEC",
-      "def":
-          "A distributed system model of computing that brings computing power to the desktop, where users('clients') access resources from servers.",
+      "def": "A distributed system model of computing that brings computing power to the desktop, where users('clients') access resources from servers.",
     },
     {
       "id": 1,
       "word": "Client/Server",
-      "def":
-          "A distributed system model of computing that brings computing power to the desktop, where users('clients') access resources from servers.",
+      "def": "A distributed system model of computing that brings computing power to the desktop, where users('clients') access resources from servers.",
     },
     {
       "id": 1,
@@ -2280,26 +2093,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "closed circuit",
-      "def":
-          "An electrical circuit through which current can flow, such as when a power switch is moved to the 'on' position. The opposite of an 'open' circuit.",
+      "def": "An electrical circuit through which current can flow, such as when a power switch is moved to the 'on' position. The opposite of an 'open' circuit.",
     },
     {
       "id": 1,
       "word": "closed end splice",
-      "def":
-          "An insulated splice in which two or more wires overlap and all enter the splice from the same end of the barrel.",
+      "def": "An insulated splice in which two or more wires overlap and all enter the splice from the same end of the barrel.",
     },
     {
       "id": 1,
       "word": "closed entry contact",
-      "def":
-          "A female contact designed to prevent the entry of a pin or probing device having a crosssectional dimension (diameter) greater than the mating pin.",
+      "def": "A female contact designed to prevent the entry of a pin or probing device having a crosssectional dimension (diameter) greater than the mating pin.",
     },
     {
       "id": 1,
       "word": "closed loop",
-      "def":
-          "A routine in which a group of instructions is repeated for an indefinite period.",
+      "def": "A routine in which a group of instructions is repeated for an indefinite period.",
     },
     {
       "id": 1,
@@ -2321,8 +2130,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CMOS",
-      "def":
-          "Complementary-Metal-Oxide-Semiconductor - A popular MOS IC that uses both p-type and n-type material for the channels. This allows very dense packaging and low power consumption.",
+      "def": "Complementary-Metal-Oxide-Semiconductor - A popular MOS IC that uses both p-type and n-type material for the channels. This allows very dense packaging and low power consumption.",
     },
     {
       "id": 1,
@@ -2332,14 +2140,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CO",
-      "def":
-          "Central Office. A local telephone company office which connects to the main system where circuit switching of customer lines occurs.",
+      "def": "Central Office. A local telephone company office which connects to the main system where circuit switching of customer lines occurs.",
     },
     {
       "id": 1,
       "word": "coax",
-      "def":
-          "Short for coaxial. Single-conductor cables with braided shields. Used in the 80's for data transmission. Now generally replaced with UTP for data. Still used for video.",
+      "def": "Short for coaxial. Single-conductor cables with braided shields. Used in the 80's for data transmission. Now generally replaced with UTP for data. Still used for video.",
     },
     {
       "id": 1,
@@ -2350,32 +2156,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "coaxial ribbon cable",
-      "def":
-          "Ribbon cable consisting of parallel coaxial conductors joined together in a flexible insulating material and designed for mass termination.",
+      "def": "Ribbon cable consisting of parallel coaxial conductors joined together in a flexible insulating material and designed for mass termination.",
     },
     {
       "id": 1,
       "word": "COBOL",
-      "def":
-          "COmmon Business Oriented Language. Used to express problems of data manipulation and processing in English narrative form.",
+      "def": "COmmon Business Oriented Language. Used to express problems of data manipulation and processing in English narrative form.",
     },
     {
       "id": 1,
       "word": "Coder/Decoder (Codec)",
-      "def":
-          "Equipment to convert between analog and digital information format. Also may provide digital information format. Also, may provide digital compression functions.",
+      "def": "Equipment to convert between analog and digital information format. Also may provide digital information format. Also, may provide digital compression functions.",
     },
     {
       "id": 1,
       "word": "coefficient of expansion",
-      "def":
-          "The fractional change in dimension of a material for a unit change in temperature.",
+      "def": "The fractional change in dimension of a material for a unit change in temperature.",
     },
     {
       "id": 1,
       "word": "Coercive Force (HC)",
-      "def":
-          "The value of magnetizing force required to reduce the flux density to zero.",
+      "def": "The value of magnetizing force required to reduce the flux density to zero.",
     },
     {
       "id": 1,
@@ -2396,14 +2197,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "coil",
-      "def":
-          "(1) Successive turns of insulated wire which create a magnetic field when an electric current is passed through the wire. (2) Another term for an 'inductor'.",
+      "def": "(1) Successive turns of insulated wire which create a magnetic field when an electric current is passed through the wire. (2) Another term for an 'inductor'.",
     },
     {
       "id": 1,
       "word": "Coil Hi-Pot",
-      "def":
-          "The minimum voltage which the relay coil terminals will isolate when the relay is properly mounted.",
+      "def": "The minimum voltage which the relay coil terminals will isolate when the relay is properly mounted.",
     },
     {
       "id": 1,
@@ -2418,80 +2217,67 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Cold Bend",
-      "def":
-          "A test conducted by wrapping tubing or cable around a mandrel or by bending it in an arc while at a low temperature.",
+      "def": "A test conducted by wrapping tubing or cable around a mandrel or by bending it in an arc while at a low temperature.",
     },
     {
       "id": 1,
       "word": "cold flow",
-      "def":
-          "Permanent deformation of polymeric materials (insulation) at ambient temperature due to mechanical force or pressure (not due to heat softening).",
+      "def": "Permanent deformation of polymeric materials (insulation) at ambient temperature due to mechanical force or pressure (not due to heat softening).",
     },
     {
       "id": 1,
       "word": "Cold Impact",
-      "def":
-          "A test performed by subjecting a component to a specified impact during exposure to low temperature. It measures the brittleness of the material.",
+      "def": "A test performed by subjecting a component to a specified impact during exposure to low temperature. It measures the brittleness of the material.",
     },
     {
       "id": 1,
       "word": "cold joint",
-      "def":
-          "A soldered joint made with insufficient heat; solder has not completely flowed and wet the substrate.",
+      "def": "A soldered joint made with insufficient heat; solder has not completely flowed and wet the substrate.",
     },
     {
       "id": 1,
       "word": "cold weld",
-      "def":
-          "A metallurgical bond. The joining of two metals (without an intermediate material) by the application of pressure only - without electrical current or elevated temperature.",
+      "def": "A metallurgical bond. The joining of two metals (without an intermediate material) by the application of pressure only - without electrical current or elevated temperature.",
     },
     {
       "id": 1,
       "word": "cold work",
-      "def":
-          "Hardening and embrittlement of metal due to repeated flexing action.",
+      "def": "Hardening and embrittlement of metal due to repeated flexing action.",
     },
     {
       "id": 1,
       "word": "Collector",
-      "def":
-          "The region of a bipolar transistor into which current flows from the base of the transistor under the influence of reverse bias across the two regions.",
+      "def": "The region of a bipolar transistor into which current flows from the base of the transistor under the influence of reverse bias across the two regions.",
     },
     {
       "id": 1,
       "word": "Collector Current",
-      "def":
-          "The current that flows through the collector of a bipolar transistor.",
+      "def": "The current that flows through the collector of a bipolar transistor.",
     },
     {
       "id": 1,
       "word": "Color Code",
-      "def":
-          "A means of identifying cable components using solid colors or stripes. Also, the scheme that assigns a number from 0 to 9 for each of 10 colors.",
+      "def": "A means of identifying cable components using solid colors or stripes. Also, the scheme that assigns a number from 0 to 9 for each of 10 colors.",
     },
     {
       "id": 1,
       "word": "color coding",
-      "def":
-          "The selective placement of color on a terminal or contact to aid in its identification and to assure proper selection of the correct wire size and crimping tool.",
+      "def": "The selective placement of color on a terminal or contact to aid in its identification and to assure proper selection of the correct wire size and crimping tool.",
     },
     {
       "id": 1,
       "word": "color concentrates",
-      "def":
-          "Pigmented resins with high percentages of pigment. They are mixed with unpigmented resins by the processor.",
+      "def": "Pigmented resins with high percentages of pigment. They are mixed with unpigmented resins by the processor.",
     },
     {
       "id": 1,
       "word": "Color Stability",
-      "def":
-          "The time and temperature ranges within which the color of a material will remain within the specified color limit.",
+      "def": "The time and temperature ranges within which the color of a material will remain within the specified color limit.",
     },
     {
       "id": 1,
       "word": "command",
-      "def":
-          "A pulse, signal, or set of signals initiating one step in the performance of a computer operation. See also instruction.",
+      "def": "A pulse, signal, or set of signals initiating one step in the performance of a computer operation. See also instruction.",
     },
     {
       "id": 1,
@@ -2502,14 +2288,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Common Carrier",
-      "def":
-          "Licensed utility that provides communications services at government-regulated rates.",
+      "def": "Licensed utility that provides communications services at government-regulated rates.",
     },
     {
       "id": 1,
       "word": "Common Mode Current",
-      "def":
-          "A current conduction mode in which currents, present in two or more conductors, are flowing in phase and with equal magnitude within the conductor.",
+      "def": "A current conduction mode in which currents, present in two or more conductors, are flowing in phase and with equal magnitude within the conductor.",
     },
     {
       "id": 1,
@@ -2520,26 +2304,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Common Mode Noise",
-      "def":
-          "Noise or electrical interference that is common to both electrical lines in relation to ground.",
+      "def": "Noise or electrical interference that is common to both electrical lines in relation to ground.",
     },
     {
       "id": 1,
       "word": "Common Mode Noise",
-      "def":
-          "Noise component that is common to both the converter output and return lines with respect to the input common.",
+      "def": "Noise component that is common to both the converter output and return lines with respect to the input common.",
     },
     {
       "id": 1,
       "word": "Common Mode Type I",
-      "def":
-          "On a single phase Wye bus, the conduction mode in which phase, neutral, and ground currents are in phase. The return current path is through the ground plane and the case.",
+      "def": "On a single phase Wye bus, the conduction mode in which phase, neutral, and ground currents are in phase. The return current path is through the ground plane and the case.",
     },
     {
       "id": 1,
       "word": "Common Mode Type II",
-      "def":
-          "On a single phase Wye bus, the conduction mode in which phase and neutral currents are in phase, but the green wire currents are the return path, thus 180? out of phase.",
+      "def": "On a single phase Wye bus, the conduction mode in which phase and neutral currents are in phase, but the green wire currents are the return path, thus 180? out of phase.",
     },
     {
       "id": 1,
@@ -2555,26 +2335,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "common-mode impedance coupling",
-      "def":
-          "The coupling of energy from one circuit to another that results when two or more currents flow through a common impedance.",
+      "def": "The coupling of energy from one circuit to another that results when two or more currents flow through a common impedance.",
     },
     {
       "id": 1,
       "word": "compiler",
-      "def":
-          "A computer program that converts a program in a high-level language such as FORTRAN or Pascal into machine language.",
+      "def": "A computer program that converts a program in a high-level language such as FORTRAN or Pascal into machine language.",
     },
     {
       "id": 1,
       "word": "complement",
-      "def":
-          "The complement of a variable or function is the binary opposite of that variable or function. In binary, if the function is '1,' its complement will be '0.'",
+      "def": "The complement of a variable or function is the binary opposite of that variable or function. In binary, if the function is '1,' its complement will be '0.'",
     },
     {
       "id": 1,
       "word": "component",
-      "def":
-          "Any item used in conjunction with another item in its manufacture.",
+      "def": "Any item used in conjunction with another item in its manufacture.",
     },
     {
       "id": 1,
@@ -2584,8 +2360,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Compound Under Strands",
-      "def":
-          "CUS - A problem that occurs when loose stranding, or overheating during extrusion, allows compounds to get under individual strands of conductor.",
+      "def": "CUS - A problem that occurs when loose stranding, or overheating during extrusion, allows compounds to get under individual strands of conductor.",
     },
     {
       "id": 1,
@@ -2602,14 +2377,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "compression set",
-      "def":
-          "The amount of compression an elastomer retains. Expressed as a percentage of original dimensions.",
+      "def": "The amount of compression an elastomer retains. Expressed as a percentage of original dimensions.",
     },
     {
       "id": 1,
       "word": "computer",
-      "def":
-          "Any device capable of accepting information, applying prescribed processes to the information, and supplying the results of these processes.",
+      "def": "Any device capable of accepting information, applying prescribed processes to the information, and supplying the results of these processes.",
     },
     {
       "id": 1,
@@ -2620,20 +2393,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "computer, on-line",
-      "def":
-          "Major processing equipment of compatible computer speed which is directly connected to the main processing unit. Also, a computer that is actively monitoring or controlling a process.",
+      "def": "Major processing equipment of compatible computer speed which is directly connected to the main processing unit. Also, a computer that is actively monitoring or controlling a process.",
     },
     {
       "id": 1,
       "word": "Concentrator",
-      "def":
-          "Device that serves as a wiring hub in star-topology network. Sometimes refers to a device containing multiple modules of network equipment.",
+      "def": "Device that serves as a wiring hub in star-topology network. Sometimes refers to a device containing multiple modules of network equipment.",
     },
     {
       "id": 1,
       "word": "concentric",
-      "def":
-          "A central core surrounded by one or more layers of helically wound strands in a fixed round geometric arrangement. Different diameter circles with exactly the same center point.",
+      "def": "A central core surrounded by one or more layers of helically wound strands in a fixed round geometric arrangement. Different diameter circles with exactly the same center point.",
     },
     {
       "id": 1,
@@ -2650,38 +2420,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Conditioned Analog Line",
-      "def":
-          "Analog line to which devices have been added to improve the electrical signal.",
+      "def": "Analog line to which devices have been added to improve the electrical signal.",
     },
     {
       "id": 1,
       "word": "Conductance",
-      "def":
-          "The reciprocal of resistance. The unit of conductance is the siemens, abbreviated as 'S.' The unit of conductance was the 'mho,' which was once shown as an upside down capital omega.",
+      "def": "The reciprocal of resistance. The unit of conductance is the siemens, abbreviated as 'S.' The unit of conductance was the 'mho,' which was once shown as an upside down capital omega.",
     },
     {
       "id": 1,
       "word": "Conduction Cooled",
-      "def":
-          "Cooling a converter via a solid material. Cools a power converter by adding a heat sink or attaching the module to the system chassis.",
+      "def": "Cooling a converter via a solid material. Cools a power converter by adding a heat sink or attaching the module to the system chassis.",
     },
     {
       "id": 1,
       "word": "conductive composite",
-      "def":
-          "A material comprised of electrically conductive particles dispersed in a polymer binder.",
+      "def": "A material comprised of electrically conductive particles dispersed in a polymer binder.",
     },
     {
       "id": 1,
       "word": "conductive fillers",
-      "def":
-          "A conductive material added to a dielectric to make it conductive.",
+      "def": "A conductive material added to a dielectric to make it conductive.",
     },
     {
       "id": 1,
       "word": "conductive pattern",
-      "def":
-          "The pattern formed from an electrically conductive material on an insulating base (eg the circuit paths on a printed circuit board).",
+      "def": "The pattern formed from an electrically conductive material on an insulating base (eg the circuit paths on a printed circuit board).",
     },
     {
       "id": 1,
@@ -2691,8 +2455,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Conductive Polymer",
-      "def":
-          "A dispersion of conductive particles in an insulating organic polymer.",
+      "def": "A dispersion of conductive particles in an insulating organic polymer.",
     },
     {
       "id": 1,
@@ -2708,8 +2471,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Conductor Resistance",
-      "def":
-          "The resistance to flow of the electrical current along a conductor. Expressed in ohms/1000 feet. (Usually referenced to 20?C).",
+      "def": "The resistance to flow of the electrical current along a conductor. Expressed in ohms/1000 feet. (Usually referenced to 20?C).",
     },
     {
       "id": 1,
@@ -2724,8 +2486,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "confined (C) crimp",
-      "def":
-          "A crimp that remains in the confines of the outside diameter of the original barrel. (See also confined crescent crimp).",
+      "def": "A crimp that remains in the confines of the outside diameter of the original barrel. (See also confined crescent crimp).",
     },
     {
       "id": 1,
@@ -2748,20 +2509,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Connector Classes",
-      "def":
-          "Categories based on shape, function, and smallest-size contact in a series.",
+      "def": "Categories based on shape, function, and smallest-size contact in a series.",
     },
     {
       "id": 1,
       "word": "Connector Insert",
-      "def":
-          "In connectors with metal shells, the part that holds contacts in proper arrangement while electrically insulating them from each other and from the shell.",
+      "def": "In connectors with metal shells, the part that holds contacts in proper arrangement while electrically insulating them from each other and from the shell.",
     },
     {
       "id": 1,
       "word": "Consolidation point",
-      "def":
-          "An interconnect device that allows the horizontal cable to be split into two parts.Used for zone cabling.",
+      "def": "An interconnect device that allows the horizontal cable to be split into two parts.Used for zone cabling.",
     },
     {
       "id": 1,
@@ -2783,26 +2541,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Contact Arrangement",
-      "def":
-          "All Kilovac relays are one of the following: single pole single throw (SPST); single pole double throw (SPDT); double pole double throw (DPDT); four pole double throw (4PDT)",
+      "def": "All Kilovac relays are one of the following: single pole single throw (SPST); single pole double throw (SPDT); double pole double throw (DPDT); four pole double throw (4PDT)",
     },
     {
       "id": 1,
       "word": "contact bounce",
-      "def":
-          "The intermittent and undesired opening of closed contacts or closing of open contacts that occurs during relay operate and release times.",
+      "def": "The intermittent and undesired opening of closed contacts or closing of open contacts that occurs during relay operate and release times.",
     },
     {
       "id": 1,
       "word": "Contact Capacitance",
-      "def":
-          "Contact capacitance is measured either between open contacts or between contacts and ground. Measurements are made per MIL-STD-202, Method 305, at 1 kHz.",
+      "def": "Contact capacitance is measured either between open contacts or between contacts and ground. Measurements are made per MIL-STD-202, Method 305, at 1 kHz.",
     },
     {
       "id": 1,
       "word": "contact cavity",
-      "def":
-          "A defined hole in the connector insert or housing into which the contact must fit.",
+      "def": "A defined hole in the connector insert or housing into which the contact must fit.",
     },
     {
       "id": 1,
@@ -2813,8 +2567,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "contact durability",
-      "def":
-          "The number of insertion and withdrawal cycles that a connector must be capable of withstanding while remaining within the performance levels of the applicable specification.",
+      "def": "The number of insertion and withdrawal cycles that a connector must be capable of withstanding while remaining within the performance levels of the applicable specification.",
     },
     {
       "id": 1,
@@ -2837,14 +2590,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "contact inspection hole",
-      "def":
-          "A hole, perpendicular to the cylindrical rear portion of screw machine contacts, used to check the depth to which wire has been inserted into the wire barrel.",
+      "def": "A hole, perpendicular to the cylindrical rear portion of screw machine contacts, used to check the depth to which wire has been inserted into the wire barrel.",
     },
     {
       "id": 1,
       "word": "contact rating",
-      "def":
-          "The maximum specified voltage and current to be passed through a set of contacts.",
+      "def": "The maximum specified voltage and current to be passed through a set of contacts.",
     },
     {
       "id": 1,
@@ -2855,8 +2606,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "contact retention",
-      "def":
-          "Defines the minimum axial load in either direction which a contact must withstand while remaining firmly fixed in its normal position within the connector insert or housing.",
+      "def": "Defines the minimum axial load in either direction which a contact must withstand while remaining firmly fixed in its normal position within the connector insert or housing.",
     },
     {
       "id": 1,
@@ -2867,14 +2617,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "contact size",
-      "def":
-          "Defines the largest wire size which is normally used with the specific contact. By control document dimensioning, it also defines the size of the engagement end of the pin contact.",
+      "def": "Defines the largest wire size which is normally used with the specific contact. By control document dimensioning, it also defines the size of the engagement end of the pin contact.",
     },
     {
       "id": 1,
       "word": "contact spacing",
-      "def":
-          "The distance between the centers of contacts within a connector insert or housing.",
+      "def": "The distance between the centers of contacts within a connector insert or housing.",
     },
     {
       "id": 1,
@@ -2885,8 +2633,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "contact wipe",
-      "def":
-          "The distance over which the mating contact surfaces are touching during engagement and separation. (See also wiping action).",
+      "def": "The distance over which the mating contact surfaces are touching during engagement and separation. (See also wiping action).",
     },
     {
       "id": 1,
@@ -2908,8 +2655,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "continuity",
-      "def":
-          "A continuous path for the flow of current in an electrical circuit.",
+      "def": "A continuous path for the flow of current in an electrical circuit.",
     },
     {
       "id": 1,
@@ -2920,14 +2666,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Continuous Operating Temperature",
-      "def":
-          "Maximum temperature at which a component will maintain an acceptable lifetime performance, based on accelerated aging prediction.",
+      "def": "Maximum temperature at which a component will maintain an acceptable lifetime performance, based on accelerated aging prediction.",
     },
     {
       "id": 1,
       "word": "Continuous Service",
-      "def":
-          "Conditions (time, temperature, environment) that describe the lifetime requirements of a component.",
+      "def": "Conditions (time, temperature, environment) that describe the lifetime requirements of a component.",
     },
     {
       "id": 1,
@@ -2937,32 +2681,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Continuous Wave",
-      "def":
-          "The state of operation in which there is no interruption of the presence of a signal. The succeeding cycles of a continuous wave are identical.",
+      "def": "The state of operation in which there is no interruption of the presence of a signal. The succeeding cycles of a continuous wave are identical.",
     },
     {
       "id": 1,
       "word": "control unit",
-      "def":
-          "The portion of a computer which directs automatic operation, interprets computer instructions, and initiates the proper signals to the other computer circuits to execute instructions.",
+      "def": "The portion of a computer which directs automatic operation, interprets computer instructions, and initiates the proper signals to the other computer circuits to execute instructions.",
     },
     {
       "id": 1,
       "word": "Control Winding",
-      "def":
-          "The winding on a mag amp or saturable reactor used to control the amount of magnetic energy the core will absorb before saturating.",
+      "def": "The winding on a mag amp or saturable reactor used to control the amount of magnetic energy the core will absorb before saturating.",
     },
     {
       "id": 1,
       "word": "controlled part",
-      "def":
-          "An item which requires the application of specialized manufacturing and/or procurement techniques.",
+      "def": "An item which requires the application of specialized manufacturing and/or procurement techniques.",
     },
     {
       "id": 1,
       "word": "controller",
-      "def":
-          "An instrument that holds a process or condition at a desired level or status as determined by comparison of the actual value with the desired value.",
+      "def": "An instrument that holds a process or condition at a desired level or status as determined by comparison of the actual value with the desired value.",
     },
     {
       "id": 1,
@@ -2979,8 +2718,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "copolymer",
-      "def":
-          "A compound resulting from the polymerization of two different monomers.",
+      "def": "A compound resulting from the polymerization of two different monomers.",
     },
     {
       "id": 1,
@@ -3003,8 +2741,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "cordwood",
-      "def":
-          "The technique of producing modules by bundling parts as closely as possible and interconnecting them into circuits by welding or soldering leads together.",
+      "def": "The technique of producing modules by bundling parts as closely as possible and interconnecting them into circuits by welding or soldering leads together.",
     },
     {
       "id": 1,
@@ -3015,8 +2752,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Core Constant",
-      "def":
-          "The summation of the magnetic path length of each section of the magnetic circuit divided by the square of the corresponding magnetic area of the same section.",
+      "def": "The summation of the magnetic path length of each section of the magnetic circuit divided by the square of the corresponding magnetic area of the same section.",
     },
     {
       "id": 1,
@@ -3033,8 +2769,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Corner Frequency",
-      "def":
-          "The frequency at which linear extrapolations of two contiguous sections of a device's or component's transfer function drop by 3 decibels.",
+      "def": "The frequency at which linear extrapolations of two contiguous sections of a device's or component's transfer function drop by 3 decibels.",
     },
     {
       "id": 1,
@@ -3051,38 +2786,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Coupler",
-      "def":
-          "A class of multiport components that directs the majority of an incident signal to the output port and the remainder of the signal to other ports.",
+      "def": "A class of multiport components that directs the majority of an incident signal to the output port and the remainder of the signal to other ports.",
     },
     {
       "id": 1,
       "word": "Coupling Factor",
-      "def":
-          "The ratio of the input power of a coupler to the output power from the coupled port. Coupling factor is typically expressed in decibels (dB).",
+      "def": "The ratio of the input power of a coupler to the output power from the coupled port. Coupling factor is typically expressed in decibels (dB).",
     },
     {
       "id": 1,
       "word": "Coupling Ring",
-      "def":
-          "The portion of a plug that aids in the mating and demating of a plug and receptacle and holds the plug to the receptacle.",
+      "def": "The portion of a plug that aids in the mating and demating of a plug and receptacle and holds the plug to the receptacle.",
     },
     {
       "id": 1,
       "word": "coupon",
-      "def":
-          "A specimen of a printed board, or of printed-board material, for testing purposes.",
+      "def": "A specimen of a printed board, or of printed-board material, for testing purposes.",
     },
     {
       "id": 1,
       "word": "Cover, Electrical Connector",
-      "def":
-          "An item specifically designed to cover the mating end of a connector for mechanical and/or environmental protection. Also known as a dust cover.",
+      "def": "An item specifically designed to cover the mating end of a connector for mechanical and/or environmental protection. Also known as a dust cover.",
     },
     {
       "id": 1,
       "word": "Coverage",
-      "def":
-          "A calculated percentage that defines the completeness with which a braid or shield covers the surface of the underlying insulated conductor or conductors.",
+      "def": "A calculated percentage that defines the completeness with which a braid or shield covers the surface of the underlying insulated conductor or conductors.",
     },
     {
       "id": 1,
@@ -3099,26 +2828,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "creep",
-      "def":
-          "Any slow change in a dimension or characteristic when a constant stress is applied to a material over a given period of time. Also referred to as cold flow.",
+      "def": "Any slow change in a dimension or characteristic when a constant stress is applied to a material over a given period of time. Also referred to as cold flow.",
     },
     {
       "id": 1,
       "word": "creepage",
-      "def":
-          "The conduction of electricity across the surface of a dielectric.",
+      "def": "The conduction of electricity across the surface of a dielectric.",
     },
     {
       "id": 1,
       "word": "creepage path",
-      "def":
-          "The path across the surface of a dielectric between two conductors. Lengthening the creepage path reduces the possibility of arc damage or tracking.",
+      "def": "The path across the surface of a dielectric between two conductors. Lengthening the creepage path reduces the possibility of arc damage or tracking.",
     },
     {
       "id": 1,
       "word": "crimp",
-      "def":
-          "The final configuration of a terminal barrel after the necessary compression forces have been applied to cause a functional union between the terminal barrel and wire.",
+      "def": "The final configuration of a terminal barrel after the necessary compression forces have been applied to cause a functional union between the terminal barrel and wire.",
     },
     {
       "id": 1,
@@ -3129,14 +2854,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "crimp height",
-      "def":
-          "A top to bottom measurement of the crimped barrel, using a Crimp Height Comparator in the prescribed manner. Refer to Instruction Sheet IS 7424.",
+      "def": "A top to bottom measurement of the crimped barrel, using a Crimp Height Comparator in the prescribed manner. Refer to Instruction Sheet IS 7424.",
     },
     {
       "id": 1,
       "word": "crimper",
-      "def":
-          "The term most commonly used within AMP to identify that part of the crimping die - usually the moving part - which indents or compresses the terminal barrel(s). Also called indenter.",
+      "def": "The term most commonly used within AMP to identify that part of the crimping die - usually the moving part - which indents or compresses the terminal barrel(s). Also called indenter.",
     },
     {
       "id": 1,
@@ -3158,32 +2881,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "crimping head",
-      "def":
-          "Tooling containing jaws and linkage for use in pneumatic or hydraulic powered units to crimp loosepiece contacts/terminals that may be too large for hand tool applications.",
+      "def": "Tooling containing jaws and linkage for use in pneumatic or hydraulic powered units to crimp loosepiece contacts/terminals that may be too large for hand tool applications.",
     },
     {
       "id": 1,
       "word": "crimping tool",
-      "def":
-          "A term most commonly used to identify a hand held mechanical device (hand crimping tool) that is used to crimp a contact, terminal, or splice.",
+      "def": "A term most commonly used to identify a hand held mechanical device (hand crimping tool) that is used to crimp a contact, terminal, or splice.",
     },
     {
       "id": 1,
       "word": "Critical Rate of Rise of Off-State Voltage",
-      "def":
-          "Maximum voltage rate of rise that will not cause a SiBar device to turn on.",
+      "def": "Maximum voltage rate of rise that will not cause a SiBar device to turn on.",
     },
     {
       "id": 1,
       "word": "Critical Rate of Rise of On-State Current",
-      "def":
-          "Maximum current rate of rise a SiBar device can withstand without damage.",
+      "def": "Maximum current rate of rise a SiBar device can withstand without damage.",
     },
     {
       "id": 1,
       "word": "Cross connect (XC)",
-      "def":
-          "Connecting hardware used to patch between two groups of cables (horizontal to backbone, for example).AMP 110Connect XC.",
+      "def": "Connecting hardware used to patch between two groups of cables (horizontal to backbone, for example).AMP 110Connect XC.",
     },
     {
       "id": 1,
@@ -3194,14 +2912,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Cross Regulation",
-      "def":
-          "For a multiple output converter, the change in voltage on one output (expressed as a percent) caused by a load change on another output.",
+      "def": "For a multiple output converter, the change in voltage on one output (expressed as a percent) caused by a load change on another output.",
     },
     {
       "id": 1,
       "word": "cross-linked",
-      "def":
-          "Inter-molecular bonds between long chain thermoplastic polymers by chemical or electron bombardment means. The properties of the resulting thermosetting material are usually improved.",
+      "def": "Inter-molecular bonds between long chain thermoplastic polymers by chemical or electron bombardment means. The properties of the resulting thermosetting material are usually improved.",
     },
     {
       "id": 1,
@@ -3212,14 +2928,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Crosslinking by Irradiation",
-      "def":
-          "A method of crosslinking polymers that makes a nonflowing material. This generally improves the properties of the polymer.",
+      "def": "A method of crosslinking polymers that makes a nonflowing material. This generally improves the properties of the polymer.",
     },
     {
       "id": 1,
       "word": "crossover",
-      "def":
-          "The point at which two conductors - insulated from each other - cross.",
+      "def": "The point at which two conductors - insulated from each other - cross.",
     },
     {
       "id": 1,
@@ -3241,8 +2955,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CRT display",
-      "def":
-          "A computer terminal presenting visual data readout on a cathode-ray tube.",
+      "def": "A computer terminal presenting visual data readout on a cathode-ray tube.",
     },
     {
       "id": 1,
@@ -3276,20 +2989,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CSU/DSU",
-      "def":
-          "Channel Service Unit/Data Service Unit- A digital interface unit that connects end user equipment to the local digital telephone loop.",
+      "def": "Channel Service Unit/Data Service Unit- A digital interface unit that connects end user equipment to the local digital telephone loop.",
     },
     {
       "id": 1,
       "word": "Cuk Converter",
-      "def":
-          "Variation of the 'buck-boost' converter that produces very low output ripple. Used primarily in applications that do not require input/output isolation. Also see Flyback Converter.",
+      "def": "Variation of the 'buck-boost' converter that produces very low output ripple. Used primarily in applications that do not require input/output isolation. Also see Flyback Converter.",
     },
     {
       "id": 1,
       "word": "cure",
-      "def":
-          "To change the physical properties of a material by chemical reaction, by the action of heat and catalysts, alone or in combination, with or without pressure.",
+      "def": "To change the physical properties of a material by chemical reaction, by the action of heat and catalysts, alone or in combination, with or without pressure.",
     },
     {
       "id": 1,
@@ -3300,8 +3010,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Curing",
-      "def":
-          "Application of heat to thermoset material to harden or set the material; once set, cannot be resoftened by heating.",
+      "def": "Application of heat to thermoset material to harden or set the material; once set, cannot be resoftened by heating.",
     },
     {
       "id": 1,
@@ -3323,8 +3032,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Current Density",
-      "def":
-          "The amperes per unit of cross section in the conductor. This is commonly measured in circular mils per amp (cm/a).",
+      "def": "The amperes per unit of cross section in the conductor. This is commonly measured in circular mils per amp (cm/a).",
     },
     {
       "id": 1,
@@ -3334,20 +3042,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "current gain",
-      "def":
-          "In a transistor, the ratio of output to input current under specified conditions.",
+      "def": "In a transistor, the ratio of output to input current under specified conditions.",
     },
     {
       "id": 1,
       "word": "Current Limit",
-      "def":
-          "Maximum steady-state current level at which the power switch output is regulated in response to an overcurrent fault.",
+      "def": "Maximum steady-state current level at which the power switch output is regulated in response to an overcurrent fault.",
     },
     {
       "id": 1,
       "word": "Current Limit Knee",
-      "def":
-          "On a plot of output voltage vs current, the point at which current begins to limit (or foldback).",
+      "def": "On a plot of output voltage vs current, the point at which current begins to limit (or foldback).",
     },
     {
       "id": 1,
@@ -3358,14 +3063,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Current Mode Control",
-      "def":
-          "Control method used with switching converter topologies. A dual loop control circuit adjusts the PWM operation in response to a measured output current.",
+      "def": "Control method used with switching converter topologies. A dual loop control circuit adjusts the PWM operation in response to a measured output current.",
     },
     {
       "id": 1,
       "word": "Current Rating",
-      "def":
-          "The maximum continuous electrical flow of current for which a device is designed to conduct for a specified time at a specified operation temperature. Usually expressed in amperes.",
+      "def": "The maximum continuous electrical flow of current for which a device is designed to conduct for a specified time at a specified operation temperature. Usually expressed in amperes.",
     },
     {
       "id": 1,
@@ -3400,8 +3103,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Current,Trip",
-      "def":
-          "The smallest steady state current that, if passed through a PolySwitch device, will cause the device to trip, under specified conditions.",
+      "def": "The smallest steady state current that, if passed through a PolySwitch device, will cause the device to trip, under specified conditions.",
     },
     {
       "id": 1,
@@ -3418,44 +3120,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "CUS",
-      "def":
-          "Compound Under Strands - A problem that occurs when loose stranding, or overheating during extrusion, allows compounds to get under individual strands of conductor.",
+      "def": "Compound Under Strands - A problem that occurs when loose stranding, or overheating during extrusion, allows compounds to get under individual strands of conductor.",
     },
     {
       "id": 1,
       "word": "cutoff frequency",
-      "def":
-          "fc - The frequency at which the filter provides 3 dB of loss (1/2 power).",
+      "def": "fc - The frequency at which the filter provides 3 dB of loss (1/2 power).",
     },
     {
       "id": 1,
       "word": "cutoff tab",
-      "def":
-          "On strip terminals, the projection which results when the point-of-shear is not flush with the terminal body.",
+      "def": "On strip terminals, the projection which results when the point-of-shear is not flush with the terminal body.",
     },
     {
       "id": 1,
       "word": "Cutoff wavelength",
-      "def":
-          "For a single-mode fiber, the wavelength above which the fiber exhibits single-mode operation.",
+      "def": "For a single-mode fiber, the wavelength above which the fiber exhibits single-mode operation.",
     },
     {
       "id": 1,
       "word": "Cutout",
-      "def":
-          "The hole, usually round or rectangular, cut into a metal panel in order to mount a connector. The cutout may also include holes for mounting screws or bolts.",
+      "def": "The hole, usually round or rectangular, cut into a metal panel in order to mount a connector. The cutout may also include holes for mounting screws or bolts.",
     },
     {
       "id": 1,
       "word": "Cut-through Resistance",
-      "def":
-          "Resistance of solid material to penetration by an object (typically a closely controlled knife edge) under conditions of pressure, temperature, and other elements.",
+      "def": "Resistance of solid material to penetration by an object (typically a closely controlled knife edge) under conditions of pressure, temperature, and other elements.",
     },
     {
       "id": 1,
       "word": "CW",
-      "def":
-          "Continuous Waves - The state of operation in which there is no interruption of the presence of a signal. The succeeding cycles of a continuous wave are identical.",
+      "def": "Continuous Waves - The state of operation in which there is no interruption of the presence of a signal. The succeeding cycles of a continuous wave are identical.",
     },
     {
       "id": 1,
@@ -3466,8 +3161,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "D Channel",
-      "def":
-          "Full duplex 16 kbps (basic rate) or 64 kbps (primary rate) ISDN channel.",
+      "def": "Full duplex 16 kbps (basic rate) or 64 kbps (primary rate) ISDN channel.",
     },
     {
       "id": 1,
@@ -3478,8 +3172,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dark current",
-      "def":
-          "The thermally induced current that exists in a photodiode in the absence of incident optical power.",
+      "def": "The thermally induced current that exists in a photodiode in the absence of incident optical power.",
     },
     {
       "id": 1,
@@ -3490,14 +3183,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Data rate",
-      "def":
-          "The number of bits of information in a transmission system, expressed in bits per second (bps), and which may or may not be equal to the signal or baud rate.",
+      "def": "The number of bits of information in a transmission system, expressed in bits per second (bps), and which may or may not be equal to the signal or baud rate.",
     },
     {
       "id": 1,
       "word": "Data rate",
-      "def":
-          "The speed, measured in bits per second, that a particular network (or other application) transmits data.",
+      "def": "The speed, measured in bits per second, that a particular network (or other application) transmits data.",
     },
     {
       "id": 1,
@@ -3508,14 +3199,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "dB",
-      "def":
-          "Abbreviation for decibel.The logarithmic ratio of two powers, voltages or currents.",
+      "def": "Abbreviation for decibel.The logarithmic ratio of two powers, voltages or currents.",
     },
     {
       "id": 1,
       "word": "dBm",
-      "def":
-          "An abbreviation for decibels referred to one milliwatt. A term used to denote power level; i.e. 0 dBm is equal to 1 milliwatt.",
+      "def": "An abbreviation for decibels referred to one milliwatt. A term used to denote power level; i.e. 0 dBm is equal to 1 milliwatt.",
     },
     {
       "id": 1,
@@ -3530,8 +3219,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "DC",
-      "def":
-          "Direct Current - A flow of charge carriers within a medium in a single direction.",
+      "def": "Direct Current - A flow of charge carriers within a medium in a single direction.",
     },
     {
       "id": 1,
@@ -3542,14 +3230,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "DC Filter",
-      "def":
-          "A filter circuit that removes the AC ripple from a mostly DC current. Usually this is done by using an inductor and capacitor together.",
+      "def": "A filter circuit that removes the AC ripple from a mostly DC current. Usually this is done by using an inductor and capacitor together.",
     },
     {
       "id": 1,
       "word": "DC Stress",
-      "def":
-          "Annealing a magnetic material in the presence of a DC magnetic field to enhance magnetic properties.",
+      "def": "Annealing a magnetic material in the presence of a DC magnetic field to enhance magnetic properties.",
     },
     {
       "id": 1,
@@ -3577,26 +3263,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "DCS 1900",
-      "def":
-          "A variant of GSM operating at or near 1.9 GHz used in the United States.",
+      "def": "A variant of GSM operating at or near 1.9 GHz used in the United States.",
     },
     {
       "id": 1,
       "word": "deci",
-      "def":
-          "A prefix which indicates a factor 10-1 (one tenth). Abbreviated as 'd.'",
+      "def": "A prefix which indicates a factor 10-1 (one tenth). Abbreviated as 'd.'",
     },
     {
       "id": 1,
       "word": "Decibel",
-      "def":
-          "One tenth of a Bel (B). The abbreviation for decibel is 'dB.' If N = P1/P2 is the ratio of two powers, then this ratio, N, expressed in decibels, is N = 10 log10(P1/P2).",
+      "def": "One tenth of a Bel (B). The abbreviation for decibel is 'dB.' If N = P1/P2 is the ratio of two powers, then this ratio, N, expressed in decibels, is N = 10 log10(P1/P2).",
     },
     {
       "id": 1,
       "word": "Decoupling",
-      "def":
-          "Refers to a magnetic circuit where comparatively more of the flux generated by the MMF fringes around the magnetic material instead of entering it.",
+      "def": "Refers to a magnetic circuit where comparatively more of the flux generated by the MMF fringes around the magnetic material instead of entering it.",
     },
     {
       "id": 1,
@@ -3606,8 +3288,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dedicated Line",
-      "def":
-          "A transmission circuit installed between two sites of a private network and 'open,' or available, at all times.",
+      "def": "A transmission circuit installed between two sites of a private network and 'open,' or available, at all times.",
     },
     {
       "id": 1,
@@ -3623,20 +3304,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Delay skew",
-      "def":
-          "The difference in propagation delay between the slowest and fastest pairs in a cable or system.",
+      "def": "The difference in propagation delay between the slowest and fastest pairs in a cable or system.",
     },
     {
       "id": 1,
       "word": "Delta",
-      "def":
-          "Arithmetic difference between two numbers, or the change in value of a parameter.",
+      "def": "Arithmetic difference between two numbers, or the change in value of a parameter.",
     },
     {
       "id": 1,
       "word": "Demagnetization Curve",
-      "def":
-          "That portion of the hysteresis loop that lies between the residual induction point (BR) and the coercive force point (HC).",
+      "def": "That portion of the hysteresis loop that lies between the residual induction point (BR) and the coercive force point (HC).",
     },
     {
       "id": 1,
@@ -3647,8 +3325,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Demodulation",
-      "def":
-          "The process of recovering intelligence from a signal, some parameter of which was modified to carry the intelligence (see modulation).",
+      "def": "The process of recovering intelligence from a signal, some parameter of which was modified to carry the intelligence (see modulation).",
     },
     {
       "id": 1,
@@ -3670,8 +3347,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Desensitization",
-      "def":
-          "The reduction in receiver sensitivity that is the result of the presence of large magnitude, off-channel signals.",
+      "def": "The reduction in receiver sensitivity that is the result of the presence of large magnitude, off-channel signals.",
     },
     {
       "id": 1,
@@ -3687,8 +3363,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dial up",
-      "def":
-          "A type of communication that is established by a switched-circuit connection using the telephone network.",
+      "def": "A type of communication that is established by a switched-circuit connection using the telephone network.",
     },
     {
       "id": 1,
@@ -3699,8 +3374,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dichroic filter",
-      "def":
-          "An optical filter that transmits light selectively according to wavelength.",
+      "def": "An optical filter that transmits light selectively according to wavelength.",
     },
     {
       "id": 1,
@@ -3711,8 +3385,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dielectric Breakdown",
-      "def":
-          "The voltage required to cause an electrical failure or breakthrough of the insulation. Determined by a destructive test. See also Breakdown Voltage.",
+      "def": "The voltage required to cause an electrical failure or breakthrough of the insulation. Determined by a destructive test. See also Breakdown Voltage.",
     },
     {
       "id": 1,
@@ -3723,8 +3396,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dielectric Loss",
-      "def":
-          "The time rate at which electric energy is converted into heat energy in a dielectric that is subjected to a varying electric field.",
+      "def": "The time rate at which electric energy is converted into heat energy in a dielectric that is subjected to a varying electric field.",
     },
     {
       "id": 1,
@@ -3747,26 +3419,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Differential Mode",
-      "def":
-          "A current conduction mode in which currents, relative to two conductors, are flowing 180? out of phase, with equal magnitude within the conductors.",
+      "def": "A current conduction mode in which currents, relative to two conductors, are flowing 180? out of phase, with equal magnitude within the conductors.",
     },
     {
       "id": 1,
       "word": "Differential Mode Current",
-      "def":
-          "The intended signal currents that are equal and oppositely directed on pairs of signal and return (ground) conductors.",
+      "def": "The intended signal currents that are equal and oppositely directed on pairs of signal and return (ground) conductors.",
     },
     {
       "id": 1,
       "word": "Differential Mode Noise",
-      "def":
-          "Also known as normal-mode noise. It is the electrical interference that is not common to both lines, but is present between both lines.",
+      "def": "Also known as normal-mode noise. It is the electrical interference that is not common to both lines, but is present between both lines.",
     },
     {
       "id": 1,
       "word": "Differential Mode Voltage",
-      "def":
-          "The voltage that drives equal and oppositely directed currents to achieve an intended circuit function. The source of differential mode current.",
+      "def": "The voltage that drives equal and oppositely directed currents to achieve an intended circuit function. The source of differential mode current.",
     },
     {
       "id": 1,
@@ -3801,20 +3469,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Diode",
-      "def":
-          "A two-terminal device which has nonlinear and asymmetrical (about zero) voltage versus current characteristics.",
+      "def": "A two-terminal device which has nonlinear and asymmetrical (about zero) voltage versus current characteristics.",
     },
     {
       "id": 1,
       "word": "Diplexer",
-      "def":
-          "A circuit or system that allows the ability to transmit and receive two distinct signals simultaneously.",
+      "def": "A circuit or system that allows the ability to transmit and receive two distinct signals simultaneously.",
     },
     {
       "id": 1,
       "word": "Diplexing",
-      "def":
-          "The simultaneous transmission or reception of two signals though a common component, such as an antenna.",
+      "def": "The simultaneous transmission or reception of two signals though a common component, such as an antenna.",
     },
     {
       "id": 1,
@@ -3830,8 +3495,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Direction of Lay",
-      "def":
-          "The lateral direction in which the strands or elements of a cable run over the top of the cable as they recede from the observer. Expressed as right-hand or left-hand lay.",
+      "def": "The lateral direction in which the strands or elements of a cable run over the top of the cable as they recede from the observer. Expressed as right-hand or left-hand lay.",
     },
     {
       "id": 1,
@@ -3842,8 +3506,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Disable",
-      "def":
-          "The act of de-asserting the enable signal to turn off the device. In the case of an EN low device, the EN signal must fall below the typical threshold voltage of 1.5V.",
+      "def": "The act of de-asserting the enable signal to turn off the device. In the case of an EN low device, the EN signal must fall below the typical threshold voltage of 1.5V.",
     },
     {
       "id": 1,
@@ -3854,8 +3517,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Discontinuity",
-      "def":
-          "A broken connection, or the loss of a specific connection characteristic. Also, the temporary interruption or variation in current or voltage.",
+      "def": "A broken connection, or the loss of a specific connection characteristic. Also, the temporary interruption or variation in current or voltage.",
     },
     {
       "id": 1,
@@ -3866,8 +3528,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Discrete Air Gap",
-      "def":
-          "Mechanical air gap created by a small number of breaks in the magnetic path. In a standard C-core this number is generally two, a standard E-core is generally three, etc.",
+      "def": "Mechanical air gap created by a small number of breaks in the magnetic path. In a standard C-core this number is generally two, a standard E-core is generally three, etc.",
     },
     {
       "id": 1,
@@ -3883,20 +3544,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dispersion",
-      "def":
-          "A general term for those phenomena that cause a broadening or spreading of light as it propagates through an optical fiber. The three types are modal, material, and waveguide.",
+      "def": "A general term for those phenomena that cause a broadening or spreading of light as it propagates through an optical fiber. The three types are modal, material, and waveguide.",
     },
     {
       "id": 1,
       "word": "Dissipation",
-      "def":
-          "The conversion of electrical energy to heat energy in a component.",
+      "def": "The conversion of electrical energy to heat energy in a component.",
     },
     {
       "id": 1,
       "word": "Dissipation Factor",
-      "def":
-          "The ratio between the permittivity and the conductivity of a dielectric.",
+      "def": "The ratio between the permittivity and the conductivity of a dielectric.",
     },
     {
       "id": 1,
@@ -3924,8 +3582,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Distributed Inductance",
-      "def":
-          "Inductance that is not concentrated within a lumped inductor, but spread over a circuit or group of components.",
+      "def": "Inductance that is not concentrated within a lumped inductor, but spread over a circuit or group of components.",
     },
     {
       "id": 1,
@@ -3963,8 +3620,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "DoD",
-      "def":
-          "The United States Department of Defense. (which manages and controls the GPS)",
+      "def": "The United States Department of Defense. (which manages and controls the GPS)",
     },
     {
       "id": 1,
@@ -3986,8 +3642,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Doping",
-      "def":
-          "The intentional addition of a foreign substance to a pure substance in order to alter the behavior or properties of the pure substance.",
+      "def": "The intentional addition of a foreign substance to a pure substance in order to alter the behavior or properties of the pure substance.",
     },
     {
       "id": 1,
@@ -4016,8 +3671,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Downconverter (Mixer)",
-      "def":
-          "A mixer whose desired output signal called the IF signal is the difference of the incident RF and LO signals.",
+      "def": "A mixer whose desired output signal called the IF signal is the difference of the incident RF and LO signals.",
     },
     {
       "id": 1,
@@ -4038,8 +3692,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Drain Wire",
-      "def":
-          "In a cable, an uninsulated conductor laid over the component, or components, in a foil-shield cable. Used as a ground connection.",
+      "def": "In a cable, an uninsulated conductor laid over the component, or components, in a foil-shield cable. Used as a ground connection.",
     },
     {
       "id": 1,
@@ -4050,14 +3703,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Driver",
-      "def":
-          "A circuit that supplies an input to another circuit, and (usually) provides a level boost, impedance matching, or isolation.",
+      "def": "A circuit that supplies an input to another circuit, and (usually) provides a level boost, impedance matching, or isolation.",
     },
     {
       "id": 1,
       "word": "Drop",
-      "def":
-          "Refers to the horizontal cabling for one work area, as in 'The job has 100 drops.'",
+      "def": "Refers to the horizontal cabling for one work area, as in 'The job has 100 drops.'",
     },
     {
       "id": 1,
@@ -4068,8 +3719,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Drop-out Voltage",
-      "def":
-          "The voltage at which all contacts return to their ?normal?, unoperated positions. (Applicable only to non-latching relays.)",
+      "def": "The voltage at which all contacts return to their ?normal?, unoperated positions. (Applicable only to non-latching relays.)",
     },
     {
       "id": 1,
@@ -4085,14 +3735,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "DSP",
-      "def":
-          "Digital Signal Processor- The processing of signal transmission using digital techniques.",
+      "def": "Digital Signal Processor- The processing of signal transmission using digital techniques.",
     },
     {
       "id": 1,
       "word": "DSSS",
-      "def":
-          "Direct Sequence Spread Spectrum. A transmission technique that uses a pseudo-random, noise-like modulation code to widen the spectrum of the transmitted signal.",
+      "def": "Direct Sequence Spread Spectrum. A transmission technique that uses a pseudo-random, noise-like modulation code to widen the spectrum of the transmitted signal.",
     },
     {
       "id": 1,
@@ -4102,8 +3750,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Duplex",
-      "def":
-          "The ability in a communications systems to simultaneously transmit and receive signals through a common component such as an antenna.",
+      "def": "The ability in a communications systems to simultaneously transmit and receive signals through a common component such as an antenna.",
     },
     {
       "id": 1,
@@ -4113,8 +3760,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Duplex transmission",
-      "def":
-          "Transmission in both directions, either one direction at a time (half duplex) or both directions simultaneously (full duplex).",
+      "def": "Transmission in both directions, either one direction at a time (half duplex) or both directions simultaneously (full duplex).",
     },
     {
       "id": 1,
@@ -4131,14 +3777,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Dust Cover",
-      "def":
-          "An item specifically designed to cover the mating end of a connector for mechanical and/or environmental protection.",
+      "def": "An item specifically designed to cover the mating end of a connector for mechanical and/or environmental protection.",
     },
     {
       "id": 1,
       "word": "Duty Cycle",
-      "def":
-          "Maximum recommended usage (cycles) per unit of time. Alternatively, the percent of the 'on' time of a square wave in a switching power supply.",
+      "def": "Maximum recommended usage (cycles) per unit of time. Alternatively, the percent of the 'on' time of a square wave in a switching power supply.",
     },
     {
       "id": 1,
@@ -4148,20 +3792,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "DWV",
-      "def":
-          "Dielectric Withstanding Voltage - A test voltage for a wire, cable, or insulation.",
+      "def": "Dielectric Withstanding Voltage - A test voltage for a wire, cable, or insulation.",
     },
     {
       "id": 1,
       "word": "Dynamic Load",
-      "def":
-          "Output load that changes rapidly. Normally specified as both a load change value and a rate of change.",
+      "def": "Output load that changes rapidly. Normally specified as both a load change value and a rate of change.",
     },
     {
       "id": 1,
       "word": "Dynamic Range",
-      "def":
-          "The power range over which a component or system functions properly.",
+      "def": "The power range over which a component or system functions properly.",
     },
     {
       "id": 1,
@@ -4177,32 +3818,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "E1",
-      "def":
-          "The term for a digital facility used for transmitting data over a telephone network at 2.048 Mbps. The European equivalent of T1.",
+      "def": "The term for a digital facility used for transmitting data over a telephone network at 2.048 Mbps. The European equivalent of T1.",
     },
     {
       "id": 1,
       "word": "E3",
-      "def":
-          "The highest transmission rate generally available in the European digital infrastructure (34 Mbps).",
+      "def": "The highest transmission rate generally available in the European digital infrastructure (34 Mbps).",
     },
     {
       "id": 1,
       "word": "EAROM",
-      "def":
-          "Electrically alterable readonly memory. A reprogrammable ROM in which each cell can be individually erased by a special electrical process.",
+      "def": "Electrically alterable readonly memory. A reprogrammable ROM in which each cell can be individually erased by a special electrical process.",
     },
     {
       "id": 1,
       "word": "EBCDIC",
-      "def":
-          "Extended Binary-Coded Decimal Interchange Code. An 8-bit code used to represent 256 unique letters, numbers, and special characters.",
+      "def": "Extended Binary-Coded Decimal Interchange Code. An 8-bit code used to represent 256 unique letters, numbers, and special characters.",
     },
     {
       "id": 1,
       "word": "ECCM",
-      "def":
-          "The defensive use of electronic warfare to counteract an opponent's electronic countermeasures.",
+      "def": "The defensive use of electronic warfare to counteract an opponent's electronic countermeasures.",
     },
     {
       "id": 1,
@@ -4212,8 +3848,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Echo Cancellation",
-      "def":
-          "Process by which a transmitter/receiver cancels out the transmitted signal as to 'hear' the received signal better.",
+      "def": "Process by which a transmitter/receiver cancels out the transmitted signal as to 'hear' the received signal better.",
     },
     {
       "id": 1,
@@ -4250,8 +3885,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "edge connector",
-      "def":
-          "A connector into which the edge of a printed circuit board is inserted.",
+      "def": "A connector into which the edge of a printed circuit board is inserted.",
     },
     {
       "id": 1,
@@ -4262,8 +3896,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "edge-mount connector",
-      "def":
-          "A connector that is mounted onto the edge of a printed circuit board.",
+      "def": "A connector that is mounted onto the edge of a printed circuit board.",
     },
     {
       "id": 1,
@@ -4280,8 +3913,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Effective Permeability",
-      "def":
-          "For a magnetic circuit constructed with an air gap, or gaps, the permeability of a hypothetical homogeneous material that would provide the same reluctance, or net permeability.",
+      "def": "For a magnetic circuit constructed with an air gap, or gaps, the permeability of a hypothetical homogeneous material that would provide the same reluctance, or net permeability.",
     },
     {
       "id": 1,
@@ -4292,8 +3924,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Efficiency",
-      "def":
-          "Ratio of total output power to input power expressed as a percentage. Efficiency is normally measured at full rated output power and nominal input line conditions.",
+      "def": "Ratio of total output power to input power expressed as a percentage. Efficiency is normally measured at full rated output power and nominal input line conditions.",
     },
     {
       "id": 1,
@@ -4309,20 +3940,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "EID",
-      "def":
-          "Expanded Inside Diameter - The specified minimum (as supplied) internal diameter of tubing.",
+      "def": "Expanded Inside Diameter - The specified minimum (as supplied) internal diameter of tubing.",
     },
     {
       "id": 1,
       "word": "Elastic Memory",
-      "def":
-          "The ability of a crosslinked polymer to be deformed to some predetermined shape, hold that shape for a period, and then return to its original shape upon the application of heat.",
+      "def": "The ability of a crosslinked polymer to be deformed to some predetermined shape, hold that shape for a period, and then return to its original shape upon the application of heat.",
     },
     {
       "id": 1,
       "word": "elastomer",
-      "def":
-          "A material which at room temperature stretches under low stress to at least twice its length and snaps back to original length upon release of stress.",
+      "def": "A material which at room temperature stretches under low stress to at least twice its length and snaps back to original length upon release of stress.",
     },
     {
       "id": 1,
@@ -4337,8 +3965,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Electrical Length",
-      "def":
-          "Physical length expressed in terms of the wavelength of a signal for the medium in which the component or structure is situated. The units are degrees, radians or grads.",
+      "def": "Physical length expressed in terms of the wavelength of a signal for the medium in which the component or structure is situated. The units are degrees, radians or grads.",
     },
     {
       "id": 1,
@@ -4359,20 +3986,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Electromagnetic Interference",
-      "def":
-          "EMI - An unwanted electrical energy in any form. EMI is often used interchangeably with 'noise' and 'interference'.",
+      "def": "EMI - An unwanted electrical energy in any form. EMI is often used interchangeably with 'noise' and 'interference'.",
     },
     {
       "id": 1,
       "word": "Electromagnetic Radiation",
-      "def":
-          "The emanation of an electromagnetic field from a source through space.",
+      "def": "The emanation of an electromagnetic field from a source through space.",
     },
     {
       "id": 1,
       "word": "Electromotive Force",
-      "def":
-          "The force that causes charge carriers to move from a location with high potential to a location with lower potential.",
+      "def": "The force that causes charge carriers to move from a location with high potential to a location with lower potential.",
     },
     {
       "id": 1,
@@ -4383,8 +4007,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Electronic Counter-countermeasures",
-      "def":
-          "The defensive use of electronic warfare to counteract an opponent's electronic countermeasures.",
+      "def": "The defensive use of electronic warfare to counteract an opponent's electronic countermeasures.",
     },
     {
       "id": 1,
@@ -4394,8 +4017,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Electronic Intelligence",
-      "def":
-          "The surreptitious gathering of information from an opponent or enemy through the use of electronic systems.",
+      "def": "The surreptitious gathering of information from an opponent or enemy through the use of electronic systems.",
     },
     {
       "id": 1,
@@ -4406,32 +4028,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Electronic Warfare",
-      "def":
-          "The use of electronic signals and systems to disrupt the function of an opponent's surveillance, defense or communications systems.",
+      "def": "The use of electronic signals and systems to disrupt the function of an opponent's surveillance, defense or communications systems.",
     },
     {
       "id": 1,
       "word": "Electronics",
-      "def":
-          "The field of applied physics concerned with the behavior of electrons, especially when they move as current, in devices and materials.",
+      "def": "The field of applied physics concerned with the behavior of electrons, especially when they move as current, in devices and materials.",
     },
     {
       "id": 1,
       "word": "electrostatic discharge",
-      "def":
-          "The sudden discharge of electrostatic charge that occurs when a charged conductor is grounded.",
+      "def": "The sudden discharge of electrostatic charge that occurs when a charged conductor is grounded.",
     },
     {
       "id": 1,
       "word": "Electrostatic Discharge",
-      "def":
-          "ESD - Current produced by two objects having a static charge when they are brought close enough to produce an arc or discharge.",
+      "def": "ESD - Current produced by two objects having a static charge when they are brought close enough to produce an arc or discharge.",
     },
     {
       "id": 1,
       "word": "Electrostatic Sensitivity",
-      "def":
-          "The degree to which a component or device is susceptible to damage by electrostatic discharge.",
+      "def": "The degree to which a component or device is susceptible to damage by electrostatic discharge.",
     },
     {
       "id": 1,
@@ -4447,26 +4064,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ELFEXT",
-      "def":
-          "Equal Level Far End Crosstalk. A measure of FEXT which accounts for the attenuation of the cabling system.",
+      "def": "Equal Level Far End Crosstalk. A measure of FEXT which accounts for the attenuation of the cabling system.",
     },
     {
       "id": 1,
       "word": "ELINT",
-      "def":
-          "The surreptitious gathering of information from an opponent or enemy through the use of electronic systems.",
+      "def": "The surreptitious gathering of information from an opponent or enemy through the use of electronic systems.",
     },
     {
       "id": 1,
       "word": "Elongation",
-      "def":
-          "The ultimate elongation, or elongation at rupture. Expressed as a percentage of original length.",
+      "def": "The ultimate elongation, or elongation at rupture. Expressed as a percentage of original length.",
     },
     {
       "id": 1,
       "word": "embossing",
-      "def":
-          "A marker identification by means of thermal indentation leaving raised lettering on the sheath material of cable.",
+      "def": "A marker identification by means of thermal indentation leaving raised lettering on the sheath material of cable.",
     },
     {
       "id": 1,
@@ -4487,14 +4100,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "EMI",
-      "def":
-          "Electro-Magnetic Interference - An unwanted electrical energy in any form. EMI is often used interchangeably with 'noise' and 'interference'.",
+      "def": "Electro-Magnetic Interference - An unwanted electrical energy in any form. EMI is often used interchangeably with 'noise' and 'interference'.",
     },
     {
       "id": 1,
       "word": "EMI Filter",
-      "def":
-          "Filter placed at the input to an off-line converter that minimizes the effect of EMI on the converter and the associated system.",
+      "def": "Filter placed at the input to an off-line converter that minimizes the effect of EMI on the converter and the associated system.",
     },
     {
       "id": 1,
@@ -4505,8 +4116,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Emitter Bias",
-      "def":
-          "The DC voltage or current that is applied to the emitter of a transistor to establish its operating point.",
+      "def": "The DC voltage or current that is applied to the emitter of a transistor to establish its operating point.",
     },
     {
       "id": 1,
@@ -4528,8 +4138,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Enable",
-      "def":
-          "The act of asserting the enable signal to turn on the device. In the case of an EN low device, the EN signal must exceed the typical threshold voltage of 1.5V.",
+      "def": "The act of asserting the enable signal to turn on the device. In the case of an EN low device, the EN signal must exceed the typical threshold voltage of 1.5V.",
     },
     {
       "id": 1,
@@ -4546,32 +4155,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "encapsulation",
-      "def":
-          "The process of embedding electrical components and conductors in a mechanically protective coating.",
+      "def": "The process of embedding electrical components and conductors in a mechanically protective coating.",
     },
     {
       "id": 1,
       "word": "Enclosure",
-      "def":
-          "Case or container used to package a converter. Typically, converters are packaged in small plastic or metal.",
+      "def": "Case or container used to package a converter. Typically, converters are packaged in small plastic or metal.",
     },
     {
       "id": 1,
       "word": "encoder",
-      "def":
-          "A device which translates information from one form (code) to another (eg decimal to binary encoder). Normally, an encoder is used in the device sending the information.",
+      "def": "A device which translates information from one form (code) to another (eg decimal to binary encoder). Normally, an encoder is used in the device sending the information.",
     },
     {
       "id": 1,
       "word": "End",
-      "def":
-          "The number of fibers or strands per carrier in braiding operations.",
+      "def": "The number of fibers or strands per carrier in braiding operations.",
     },
     {
       "id": 1,
       "word": "end of message",
-      "def":
-          "EOM - Usually a unique character in a data stream that indicates the end of a block of information data.",
+      "def": "EOM - Usually a unique character in a data stream that indicates the end of a block of information data.",
     },
     {
       "id": 1,
@@ -4582,8 +4186,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Energy Storage Inductors",
-      "def":
-          "Inductors used for energy storage, generally in power conversion rather than filtering or tuning.",
+      "def": "Inductors used for energy storage, generally in power conversion rather than filtering or tuning.",
     },
     {
       "id": 1,
@@ -4594,20 +4197,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Enhanced Category 5",
-      "def":
-          "Also called Category 5e.A performance classification for twisted pair cables, connectors and systems.Specified to 100 MHz.Suitable for voice and data applications up to 1000 Mbps.",
+      "def": "Also called Category 5e.A performance classification for twisted pair cables, connectors and systems.Specified to 100 MHz.Suitable for voice and data applications up to 1000 Mbps.",
     },
     {
       "id": 1,
       "word": "Enterprise Network",
-      "def":
-          "A large typical corporate network under the auspices of one organization.",
+      "def": "A large typical corporate network under the auspices of one organization.",
     },
     {
       "id": 1,
       "word": "environment",
-      "def":
-          "The aggregate of all conditions (such as temperature, humidity, radiation, magnetic and electric fields, shock, and vibration) which externally influences the performance of an item.",
+      "def": "The aggregate of all conditions (such as temperature, humidity, radiation, magnetic and electric fields, shock, and vibration) which externally influences the performance of an item.",
     },
     {
       "id": 1,
@@ -4618,8 +4218,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "EOM",
-      "def":
-          "End of Message. Usually a unique character in a data stream that indicates the end of a block of information data.",
+      "def": "End of Message. Usually a unique character in a data stream that indicates the end of a block of information data.",
     },
     {
       "id": 1,
@@ -4634,8 +4233,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Epitaxial",
-      "def":
-          "Of or pertaining to a layer of single crystal material grown on a crystalline substrate, with the same crystal orientation in both regions.",
+      "def": "Of or pertaining to a layer of single crystal material grown on a crystalline substrate, with the same crystal orientation in both regions.",
     },
     {
       "id": 1,
@@ -4663,26 +4261,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "equilibrium mode distribution",
-      "def":
-          "The condition in an optical fiber in which all allowable modes propagate their characteristic amount of optical energy.",
+      "def": "The condition in an optical fiber in which all allowable modes propagate their characteristic amount of optical energy.",
     },
     {
       "id": 1,
       "word": "Equivalent Series Inductance (ESL)",
-      "def":
-          "Inductance in series with an 'ideal' capacitor. Sources include leads, terminals, electrodes etc.",
+      "def": "Inductance in series with an 'ideal' capacitor. Sources include leads, terminals, electrodes etc.",
     },
     {
       "id": 1,
       "word": "Equivalent Series Resistance (ESR)",
-      "def":
-          "Resistance in series with an 'ideal' capacitor. Sources include lead resistance, terminal losses, etc. An important specification for high frequency applications.",
+      "def": "Resistance in series with an 'ideal' capacitor. Sources include lead resistance, terminal losses, etc. An important specification for high frequency applications.",
     },
     {
       "id": 1,
       "word": "Erbium-doped fiber amplifier",
-      "def":
-          "A type of fiber that amplifies 1550-nm optical signals when pumped with a 980- or 1480-nm light source.",
+      "def": "A type of fiber that amplifies 1550-nm optical signals when pumped with a 980- or 1480-nm light source.",
     },
     {
       "id": 1,
@@ -4698,8 +4292,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ESD",
-      "def":
-          "Electrostaic discharge - Current produced by two objects having a static charge when they are brought close enough to produce an arc or discharge.",
+      "def": "Electrostaic discharge - Current produced by two objects having a static charge when they are brought close enough to produce an arc or discharge.",
     },
     {
       "id": 1,
@@ -4709,26 +4302,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "etchant",
-      "def":
-          "A solution used to remove, by chemical reaction, the unwanted portion of a conductive material bonded to a base.",
+      "def": "A solution used to remove, by chemical reaction, the unwanted portion of a conductive material bonded to a base.",
     },
     {
       "id": 1,
       "word": "etched wire",
-      "def":
-          "A process applied to fluoroplastic wire in which the wire is passed through a sodium bath to create a rough surface to allow epoxy resin to bond the fluoroplastic.",
+      "def": "A process applied to fluoroplastic wire in which the wire is passed through a sodium bath to create a rough surface to allow epoxy resin to bond the fluoroplastic.",
     },
     {
       "id": 1,
       "word": "etched wiring substrate",
-      "def":
-          "A printed conductive pattern formed by chemical, or chemical and electrolytic, removal of the unwanted portion of conductive material bonded to a base.",
+      "def": "A printed conductive pattern formed by chemical, or chemical and electrolytic, removal of the unwanted portion of conductive material bonded to a base.",
     },
     {
       "id": 1,
       "word": "etching",
-      "def":
-          "The process of removing unwanted metallic substance bonded to a base - by chemical, or chemical and electrolytic, means.",
+      "def": "The process of removing unwanted metallic substance bonded to a base - by chemical, or chemical and electrolytic, means.",
     },
     {
       "id": 1,
@@ -4756,8 +4345,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Eutectic Solder",
-      "def":
-          "A solder consisting of two or more metals, all in the appropriate proportions to allow the lowest possible melting point for the given combination.",
+      "def": "A solder consisting of two or more metals, all in the appropriate proportions to allow the lowest possible melting point for the given combination.",
     },
     {
       "id": 1,
@@ -4767,8 +4355,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "EW",
-      "def":
-          "Electronic Warfare - The use of electronic signals and systems to disrupt the function of an opponent's surveillance, defense or communications systems.",
+      "def": "Electronic Warfare - The use of electronic signals and systems to disrupt the function of an opponent's surveillance, defense or communications systems.",
     },
     {
       "id": 1,
@@ -4778,32 +4365,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Excess loss",
-      "def":
-          "In a fiber-optic coupler, the optical loss from that portion of light that does not emerge from the nominally operational ports of the device.",
+      "def": "In a fiber-optic coupler, the optical loss from that portion of light that does not emerge from the nominally operational ports of the device.",
     },
     {
       "id": 1,
       "word": "Excitation Current",
-      "def":
-          "The current required to overcome the losses in a core, which begins to produce magnetic energy (or flux) in an inductor.",
+      "def": "The current required to overcome the losses in a core, which begins to produce magnetic energy (or flux) in an inductor.",
     },
     {
       "id": 1,
       "word": "excite",
-      "def":
-          "To initiate or develop a magnetic field in a motor or other electrical machine.",
+      "def": "To initiate or develop a magnetic field in a motor or other electrical machine.",
     },
     {
       "id": 1,
       "word": "executive control program",
-      "def":
-          "A main system program designed to establish priorities, and to process and control other routines.",
+      "def": "A main system program designed to establish priorities, and to process and control other routines.",
     },
     {
       "id": 1,
       "word": "Expanded ID",
-      "def":
-          "Expanded Inside Diameter - The specified minimum (as supplied) internal diameter of tubing.",
+      "def": "Expanded Inside Diameter - The specified minimum (as supplied) internal diameter of tubing.",
     },
     {
       "id": 1,
@@ -4814,32 +4396,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "extender",
-      "def":
-          "A substance added to a plastic composition to reduce the amount of the primary resin required per unit volume.",
+      "def": "A substance added to a plastic composition to reduce the amount of the primary resin required per unit volume.",
     },
     {
       "id": 1,
       "word": "external storage",
-      "def":
-          "That portion specially designed to receive and store information for use at a later time, external to . Also called storage.",
+      "def": "That portion specially designed to receive and store information for use at a later time, external to . Also called storage.",
     },
     {
       "id": 1,
       "word": "extraction tool",
-      "def":
-          "A tool used for removing a contact from a connector. Most extraction tools will remove a contact in such a manner that the contact can be re-used, if desired.",
+      "def": "A tool used for removing a contact from a connector. Most extraction tools will remove a contact in such a manner that the contact can be re-used, if desired.",
     },
     {
       "id": 1,
       "word": "Extrinsic loss",
-      "def":
-          "In a fiber interconnection, that portion of loss that is not intrinsic to the fiber but is related to imperfect joining, which may be caused by the connector or splice.",
+      "def": "In a fiber interconnection, that portion of loss that is not intrinsic to the fiber but is related to imperfect joining, which may be caused by the connector or splice.",
     },
     {
       "id": 1,
       "word": "extrinsic properties",
-      "def":
-          "The properties of a semiconductor as modified by impurities or imperfectionswith in a crystal.",
+      "def": "The properties of a semiconductor as modified by impurities or imperfectionswith in a crystal.",
     },
     {
       "id": 1,
@@ -4850,8 +4427,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Extrusion",
-      "def":
-          "A process that conveys plastic insulation material, generally via a screw, through forming dies and subsequently cools the insulation material to form a predetermined shape.",
+      "def": "A process that conveys plastic insulation material, generally via a screw, through forming dies and subsequently cools the insulation material to form a predetermined shape.",
     },
     {
       "id": 1,
@@ -4867,14 +4443,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "F crimp",
-      "def":
-          "A crimp that brings the center of the barrel along an open seam downward into a V.",
+      "def": "A crimp that brings the center of the barrel along an open seam downward into a V.",
     },
     {
       "id": 1,
       "word": "face",
-      "def":
-          "A connection between two systems or devices. A shared boundary defined by common physical interconnection characteristics, signal characteristics, and meanings of interchanged signals.",
+      "def": "A connection between two systems or devices. A shared boundary defined by common physical interconnection characteristics, signal characteristics, and meanings of interchanged signals.",
     },
     {
       "id": 1,
@@ -4885,8 +4459,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Failure",
-      "def":
-          "The inability of a component or device to perform its intended function as specified by the manufacturer.",
+      "def": "The inability of a component or device to perform its intended function as specified by the manufacturer.",
     },
     {
       "id": 1,
@@ -4896,26 +4469,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Failure Criteria",
-      "def":
-          "A specific description of a condition or characteristic of a device that precludes the device from performing its intended function as specified by the manufacturer",
+      "def": "A specific description of a condition or characteristic of a device that precludes the device from performing its intended function as specified by the manufacturer",
     },
     {
       "id": 1,
       "word": "failure mechanism",
-      "def":
-          "A structural or chemical defect which causes failure such as corrosion, poor bonds, or surface inversion.",
+      "def": "A structural or chemical defect which causes failure such as corrosion, poor bonds, or surface inversion.",
     },
     {
       "id": 1,
       "word": "Failure Mode",
-      "def":
-          "The manner in which a failure occurs. Reason for which a converter either does not meet or stops meeting its specified parameters.",
+      "def": "The manner in which a failure occurs. Reason for which a converter either does not meet or stops meeting its specified parameters.",
     },
     {
       "id": 1,
       "word": "Failure Rate",
-      "def":
-          "The mean proportion of failures per unit time, normally expressed in per cent per thousand hours of operation.",
+      "def": "The mean proportion of failures per unit time, normally expressed in per cent per thousand hours of operation.",
     },
     {
       "id": 1,
@@ -4937,14 +4506,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "fan out",
-      "def":
-          "The number of logic inputs that can be driven by the output of a logic gate.",
+      "def": "The number of logic inputs that can be driven by the output of a logic gate.",
     },
     {
       "id": 1,
       "word": "Farad",
-      "def":
-          "The unit of capacitance, abbreviated as 'F', equal to 1 coulomb per volt.",
+      "def": "The unit of capacitance, abbreviated as 'F', equal to 1 coulomb per volt.",
     },
     {
       "id": 1,
@@ -4955,8 +4522,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "fatigue",
-      "def":
-          "The tendency of a metal to fracture in a brittle manner under conditions of repeated cyclic stressing at stress levels below its tensile strength.",
+      "def": "The tendency of a metal to fracture in a brittle manner under conditions of repeated cyclic stressing at stress levels below its tensile strength.",
     },
     {
       "id": 1,
@@ -4993,14 +4559,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Feed Forward",
-      "def":
-          "Method of improving line regulation by directly sensing the input voltage of the converter. Also see Line Regulation.",
+      "def": "Method of improving line regulation by directly sensing the input voltage of the converter. Also see Line Regulation.",
     },
     {
       "id": 1,
       "word": "Feedback",
-      "def":
-          "A portion of the output signal of a device or system which is applied to the input of the system.",
+      "def": "A portion of the output signal of a device or system which is applied to the input of the system.",
     },
     {
       "id": 1,
@@ -5029,8 +4593,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "femto",
-      "def":
-          "A prefix that stands indicates a factor of 10-15, abbreviated as 'f'.",
+      "def": "A prefix that stands indicates a factor of 10-15, abbreviated as 'f'.",
     },
     {
       "id": 1,
@@ -5040,8 +4603,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Ferrite Bead",
-      "def":
-          "A small circular ferrite material structure. It is used to reduce radation",
+      "def": "A small circular ferrite material structure. It is used to reduce radation",
     },
     {
       "id": 1,
@@ -5082,8 +4644,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "FEXT",
-      "def":
-          "Far End Crosstalk. Unwanted noise coupled onto a receive pair from a transmit pair at the far end of the system.",
+      "def": "Far End Crosstalk. Unwanted noise coupled onto a receive pair from a transmit pair at the far end of the system.",
     },
     {
       "id": 1,
@@ -5100,8 +4661,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Fiber Distributed Data Interface network",
-      "def":
-          "A token-passing ring network designed specifically for fiber optics and featuring dual counterrotating rings and 100 Mbps operation.",
+      "def": "A token-passing ring network designed specifically for fiber optics and featuring dual counterrotating rings and 100 Mbps operation.",
     },
     {
       "id": 1,
@@ -5118,14 +4678,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Fiber-Optic Interrepeater Link",
-      "def":
-          "A standard defining a fiber-optic link between two repeaters in an IEEE 802.3 network.",
+      "def": "A standard defining a fiber-optic link between two repeaters in an IEEE 802.3 network.",
     },
     {
       "id": 1,
       "word": "field",
-      "def":
-          "(1) A region containing electric or magnetic lines of force, or both. (2) A category of information in a computer file.",
+      "def": "(1) A region containing electric or magnetic lines of force, or both. (2) A category of information in a computer file.",
     },
     {
       "id": 1,
@@ -5136,14 +4694,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Field Strength (H)",
-      "def":
-          "The parameter characterizing the amplitude of AC or DC field strength. The magnitude of current, number of turns, and winding geometry determine field strength.",
+      "def": "The parameter characterizing the amplitude of AC or DC field strength. The magnitude of current, number of turns, and winding geometry determine field strength.",
     },
     {
       "id": 1,
       "word": "file",
-      "def":
-          "An organized collection of information consisting of records. The records in a file may or may not be sequenced according to a key contained in each record.",
+      "def": "An organized collection of information consisting of records. The records in a file may or may not be sequenced according to a key contained in each record.",
     },
     {
       "id": 1,
@@ -5154,8 +4710,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "filled cable",
-      "def":
-          "A telephone cable construction in which the cable core is filled with a material that will prevent moisture from entering or passing through the cable.",
+      "def": "A telephone cable construction in which the cable core is filled with a material that will prevent moisture from entering or passing through the cable.",
     },
     {
       "id": 1,
@@ -5195,14 +4750,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "fishpaper",
-      "def":
-          "A type of fiber paper used for insulating purposes where high mechanical strength is required.",
+      "def": "A type of fiber paper used for insulating purposes where high mechanical strength is required.",
     },
     {
       "id": 1,
       "word": "Flag",
-      "def":
-          "Power switch output that provides the USB controller the power switch device status. When FLG = High, the output MOSFET allows power to flow from the supply rail.",
+      "def": "Power switch output that provides the USB controller the power switch device status. When FLG = High, the output MOSFET allows power to flow from the supply rail.",
     },
     {
       "id": 1,
@@ -5213,20 +4766,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "flag terminal",
-      "def":
-          "A type of terminal having the tongue or body project at 90? from the side of the terminal barrel, rather than being in line with - and extending from - the end of the barrel.",
+      "def": "A type of terminal having the tongue or body project at 90? from the side of the terminal barrel, rather than being in line with - and extending from - the end of the barrel.",
     },
     {
       "id": 1,
       "word": "flame resistance",
-      "def":
-          "The ability of material to extinguish flame once the source of heat is removed.",
+      "def": "The ability of material to extinguish flame once the source of heat is removed.",
     },
     {
       "id": 1,
       "word": "Flame Retardant",
-      "def":
-          "A descriptor applied to a material that has been made or treated so as to resist burning.",
+      "def": "A descriptor applied to a material that has been made or treated so as to resist burning.",
     },
     {
       "id": 1,
@@ -5237,8 +4787,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Flame-resistant",
-      "def":
-          "A descriptor applied to a material that is inherently resistant to burning.",
+      "def": "A descriptor applied to a material that is inherently resistant to burning.",
     },
     {
       "id": 1,
@@ -5248,8 +4797,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "flange",
-      "def":
-          "A projection extending from - or around the periphery of - a connector, and having holes that provide for mounting the connector to a panel, or to a mating connector.",
+      "def": "A projection extending from - or around the periphery of - a connector, and having holes that provide for mounting the connector to a panel, or to a mating connector.",
     },
     {
       "id": 1,
@@ -5270,8 +4818,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Flat Conductor",
-      "def":
-          "A conductor having a rectangular cross section, as opposed to a round or square cross section.",
+      "def": "A conductor having a rectangular cross section, as opposed to a round or square cross section.",
     },
     {
       "id": 1,
@@ -5282,20 +4829,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Flatness",
-      "def":
-          "The variation in attenuation or gain at a given bias level over the frequency band of interest.",
+      "def": "The variation in attenuation or gain at a given bias level over the frequency band of interest.",
     },
     {
       "id": 1,
       "word": "Flex Life",
-      "def":
-          "A measure of the susceptibility of a conductor or other device to failure due to fatigue from repeated bending.",
+      "def": "A measure of the susceptibility of a conductor or other device to failure due to fatigue from repeated bending.",
     },
     {
       "id": 1,
       "word": "flexibilizer",
-      "def":
-          "An additive that makes a resin or rubber more flexible. More commonly called plasticizer.",
+      "def": "An additive that makes a resin or rubber more flexible. More commonly called plasticizer.",
     },
     {
       "id": 1,
@@ -5306,8 +4850,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "flip-chip",
-      "def":
-          "A method of attaching a silicon chip in which the bonding pads and circuit are placed face down to contact pads on the substrate.",
+      "def": "A method of attaching a silicon chip in which the bonding pads and circuit are placed face down to contact pads on the substrate.",
     },
     {
       "id": 1,
@@ -5324,8 +4867,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "floating ground",
-      "def":
-          "A grounding technique in which circuit grounds (return paths) are isolated from earth ground.",
+      "def": "A grounding technique in which circuit grounds (return paths) are isolated from earth ground.",
     },
     {
       "id": 1,
@@ -5336,8 +4878,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Flow Soldering",
-      "def":
-          "Flow Soldering is a tradename for specific wave soldering equipment manufactured by a company in England.",
+      "def": "Flow Soldering is a tradename for specific wave soldering equipment manufactured by a company in England.",
     },
     {
       "id": 1,
@@ -5347,14 +4888,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "fluorocarbons",
-      "def":
-          "Resins which include fluorine in their molecular structure; the greater the fluorine content, the better are the polymer's electrical, mechanical, thermal, and chemical properties.",
+      "def": "Resins which include fluorine in their molecular structure; the greater the fluorine content, the better are the polymer's electrical, mechanical, thermal, and chemical properties.",
     },
     {
       "id": 1,
       "word": "fluoroplastics",
-      "def":
-          "Polymers with monomers containing one or more atoms of fluorine or copolymers of such monomers.",
+      "def": "Polymers with monomers containing one or more atoms of fluorine or copolymers of such monomers.",
     },
     {
       "id": 1,
@@ -5376,8 +4915,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Flux Transfer Ratio",
-      "def":
-          "The numeric amount of flux intercepted by the secondary winding and the total flux created by the applied ampere-turns.",
+      "def": "The numeric amount of flux intercepted by the secondary winding and the total flux created by the applied ampere-turns.",
     },
     {
       "id": 1,
@@ -5394,14 +4932,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Flyback Transformer",
-      "def":
-          "Transformer used in a flyback power supply. Also called horizontal output transformer.",
+      "def": "Transformer used in a flyback power supply. Also called horizontal output transformer.",
     },
     {
       "id": 1,
       "word": "FM",
-      "def":
-          "Frequency Modulation - A method of transmission in which the frequency of the carrier is varied in accordance to the signal.",
+      "def": "Frequency Modulation - A method of transmission in which the frequency of the carrier is varied in accordance to the signal.",
     },
     {
       "id": 1,
@@ -5423,14 +4959,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "FORTRAN",
-      "def":
-          "FORmula TRANslation. A computer-programming language designed mainly for scientific problems (expressed in algebraic notation).",
+      "def": "FORmula TRANslation. A computer-programming language designed mainly for scientific problems (expressed in algebraic notation).",
     },
     {
       "id": 1,
       "word": "Forward Bias",
-      "def":
-          "Bias voltage applied to a semiconductor PN junction in the direction that causes electrons to flow from the n-type (cathode) to the p-type (anode) regions.",
+      "def": "Bias voltage applied to a semiconductor PN junction in the direction that causes electrons to flow from the n-type (cathode) to the p-type (anode) regions.",
     },
     {
       "id": 1,
@@ -5457,8 +4991,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Fractional T1",
-      "def":
-          "A WAN communications service that provides the user with some portion of a T1 circuit which has been divided into 24 separate 64 kbps channels.",
+      "def": "A WAN communications service that provides the user with some portion of a T1 circuit which has been divided into 24 separate 64 kbps channels.",
     },
     {
       "id": 1,
@@ -5469,26 +5002,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Frame Relay",
-      "def":
-          "A streamlined packet switching protocol designed to provide high-speed frame or packet switching with minimal delay and efficient bandwidth usage.",
+      "def": "A streamlined packet switching protocol designed to provide high-speed frame or packet switching with minimal delay and efficient bandwidth usage.",
     },
     {
       "id": 1,
       "word": "Free Convection",
-      "def":
-          "Operating environment where the natural movement of air (unassisted by fans or blowers) maintains the power module within its operating limits. Also called natural convection.",
+      "def": "Operating environment where the natural movement of air (unassisted by fans or blowers) maintains the power module within its operating limits. Also called natural convection.",
     },
     {
       "id": 1,
       "word": "free hanging",
-      "def":
-          "A connector that is movable and not fixed to a board, panel, or frame. It will mate with another free-hanging connector or with a panelmount connector.",
+      "def": "A connector that is movable and not fixed to a board, panel, or frame. It will mate with another free-hanging connector or with a panelmount connector.",
     },
     {
       "id": 1,
       "word": "free standing",
-      "def":
-          "A contact/terminal installed on a pc board and used without a housing.",
+      "def": "A contact/terminal installed on a pc board and used without a housing.",
     },
     {
       "id": 1,
@@ -5499,8 +5028,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Frequency Band",
-      "def":
-          "Frequency range over which the performance or characteristics of a circuit, device or component are described or specified.",
+      "def": "Frequency range over which the performance or characteristics of a circuit, device or component are described or specified.",
     },
     {
       "id": 1,
@@ -5510,14 +5038,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Frequency Converter (or simply, Converter)",
-      "def":
-          "A device or circuit that performs frequency conversion, such as a mixer.",
+      "def": "A device or circuit that performs frequency conversion, such as a mixer.",
     },
     {
       "id": 1,
       "word": "Frequency Modulation",
-      "def":
-          "the modification of the frequency of a higher frequency, constant magnitude carrier signal controlled by the amplitude and phase of a lower frequency baseband or audio signal.",
+      "def": "the modification of the frequency of a higher frequency, constant magnitude carrier signal controlled by the amplitude and phase of a lower frequency baseband or audio signal.",
     },
     {
       "id": 1,
@@ -5544,8 +5070,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Fresnel reflection",
-      "def":
-          "The reflection that occurs at the planar junction of two materials having different refractive indices; Fresnel reflection is not a function of the angle of incidence.",
+      "def": "The reflection that occurs at the planar junction of two materials having different refractive indices; Fresnel reflection is not a function of the angle of incidence.",
     },
     {
       "id": 1,
@@ -5567,8 +5092,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Front Release Contacts",
-      "def":
-          "Connector contacts that are released from the front side of the connector and then removed from the back, wire side of the connector.",
+      "def": "Connector contacts that are released from the front side of the connector and then removed from the back, wire side of the connector.",
     },
     {
       "id": 1,
@@ -5597,26 +5121,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Full Load",
-      "def":
-          "Maximum value of output load specified for a converter under continuous operating conditions.",
+      "def": "Maximum value of output load specified for a converter under continuous operating conditions.",
     },
     {
       "id": 1,
       "word": "Full Load Voltage",
-      "def":
-          "Variations in winding resistance, turns ratio, and leakage can cause minor discrepancies in output voltage, which is the full load voltage.",
+      "def": "Variations in winding resistance, turns ratio, and leakage can cause minor discrepancies in output voltage, which is the full load voltage.",
     },
     {
       "id": 1,
       "word": "Full Recovery Temperature, Minimum",
-      "def":
-          "The minimum temperature required to fully shrink a product, that is, for the product to recover completely.",
+      "def": "The minimum temperature required to fully shrink a product, that is, for the product to recover completely.",
     },
     {
       "id": 1,
       "word": "Full Winding",
-      "def":
-          "A winding for toroidal cores that will result in 45% of the core's inside diameter remaining.",
+      "def": "A winding for toroidal cores that will result in 45% of the core's inside diameter remaining.",
     },
     {
       "id": 1,
@@ -5679,32 +5199,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Gain Control",
-      "def":
-          "Part of an amplifier to which a control signal is applied to vary the gain of the amplifier. The ability to externally vary the gain of an amplifier.",
+      "def": "Part of an amplifier to which a control signal is applied to vary the gain of the amplifier. The ability to externally vary the gain of an amplifier.",
     },
     {
       "id": 1,
       "word": "galvanic corrosion",
-      "def":
-          "Electrical flow or chemical interaction caused by dissimilar materials (usually metal).",
+      "def": "Electrical flow or chemical interaction caused by dissimilar materials (usually metal).",
     },
     {
       "id": 1,
       "word": "Ganged port protection",
-      "def":
-          "Protection method where one circuit protection device (or output) is used to protect more than one output port.",
+      "def": "Protection method where one circuit protection device (or output) is used to protect more than one output port.",
     },
     {
       "id": 1,
       "word": "Gap loss",
-      "def":
-          "Loss resulting from the end separation of two axially aligned fibers.",
+      "def": "Loss resulting from the end separation of two axially aligned fibers.",
     },
     {
       "id": 1,
       "word": "garbage",
-      "def":
-          "Unwanted, incorrect, or meaningless information in memory, transmission media, or other electronic circuit.",
+      "def": "Unwanted, incorrect, or meaningless information in memory, transmission media, or other electronic circuit.",
     },
     {
       "id": 1,
@@ -5720,8 +5235,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "gate array",
-      "def":
-          "A type of integrated circuit that, by virtue of being partially fabricated, allows much shorter lead times in the design and production of custom circuits.",
+      "def": "A type of integrated circuit that, by virtue of being partially fabricated, allows much shorter lead times in the design and production of custom circuits.",
     },
     {
       "id": 1,
@@ -5731,8 +5245,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Gauss",
-      "def":
-          "The CGS unit of measurement for flux density. One Gauss is equal to 1 Maxwell per cm2.",
+      "def": "The CGS unit of measurement for flux density. One Gauss is equal to 1 Maxwell per cm2.",
     },
     {
       "id": 1,
@@ -5747,20 +5260,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "generator",
-      "def":
-          "A machine that converts mechanical energy into electrical energy.",
+      "def": "A machine that converts mechanical energy into electrical energy.",
     },
     {
       "id": 1,
       "word": "GEO",
-      "def":
-          "Geostationary or Geosynchronous Earth Orbit (See also LEO &amp; MEO)",
+      "def": "Geostationary or Geosynchronous Earth Orbit (See also LEO &amp; MEO)",
     },
     {
       "id": 1,
       "word": "g-force",
-      "def":
-          "Gravitational acceleration of a freefalling body. Equal to 32.2 ft/sec2.",
+      "def": "Gravitational acceleration of a freefalling body. Equal to 32.2 ft/sec2.",
     },
     {
       "id": 1,
@@ -5770,8 +5280,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "giga",
-      "def":
-          "A prefix that indicates a factor of 109 (one billion), abbreviated as 'G.' Giga is a French prefix, and should be pronounced 'jeegah,' at least when in France.",
+      "def": "A prefix that indicates a factor of 109 (one billion), abbreviated as 'G.' Giga is a French prefix, and should be pronounced 'jeegah,' at least when in France.",
     },
     {
       "id": 1,
@@ -5787,8 +5296,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "GIGO",
-      "def":
-          "From garbage in/garbage out, expressing that the quality of a computer depends on the quality of the programs and data used with it.",
+      "def": "From garbage in/garbage out, expressing that the quality of a computer depends on the quality of the programs and data used with it.",
     },
     {
       "id": 1,
@@ -5820,14 +5328,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Government Rubber Synthetic",
-      "def":
-          "GRS - a government standard for Buna-S Rubber for jacketing and insulating compounds for military wires and cables.",
+      "def": "GRS - a government standard for Buna-S Rubber for jacketing and insulating compounds for military wires and cables.",
     },
     {
       "id": 1,
       "word": "GPRS",
-      "def":
-          "Generalized Packet Radio Service. (A GSM-based packet data protocol)",
+      "def": "Generalized Packet Radio Service. (A GSM-based packet data protocol)",
     },
     {
       "id": 1,
@@ -5837,14 +5343,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Graded Cores",
-      "def":
-          "MPP and HF cores are graded into increments of permeability within their normal ?8% tolerance. It is expressed as a percent deviation from the nominal value.",
+      "def": "MPP and HF cores are graded into increments of permeability within their normal ?8% tolerance. It is expressed as a percent deviation from the nominal value.",
     },
     {
       "id": 1,
       "word": "graded index fiber",
-      "def":
-          "An optical fiber whose core has a nonuniform index of refraction. The differences in the refractive index reduce signal spreading caused by modal dispersion.",
+      "def": "An optical fiber whose core has a nonuniform index of refraction. The differences in the refractive index reduce signal spreading caused by modal dispersion.",
     },
     {
       "id": 1,
@@ -5855,14 +5359,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Grain Oriented",
-      "def":
-          "Silicon steel or other granular magnetic material that has a preferred direction of magnetization.",
+      "def": "Silicon steel or other granular magnetic material that has a preferred direction of magnetization.",
     },
     {
       "id": 1,
       "word": "Gray code",
-      "def":
-          "The mirror image of the binary counting code which changes one bit at a time when increasing or decreasing by one.",
+      "def": "The mirror image of the binary counting code which changes one bit at a time when increasing or decreasing by one.",
     },
     {
       "id": 1,
@@ -5883,8 +5385,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "grommet",
-      "def":
-          "A rubber seal used on the cable side of a multiple-contact connector to seal the connector against moisture, dirt, or air.",
+      "def": "A rubber seal used on the cable side of a multiple-contact connector to seal the connector against moisture, dirt, or air.",
     },
     {
       "id": 1,
@@ -5895,20 +5396,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Ground fault",
-      "def":
-          "A type of overcurrent event that occurs due to momentary, usually accidental, grounding of a conducting wire.",
+      "def": "A type of overcurrent event that occurs due to momentary, usually accidental, grounding of a conducting wire.",
     },
     {
       "id": 1,
       "word": "Ground Loop",
-      "def":
-          "Condition caused when two or more system components share a common electrical ground line. A feedback loop is unintentionally induced, causing unwanted voltage levels.",
+      "def": "Condition caused when two or more system components share a common electrical ground line. A feedback loop is unintentionally induced, causing unwanted voltage levels.",
     },
     {
       "id": 1,
       "word": "ground loop noise",
-      "def":
-          "Noise that results when different points of a grounding system are at different potentials and thereby create an unintended current path.",
+      "def": "Noise that results when different points of a grounding system are at different potentials and thereby create an unintended current path.",
     },
     {
       "id": 1,
@@ -5918,8 +5416,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Grounding Conductor",
-      "def":
-          "A conductor that provides a current return path from an electrical device to ground.",
+      "def": "A conductor that provides a current return path from an electrical device to ground.",
     },
     {
       "id": 1,
@@ -5930,8 +5427,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Group Delay",
-      "def":
-          "The first derivative of the phase versus frequency response of a network, component, or transmission line.",
+      "def": "The first derivative of the phase versus frequency response of a network, component, or transmission line.",
     },
     {
       "id": 1,
@@ -5952,8 +5448,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "guard band",
-      "def":
-          "The unused area which serves to isolate elements in a printed circuit. Examples: area between printed circuit paths; area between an element and the edge of the mounting base.",
+      "def": "The unused area which serves to isolate elements in a printed circuit. Examples: area between printed circuit paths; area between an element and the edge of the mounting base.",
     },
     {
       "id": 1,
@@ -5975,8 +5470,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "h Parameters",
-      "def":
-          "The set of parameters for a two port device that relates the input voltage and current to the output current and voltage.",
+      "def": "The set of parameters for a two port device that relates the input voltage and current to the output current and voltage.",
     },
     {
       "id": 1,
@@ -6023,14 +5517,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Hard Magnetic Material",
-      "def":
-          "A 'permanent' magnet material that has an intrinsic coercivity generally greater than or equal to about 300 Oersteds.",
+      "def": "A 'permanent' magnet material that has an intrinsic coercivity generally greater than or equal to about 300 Oersteds.",
     },
     {
       "id": 1,
       "word": "Hardness",
-      "def":
-          "A general term that correlates with strength, rigidity, and resistance to abrasion or penetration. Measured on Shore or Rockwell scales. See also Shore.",
+      "def": "A general term that correlates with strength, rigidity, and resistance to abrasion or penetration. Measured on Shore or Rockwell scales. See also Shore.",
     },
     {
       "id": 1,
@@ -6041,8 +5533,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Harmonic Content",
-      "def":
-          "The degree of distortion in a signal due to the presence of harmonics.",
+      "def": "The degree of distortion in a signal due to the presence of harmonics.",
     },
     {
       "id": 1,
@@ -6053,8 +5544,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "harness",
-      "def":
-          "A wire assembly involving two or more wires that are prepared and ready for installation into a unit or system.",
+      "def": "A wire assembly involving two or more wires that are prepared and ready for installation into a unit or system.",
     },
     {
       "id": 1,
@@ -6064,20 +5554,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "HDSL",
-      "def":
-          "High-bit-rate Digital Subscriber Line- Designed to be a cost-effective method of delivering T1/E1 line speeds over unconditioned copper cable, without the use of repeaters.",
+      "def": "High-bit-rate Digital Subscriber Line- Designed to be a cost-effective method of delivering T1/E1 line speeds over unconditioned copper cable, without the use of repeaters.",
     },
     {
       "id": 1,
       "word": "Headend",
-      "def":
-          "The source end of a coaxial cable TV system. Often, the site for signal processing equipment essential to proper functioning of a cable system.",
+      "def": "The source end of a coaxial cable TV system. Often, the site for signal processing equipment essential to proper functioning of a cable system.",
     },
     {
       "id": 1,
       "word": "header",
-      "def":
-          "The base or mounting plate of an electronic package to which chips and leads are attached.",
+      "def": "The base or mounting plate of an electronic package to which chips and leads are attached.",
     },
     {
       "id": 1,
@@ -6088,8 +5575,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Heat Flux",
-      "def":
-          "Flow rate of heat across or through a material, typically given in W/cm2",
+      "def": "Flow rate of heat across or through a material, typically given in W/cm2",
     },
     {
       "id": 1,
@@ -6117,8 +5603,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "heat sink tab",
-      "def":
-          "A mechanical tab on an integrated circuit package for attachment to a heat sink.",
+      "def": "A mechanical tab on an integrated circuit package for attachment to a heat sink.",
     },
     {
       "id": 1,
@@ -6129,8 +5614,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Heat-Shrinkable Material",
-      "def":
-          "A polymeric material capable of being reduced in size when exposed to heat.",
+      "def": "A polymeric material capable of being reduced in size when exposed to heat.",
     },
     {
       "id": 1,
@@ -6145,14 +5629,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "hermaphroditic connector",
-      "def":
-          "A connector in which both mating members are exactly alike at their mating face.",
+      "def": "A connector in which both mating members are exactly alike at their mating face.",
     },
     {
       "id": 1,
       "word": "hermaphroditic contact",
-      "def":
-          "A contact design which mates with another contact of the same design.",
+      "def": "A contact design which mates with another contact of the same design.",
     },
     {
       "id": 1,
@@ -6186,8 +5668,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "hexadecimal numbering system",
-      "def":
-          "A numbering system with the base 16. The digits of the system are 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, and F.",
+      "def": "A numbering system with the base 16. The digits of the system are 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, and F.",
     },
     {
       "id": 1,
@@ -6209,38 +5690,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "High Line",
-      "def":
-          "Maximum value of input line voltage specified for normal converter operaton. Also see Low Line and Input Voltage Range.",
+      "def": "Maximum value of input line voltage specified for normal converter operaton. Also see Low Line and Input Voltage Range.",
     },
     {
       "id": 1,
       "word": "High Pass Filter",
-      "def":
-          "HPF - A reactive circuit that rejects signals whose frequencies are below the 3 dB point frequency and passes signals whose frequencies are above the 3 dB point frequency.",
+      "def": "HPF - A reactive circuit that rejects signals whose frequencies are below the 3 dB point frequency and passes signals whose frequencies are above the 3 dB point frequency.",
     },
     {
       "id": 1,
       "word": "High Potential Test (Hi-Pot Test)",
-      "def":
-          "Test used to determine whether a converter passes its miminum breakdown voltage specification. Also see Breakdown Voltage.",
+      "def": "Test used to determine whether a converter passes its miminum breakdown voltage specification. Also see Breakdown Voltage.",
     },
     {
       "id": 1,
       "word": "High Q Filters",
-      "def":
-          "A filter circuit that exhibits a high Q factor. It is very frequency sensitive and filters out or allows to pass, only those frequencies within a narrow band.",
+      "def": "A filter circuit that exhibits a high Q factor. It is very frequency sensitive and filters out or allows to pass, only those frequencies within a narrow band.",
     },
     {
       "id": 1,
       "word": "high voltage",
-      "def":
-          "Generally considered to be a wire or cable with an operating voltage of over 600 volts. Also called high tension.",
+      "def": "Generally considered to be a wire or cable with an operating voltage of over 600 volts. Also called high tension.",
     },
     {
       "id": 1,
       "word": "high-density polyethylene",
-      "def":
-          "Those polyethylenes whose density ranges about .94 to .96 and above. They are linked in longer chains, forming a more rigid resin material.",
+      "def": "Those polyethylenes whose density ranges about .94 to .96 and above. They are linked in longer chains, forming a more rigid resin material.",
     },
     {
       "id": 1,
@@ -6251,8 +5726,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "high-speed socket",
-      "def":
-          "A ceramic chip carrier socket for highpincount circuits of up to 164 contacts on .020in. centerlines. Highspeed refers to the short electrical length of the contacts.",
+      "def": "A ceramic chip carrier socket for highpincount circuits of up to 164 contacts on .020in. centerlines. Highspeed refers to the short electrical length of the contacts.",
     },
     {
       "id": 1,
@@ -6286,14 +5760,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "holding strength",
-      "def":
-          "Ability of a connector to remain assembled to a cable when under tension.",
+      "def": "Ability of a connector to remain assembled to a cable when under tension.",
     },
     {
       "id": 1,
       "word": "Hold-Up Time",
-      "def":
-          "Period of time that a converter output remains operating within specification following the loss of input power. This is a more common specificatioin for AC/DC supplies.",
+      "def": "Period of time that a converter output remains operating within specification following the loss of input power. This is a more common specificatioin for AC/DC supplies.",
     },
     {
       "id": 1,
@@ -6321,8 +5793,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "hook tongue",
-      "def":
-          "A terminal with a tongue that is open from the side rather than from the end.",
+      "def": "A terminal with a tongue that is open from the side rather than from the end.",
     },
     {
       "id": 1,
@@ -6332,14 +5803,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Horizontal cabling",
-      "def":
-          "Includes the work area outlet, distribution cable and connecting hardware in the telecom closet.",
+      "def": "Includes the work area outlet, distribution cable and connecting hardware in the telecom closet.",
     },
     {
       "id": 1,
       "word": "hot melts",
-      "def":
-          "Adhesives or other thermoplastic materials used for production bonding. A mechanical bond is formed when the material cools.",
+      "def": "Adhesives or other thermoplastic materials used for production bonding. A mechanical bond is formed when the material cools.",
     },
     {
       "id": 1,
@@ -6350,8 +5819,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Hot-Melt Adhesive",
-      "def":
-          "An adhesive that becomes activated by heating. When heated, it melts, flows over the substrate surface, and forms an adhesive bond. Reheating causes the adhesive to remelt.",
+      "def": "An adhesive that becomes activated by heating. When heated, it melts, flows over the substrate surface, and forms an adhesive bond. Reheating causes the adhesive to remelt.",
     },
     {
       "id": 1,
@@ -6368,8 +5836,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "HPF",
-      "def":
-          "High Pass Filter - A reactive circuit that rejects signals whose frequencies are below the 3 dB point frequency and passes signals whose frequencies are above the 3 dB point frequency.",
+      "def": "High Pass Filter - A reactive circuit that rejects signals whose frequencies are below the 3 dB point frequency and passes signals whose frequencies are above the 3 dB point frequency.",
     },
     {
       "id": 1,
@@ -6392,14 +5859,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "hybrid",
-      "def":
-          "A blend or composite of two different technologies. The context defines the technologies.",
+      "def": "A blend or composite of two different technologies. The context defines the technologies.",
     },
     {
       "id": 1,
       "word": "hybrid IC",
-      "def":
-          "A composite of either monolithic integrated circuits, or discrete semiconductor device circuits, in a unit packaging configuration.",
+      "def": "A composite of either monolithic integrated circuits, or discrete semiconductor device circuits, in a unit packaging configuration.",
     },
     {
       "id": 1,
@@ -6431,14 +5896,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "I/O",
-      "def":
-          "Pertaining to the equipment used to communicate with a computer and the data involved.",
+      "def": "Pertaining to the equipment used to communicate with a computer and the data involved.",
     },
     {
       "id": 1,
       "word": "I/O limited",
-      "def":
-          "Pertaining to a computer in which the speed of computer processing is limited by the speed of the input and/or output equipment.",
+      "def": "Pertaining to a computer in which the speed of computer processing is limited by the speed of the input and/or output equipment.",
     },
     {
       "id": 1,
@@ -6458,20 +5921,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ID",
-      "def":
-          "Internal Diameter or Inside Diameter - The inside or internal diameter of a tubing.",
+      "def": "Internal Diameter or Inside Diameter - The inside or internal diameter of a tubing.",
     },
     {
       "id": 1,
       "word": "IDC",
-      "def":
-          "Insulation Displacement Connector. A style of connector that slices through the cable insulation to make a connection.Eliminates the need to strip insulation.",
+      "def": "Insulation Displacement Connector. A style of connector that slices through the cable insulation to make a connection.Eliminates the need to strip insulation.",
     },
     {
       "id": 1,
       "word": "identifier",
-      "def":
-          "A symbol whose purpose is to identify, indicate, or name a body of data.",
+      "def": "A symbol whose purpose is to identify, indicate, or name a body of data.",
     },
     {
       "id": 1,
@@ -6491,14 +5951,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "IEEE",
-      "def":
-          "Institute of Electrical and Electronics Engineers. 802 Group develops Local Area Network standards and Metropolitan Area Network standards.",
+      "def": "Institute of Electrical and Electronics Engineers. 802 Group develops Local Area Network standards and Metropolitan Area Network standards.",
     },
     {
       "id": 1,
       "word": "IEEE 488",
-      "def":
-          "An interface for interconnecting programmable digital instruments.",
+      "def": "An interface for interconnecting programmable digital instruments.",
     },
     {
       "id": 1,
@@ -6518,8 +5976,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "IF Bandwidth",
-      "def":
-          "The frequency interval in a receiver over which the amplifiers, filters and other components that process the IF are deigned to operate.",
+      "def": "The frequency interval in a receiver over which the amplifiers, filters and other components that process the IF are deigned to operate.",
     },
     {
       "id": 1,
@@ -6530,8 +5987,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "IGFET",
-      "def":
-          "Insulated-gate field-effect transistor. A general term lumping together all field-effect transistors having insulated gates regardless of fabrication process.",
+      "def": "Insulated-gate field-effect transistor. A general term lumping together all field-effect transistors having insulated gates regardless of fabrication process.",
     },
     {
       "id": 1,
@@ -6565,8 +6021,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Image Rejection Mixer",
-      "def":
-          "A mixer that is designed to reject signal at the image frequency.",
+      "def": "A mixer that is designed to reject signal at the image frequency.",
     },
     {
       "id": 1,
@@ -6607,20 +6062,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "impregnate",
-      "def":
-          "To fill the voids and interstices of a material with a compound. This does not imply complete fill or complete coating of the surfaces by a hole-free film.",
+      "def": "To fill the voids and interstices of a material with a compound. This does not imply complete fill or complete coating of the surfaces by a hole-free film.",
     },
     {
       "id": 1,
       "word": "Impulse Test",
-      "def":
-          "A high-voltage test designed to locate pinholes in the insulation of a wire or cable by applying a voltage while the wire or cable is being drawn through an electrode.",
+      "def": "A high-voltage test designed to locate pinholes in the insulation of a wire or cable by applying a voltage while the wire or cable is being drawn through an electrode.",
     },
     {
       "id": 1,
       "word": "In Phase",
-      "def":
-          "When two or more periodic, time-varying waveforms are simultaneously at the same phase angle and trending in the same direction.",
+      "def": "When two or more periodic, time-varying waveforms are simultaneously at the same phase angle and trending in the same direction.",
     },
     {
       "id": 1,
@@ -6642,14 +6094,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Index of refraction",
-      "def":
-          "The ratio of the velocity of light in free space to the velocity of light in a given material. Symbolized by n.",
+      "def": "The ratio of the velocity of light in free space to the velocity of light in a given material. Symbolized by n.",
     },
     {
       "id": 1,
       "word": "Index-matching material",
-      "def":
-          "A material, used at optical interconnection, having a refractive index close to that of the fiber core and used to reduce Fresnel reflections.",
+      "def": "A material, used at optical interconnection, having a refractive index close to that of the fiber core and used to reduce Fresnel reflections.",
     },
     {
       "id": 1,
@@ -6672,20 +6122,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "induction generator",
-      "def":
-          "An induction generator is an induction machine, driven above synchronous speed by an external source of mechanical power.",
+      "def": "An induction generator is an induction machine, driven above synchronous speed by an external source of mechanical power.",
     },
     {
       "id": 1,
       "word": "induction motor",
-      "def":
-          "An induction machine which converts electric power, delivered to the primary circuit, into mechanical power.",
+      "def": "An induction machine which converts electric power, delivered to the primary circuit, into mechanical power.",
     },
     {
       "id": 1,
       "word": "inductive coupling",
-      "def":
-          "The coupling of energy from one circuit to another that results from the magnetic field generated by the source conductor.",
+      "def": "The coupling of energy from one circuit to another that results from the magnetic field generated by the source conductor.",
     },
     {
       "id": 1,
@@ -6708,20 +6155,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "inhibiting input",
-      "def":
-          "A gate input that blocks an output which might otherwise occur in a computer.",
+      "def": "A gate input that blocks an output which might otherwise occur in a computer.",
     },
     {
       "id": 1,
       "word": "inhibitor, corrosion",
-      "def":
-          "A material which prevents or delays oxidation and galvanic action.",
+      "def": "A material which prevents or delays oxidation and galvanic action.",
     },
     {
       "id": 1,
       "word": "Initial Permeability (NO)",
-      "def":
-          "Permeability=u=B/H Initial permeability is that value of permeability when Bac=10gs.",
+      "def": "Permeability=u=B/H Initial permeability is that value of permeability when Bac=10gs.",
     },
     {
       "id": 1,
@@ -6732,32 +6176,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "initialize",
-      "def":
-          "A program or hardware circuit which will return a program, a system, or a hardware device to an original state.",
+      "def": "A program or hardware circuit which will return a program, a system, or a hardware device to an original state.",
     },
     {
       "id": 1,
       "word": "Input",
-      "def":
-          "The part of a circuit or device into which a signal is directed or applied. The signal that is applied to a circuit or device.",
+      "def": "The part of a circuit or device into which a signal is directed or applied. The signal that is applied to a circuit or device.",
     },
     {
       "id": 1,
       "word": "input bias current",
-      "def":
-          "The dc current that must be present at the amplifier input in order for the amplifier to be functional. It is measured with no signal applied.",
+      "def": "The dc current that must be present at the amplifier input in order for the amplifier to be functional. It is measured with no signal applied.",
     },
     {
       "id": 1,
       "word": "Input Current",
-      "def":
-          "Current drawn from the input power bus by a converter when operating under nominal conditions",
+      "def": "Current drawn from the input power bus by a converter when operating under nominal conditions",
     },
     {
       "id": 1,
       "word": "input impedance",
-      "def":
-          "The impedance that exists between the input terminals of an amplifier or transmission line when the source is disconnected. The circuit, signal level, and frequency must be specified.",
+      "def": "The impedance that exists between the input terminals of an amplifier or transmission line when the source is disconnected. The circuit, signal level, and frequency must be specified.",
     },
     {
       "id": 1,
@@ -6768,26 +6207,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "input offset current",
-      "def":
-          "The difference in the currents into the two input terminals of an operational amplifier when the output is at zero.",
+      "def": "The difference in the currents into the two input terminals of an operational amplifier when the output is at zero.",
     },
     {
       "id": 1,
       "word": "input offset voltage",
-      "def":
-          "The voltage that must be applied between the two input terminals of an operational amplifier to obtain zero output voltage.",
+      "def": "The voltage that must be applied between the two input terminals of an operational amplifier to obtain zero output voltage.",
     },
     {
       "id": 1,
       "word": "Input Reflected Ripple Current",
-      "def":
-          "AC component (typically generated by the switching circuit) measured at the input of a converter. Given as a peak-to-peak or RMS value.",
+      "def": "AC component (typically generated by the switching circuit) measured at the input of a converter. Given as a peak-to-peak or RMS value.",
     },
     {
       "id": 1,
       "word": "Input Surge Current",
-      "def":
-          "Maximum, instantaneous input current drawn by a converter at turn on. Also called Inrush Current.",
+      "def": "Maximum, instantaneous input current drawn by a converter at turn on. Also called Inrush Current.",
     },
     {
       "id": 1,
@@ -6798,20 +6233,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Input Voltage Range",
-      "def":
-          "Minimum and maximum input voltage limits within which a converter operates to specifications. Often given as a ratio of high line to low line (i.e. a range of 9VDC to 18VDC is 2:1)",
+      "def": "Minimum and maximum input voltage limits within which a converter operates to specifications. Often given as a ratio of high line to low line (i.e. a range of 9VDC to 18VDC is 2:1)",
     },
     {
       "id": 1,
       "word": "Inrush Current",
-      "def":
-          "Maximum, instantaneous input current drawn by a converter at turn on. Also called Input Surge Current.",
+      "def": "Maximum, instantaneous input current drawn by a converter at turn on. Also called Input Surge Current.",
     },
     {
       "id": 1,
       "word": "Inrush Current Limiting",
-      "def":
-          "Protection circuit that limits the current a converter draws at turn on.",
+      "def": "Protection circuit that limits the current a converter draws at turn on.",
     },
     {
       "id": 1,
@@ -6822,26 +6254,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Insert Arrangement",
-      "def":
-          "The number, spacing, and arrangement of contacts in a termination assembly.",
+      "def": "The number, spacing, and arrangement of contacts in a termination assembly.",
     },
     {
       "id": 1,
       "word": "Insert Cavity",
-      "def":
-          "A defined hole in the connector insert into which the contacts are inserted.",
+      "def": "A defined hole in the connector insert into which the contacts are inserted.",
     },
     {
       "id": 1,
       "word": "insert molding",
-      "def":
-          "Two-step process wherein material is injection molded to form a part, which is then moved to a new mold as an insert, with another component molded against the first.",
+      "def": "Two-step process wherein material is injection molded to form a part, which is then moved to a new mold as an insert, with another component molded against the first.",
     },
     {
       "id": 1,
       "word": "insertion force",
-      "def":
-          "The effort, usually measured in ounces, required to engage mating components.",
+      "def": "The effort, usually measured in ounces, required to engage mating components.",
     },
     {
       "id": 1,
@@ -6852,8 +6280,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "insertion tool",
-      "def":
-          "A tool used to insert contacts into a housing, insert, or module, or to insert connectors into panels or pc boards.",
+      "def": "A tool used to insert contacts into a housing, insert, or module, or to insert connectors into panels or pc boards.",
     },
     {
       "id": 1,
@@ -6876,14 +6303,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Insulated Gate Bipolar Transistor",
-      "def":
-          "IGBT - Power semiconductor device available for use in power conversion circuits.",
+      "def": "IGBT - Power semiconductor device available for use in power conversion circuits.",
     },
     {
       "id": 1,
       "word": "Insulated Terminal",
-      "def":
-          "A solderless terminal with an insulated sleeve over the barrel to prevent a short circuit in certain installations.",
+      "def": "A solderless terminal with an insulated sleeve over the barrel to prevent a short circuit in certain installations.",
     },
     {
       "id": 1,
@@ -6905,8 +6330,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "insulation crimp",
-      "def":
-          "The area of a terminal, splice, or contact that has been formed around the insulation of the wire.",
+      "def": "The area of a terminal, splice, or contact that has been formed around the insulation of the wire.",
     },
     {
       "id": 1,
@@ -6923,8 +6347,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "insulation piercing",
-      "def":
-          "A method of crimping whereby lances cut through the insulation of the wire and enter into the strands and make electrical contact thus eliminating stripping of the wire.",
+      "def": "A method of crimping whereby lances cut through the insulation of the wire and enter into the strands and make electrical contact thus eliminating stripping of the wire.",
     },
     {
       "id": 1,
@@ -6941,8 +6364,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Insulation, Electrical",
-      "def":
-          "A nonconductive material usually surrounding or separating two conductive materials. Often called the dielectric in cables designed for highfrequency use.",
+      "def": "A nonconductive material usually surrounding or separating two conductive materials. Often called the dielectric in cables designed for highfrequency use.",
     },
     {
       "id": 1,
@@ -6964,14 +6386,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Integrated detector/preamplifier",
-      "def":
-          "A detector package containing a pin photodiode and transimpedance amplifier.",
+      "def": "A detector package containing a pin photodiode and transimpedance amplifier.",
     },
     {
       "id": 1,
       "word": "interaction",
-      "def":
-          "The effects of two or more elements, parts, assemblies, or equipments on each other - where each is performing a function.",
+      "def": "The effects of two or more elements, parts, assemblies, or equipments on each other - where each is performing a function.",
     },
     {
       "id": 1,
@@ -6981,8 +6401,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "interchangeable",
-      "def":
-          "A connector of one manufacturer can be replaced with a connector of another manufacturer, and will provide the same function in the same panel space as the connector it is replacing.",
+      "def": "A connector of one manufacturer can be replaced with a connector of another manufacturer, and will provide the same function in the same panel space as the connector it is replacing.",
     },
     {
       "id": 1,
@@ -6998,14 +6417,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "interfacial compression",
-      "def":
-          "The compression of the resilient material (face of mating inserts) that provides positive sealing and insulation when plug and receptacle are locked together.",
+      "def": "The compression of the resilient material (face of mating inserts) that provides positive sealing and insulation when plug and receptacle are locked together.",
     },
     {
       "id": 1,
       "word": "interfacial connection",
-      "def":
-          "A conductor which connects conductive patterns on opposite sides of a printed circuit board or other base. May be accomplished with a platedthru hole. Also a feed-thru connection.",
+      "def": "A conductor which connects conductive patterns on opposite sides of a printed circuit board or other base. May be accomplished with a platedthru hole. Also a feed-thru connection.",
     },
     {
       "id": 1,
@@ -7015,8 +6432,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "interfacial junction",
-      "def":
-          "The junction that is formed by the interface of two mating connectors. This junction can be tightly compressed or loose, depending upon the requirements of the application.",
+      "def": "The junction that is formed by the interface of two mating connectors. This junction can be tightly compressed or loose, depending upon the requirements of the application.",
     },
     {
       "id": 1,
@@ -7027,14 +6443,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "interference protection",
-      "def":
-          "Those measures which shield or immunize sensitive areas of an equipment from electrical interference.",
+      "def": "Those measures which shield or immunize sensitive areas of an equipment from electrical interference.",
     },
     {
       "id": 1,
       "word": "interlaced memory",
-      "def":
-          "A memory with sequentially addressed locations occupying physically separated positions in the storage media.",
+      "def": "A memory with sequentially addressed locations occupying physically separated positions in the storage media.",
     },
     {
       "id": 1,
@@ -7045,8 +6459,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Intermediate Frequency",
-      "def":
-          "The desired output frequency from the down conversion mixing process, which is normally the difference between the LO and signal frequencies, i.e., (LO-RF) or (RF-LO).",
+      "def": "The desired output frequency from the down conversion mixing process, which is normally the difference between the LO and signal frequencies, i.e., (LO-RF) or (RF-LO).",
     },
     {
       "id": 1,
@@ -7080,8 +6493,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Interstice",
-      "def":
-          "In a cable construction, the space or void left between or around the cabled components.",
+      "def": "In a cable construction, the space or void left between or around the cabled components.",
     },
     {
       "id": 1,
@@ -7097,8 +6509,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Inverter Transformer",
-      "def":
-          "A transformer driven in such a manner that an applied DC power is converted to AC power (square waveform). Quite often the core is driven into saturation to accomplish this function.",
+      "def": "A transformer driven in such a manner that an applied DC power is converted to AC power (square waveform). Quite often the core is driven into saturation to accomplish this function.",
     },
     {
       "id": 1,
@@ -7109,8 +6520,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ionomer",
-      "def":
-          "A thermoplastic with polyethylene as a major component and containing covalent and ionic bonds.",
+      "def": "A thermoplastic with polyethylene as a major component and containing covalent and ionic bonds.",
     },
     {
       "id": 1,
@@ -7126,32 +6536,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "IRQ",
-      "def":
-          "Interrupt Request Line, it is used to connect between CPU and peripheral",
+      "def": "Interrupt Request Line, it is used to connect between CPU and peripheral",
     },
     {
       "id": 1,
       "word": "Irradiation",
-      "def":
-          "In insulations, the exposure of the material to high-energy emissions for the purpose of favorably altering the molecular structure via crosslinking.",
+      "def": "In insulations, the exposure of the material to high-energy emissions for the purpose of favorably altering the molecular structure via crosslinking.",
     },
     {
       "id": 1,
       "word": "IS-95",
-      "def":
-          "A digital mobile telephony air interface standard that uses CDMA transmission.",
+      "def": "A digital mobile telephony air interface standard that uses CDMA transmission.",
     },
     {
       "id": 1,
       "word": "Isc Max",
-      "def":
-          "The maximum short circuit a PolySwitch device is tested at the maximum operating voltage as specified.",
+      "def": "The maximum short circuit a PolySwitch device is tested at the maximum operating voltage as specified.",
     },
     {
       "id": 1,
       "word": "ISDN",
-      "def":
-          "Integrated Services Digital Network- A CCITT networking standard devised to provide end-to-end, simultaneous handling of digitized voice and data traffic on the same link",
+      "def": "Integrated Services Digital Network- A CCITT networking standard devised to provide end-to-end, simultaneous handling of digitized voice and data traffic on the same link",
     },
     {
       "id": 1,
@@ -7178,8 +6583,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "isolation diffusion",
-      "def":
-          "The first diffusion of a monolithic integrated circuit. Its purpose is to generate the back-to-back junctions which isolate all active devices from one another.",
+      "def": "The first diffusion of a monolithic integrated circuit. Its purpose is to generate the back-to-back junctions which isolate all active devices from one another.",
     },
     {
       "id": 1,
@@ -7190,8 +6594,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Isolation Transformer",
-      "def":
-          "Transformer with a one-to-one turns ratio. connected between the a.c. power input to a piece of equipment and the a.c. line, to minimize shock hazard.",
+      "def": "Transformer with a one-to-one turns ratio. connected between the a.c. power input to a piece of equipment and the a.c. line, to minimize shock hazard.",
     },
     {
       "id": 1,
@@ -7202,8 +6605,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Isolator",
-      "def":
-          "A three port circulator with one of its ports terminated with its characteristic impedance.",
+      "def": "A three port circulator with one of its ports terminated with its characteristic impedance.",
     },
     {
       "id": 1,
@@ -7219,8 +6621,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "IT",
-      "def":
-          "The smallest steady state current that, if passed through a PolySwitch device, will cause the device to trip, under specified conditions.",
+      "def": "The smallest steady state current that, if passed through a PolySwitch device, will cause the device to trip, under specified conditions.",
     },
     {
       "id": 1,
@@ -7252,14 +6653,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "jack",
-      "def":
-          "A connecting device into which a plug can be inserted to make circuit connections.",
+      "def": "A connecting device into which a plug can be inserted to make circuit connections.",
     },
     {
       "id": 1,
       "word": "Jacket",
-      "def":
-          "1.) A material covering over a wire or cable assembly. 2.) Outer covering of a dual-wall heat-shrinkable tubing.",
+      "def": "1.) A material covering over a wire or cable assembly. 2.) Outer covering of a dual-wall heat-shrinkable tubing.",
     },
     {
       "id": 1,
@@ -7275,14 +6674,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "jitter",
-      "def":
-          "Short-term variation of pulses from their ideal position in time.",
+      "def": "Short-term variation of pulses from their ideal position in time.",
     },
     {
       "id": 1,
       "word": "Jones block",
-      "def":
-          "Jones is the name of the originator of barrier blocks. The term 'Jones block' is sometimes erroneously used to describe terminal strips and barrier blocks in general.",
+      "def": "Jones is the name of the originator of barrier blocks. The term 'Jones block' is sometimes erroneously used to describe terminal strips and barrier blocks in general.",
     },
     {
       "id": 1,
@@ -7299,8 +6696,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Junction",
-      "def":
-          "The plane in a semiconductor device where two layers that have opposing-polarity dopants physically meet.",
+      "def": "The plane in a semiconductor device where two layers that have opposing-polarity dopants physically meet.",
     },
     {
       "id": 1,
@@ -7316,8 +6712,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "kcmil",
-      "def":
-          "Thousand circular mils. The power industry uses this symbol in preference to MCM.",
+      "def": "Thousand circular mils. The power industry uses this symbol in preference to MCM.",
     },
     {
       "id": 1,
@@ -7328,8 +6723,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "key",
-      "def":
-          "A projection which engages with a keyway to guide a component during mating.",
+      "def": "A projection which engages with a keyway to guide a component during mating.",
     },
     {
       "id": 1,
@@ -7366,8 +6760,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "KMER",
-      "def":
-          "Kodak metal etch resist. A photosensitive material used to mask silicon and silicon dioxide for selective etching. Performs the same function as KPR.",
+      "def": "Kodak metal etch resist. A photosensitive material used to mask silicon and silicon dioxide for selective etching. Performs the same function as KPR.",
     },
     {
       "id": 1,
@@ -7400,8 +6793,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Kulka block",
-      "def":
-          "Kulka is a manufacturer's name (Kulka Electric Corp), but the term is frequently used in error as a generic term to describe terminal blocks in general.",
+      "def": "Kulka is a manufacturer's name (Kulka Electric Corp), but the term is frequently used in error as a generic term to describe terminal blocks in general.",
     },
     {
       "id": 1,
@@ -7411,8 +6803,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Kynar",
-      "def":
-          "Trade name (of Elf Atochem North America) for polyvinylidene fluoride and its copolymers.",
+      "def": "Trade name (of Elf Atochem North America) for polyvinylidene fluoride and its copolymers.",
     },
     {
       "id": 1,
@@ -7423,8 +6814,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "L2",
-      "def":
-          "L2 Frequency - 1227.6 MHz - one of the two radio frequencies transmitted by the GPS satellites. This frequency carries only the P-Code.",
+      "def": "L2 Frequency - 1227.6 MHz - one of the two radio frequencies transmitted by the GPS satellites. This frequency carries only the P-Code.",
     },
     {
       "id": 1,
@@ -7434,8 +6824,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "L5",
-      "def":
-          "Level 5 frequency - 1176.45 MHz - additional frequency used on new ?Block IIF' satellites, intended for civilian applications in air traffic control.",
+      "def": "Level 5 frequency - 1176.45 MHz - additional frequency used on new ?Block IIF' satellites, intended for civilian applications in air traffic control.",
     },
     {
       "id": 1,
@@ -7451,8 +6840,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Lacing Cord or Twine",
-      "def":
-          "Used for lacing and tying cable forms, hookup wires, cable ends, cable bundles, and wire harness assemblies. Available in various materials and impregnants.",
+      "def": "Used for lacing and tying cable forms, hookup wires, cable ends, cable bundles, and wire harness assemblies. Available in various materials and impregnants.",
     },
     {
       "id": 1,
@@ -7469,8 +6857,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "laminating",
-      "def":
-          "The process of bonding two or more layers of material together, using heat, pressure, and an adhesive.",
+      "def": "The process of bonding two or more layers of material together, using heat, pressure, and an adhesive.",
     },
     {
       "id": 1,
@@ -7487,14 +6874,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "land",
-      "def":
-          "The printed conductive portion of a printed circuit board. See also pad and terminal area.",
+      "def": "The printed conductive portion of a printed circuit board. See also pad and terminal area.",
     },
     {
       "id": 1,
       "word": "Lanyard",
-      "def":
-          "A device, attached to certain quick-disconnect connectors, that permits uncoupling and separation of connector halves by a pull on a wire or cable.",
+      "def": "A device, attached to certain quick-disconnect connectors, that permits uncoupling and separation of connector halves by a pull on a wire or cable.",
     },
     {
       "id": 1,
@@ -7505,8 +6890,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "large-scale integration",
-      "def":
-          "LSI - A term describing the level of complexity or size of an integrated circuit. An LSI circuit is considered to have in excess of 100 digital gates, or equivalent circuitry.",
+      "def": "LSI - A term describing the level of complexity or size of an integrated circuit. An LSI circuit is considered to have in excess of 100 digital gates, or equivalent circuitry.",
     },
     {
       "id": 1,
@@ -7517,26 +6901,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "laser diode",
-      "def":
-          "A semiconductor device that converts an electrical input into a coherent light output.",
+      "def": "A semiconductor device that converts an electrical input into a coherent light output.",
     },
     {
       "id": 1,
       "word": "Last mile",
-      "def":
-          "A reference to the local loop, the distance between a local telco office and the subscriber, a distance actually about 0 to 3 miles (0 to 4 kilometers).",
+      "def": "A reference to the local loop, the distance between a local telco office and the subscriber, a distance actually about 0 to 3 miles (0 to 4 kilometers).",
     },
     {
       "id": 1,
       "word": "Lateral displacement loss",
-      "def":
-          "The loss of power that results from lateral displacement from optimum alignment between two fibers or between a fiber and an active device.",
+      "def": "The loss of power that results from lateral displacement from optimum alignment between two fibers or between a fiber and an active device.",
     },
     {
       "id": 1,
       "word": "Lay",
-      "def":
-          "Refers to direction or sometimes the ratio of lay length to core diameter.",
+      "def": "Refers to direction or sometimes the ratio of lay length to core diameter.",
     },
     {
       "id": 1,
@@ -7547,8 +6927,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "layout",
-      "def":
-          "The topological arrangement of conductors and components in integrated circuit design. A precursor to artwork.",
+      "def": "The topological arrangement of conductors and components in integrated circuit design. A precursor to artwork.",
     },
     {
       "id": 1,
@@ -7564,38 +6943,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "lead frame",
-      "def":
-          "A metal frame that includes the leads of a plastic encapsulated DIP. The frame holds the leads in place prior to encapsulation and is cut away after encapsulation.",
+      "def": "A metal frame that includes the leads of a plastic encapsulated DIP. The frame holds the leads in place prior to encapsulation and is cut away after encapsulation.",
     },
     {
       "id": 1,
       "word": "lead(s)",
-      "def":
-          "Generally one or two wires cut to certain length with or without terminals.",
+      "def": "Generally one or two wires cut to certain length with or without terminals.",
     },
     {
       "id": 1,
       "word": "leading edge",
-      "def":
-          "Refers to a pulse. The leading edge of a pulse is defined as that edge or transition which occurs first. The leading edge is usually the transition from a logic 0 to a logic 1.",
+      "def": "Refers to a pulse. The leading edge of a pulse is defined as that edge or transition which occurs first. The leading edge is usually the transition from a logic 0 to a logic 1.",
     },
     {
       "id": 1,
       "word": "Leakage Current",
-      "def":
-          "Current flowing from input to output or input to case of an isolated converter at a specified voltage level.",
+      "def": "Current flowing from input to output or input to case of an isolated converter at a specified voltage level.",
     },
     {
       "id": 1,
       "word": "Leakage Inductance",
-      "def":
-          "The inductance that does not link the primary in a coil. It is due to the leakage flux.",
+      "def": "The inductance that does not link the primary in a coil. It is due to the leakage flux.",
     },
     {
       "id": 1,
       "word": "Leased Line",
-      "def":
-          "A transmission line reserved by a communication carrier for the private use of a customer.",
+      "def": "A transmission line reserved by a communication carrier for the private use of a customer.",
     },
     {
       "id": 1,
@@ -7622,32 +6995,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "LFM",
-      "def":
-          "Linear feet per minute, which is a measure of air velocity used to cool a power converter.",
+      "def": "Linear feet per minute, which is a measure of air velocity used to cool a power converter.",
     },
     {
       "id": 1,
       "word": "Life Cycle",
-      "def":
-          "A test to determine the length of time before failure in a controlled, usually accelerated environment.",
+      "def": "A test to determine the length of time before failure in a controlled, usually accelerated environment.",
     },
     {
       "id": 1,
       "word": "Life test",
-      "def":
-          "Reliability test in which a converter is operated (typically under accelerated conditions) over some period of time in order to approximate its life expectancy.",
+      "def": "Reliability test in which a converter is operated (typically under accelerated conditions) over some period of time in order to approximate its life expectancy.",
     },
     {
       "id": 1,
       "word": "Lifeline POTS",
-      "def":
-          "A minimal telephone service designed to extend a 'lifeline' to the telephone system in case of emergency, particularly when electric power is lost.",
+      "def": "A minimal telephone service designed to extend a 'lifeline' to the telephone system in case of emergency, particularly when electric power is lost.",
     },
     {
       "id": 1,
       "word": "light-emitting diode",
-      "def":
-          "LED - A semiconductor diode, generally made from gallium arsenide, that can serve as an infrared or visible light source when voltage is applied continuously or in pulses.",
+      "def": "LED - A semiconductor diode, generally made from gallium arsenide, that can serve as an infrared or visible light source when voltage is applied continuously or in pulses.",
     },
     {
       "id": 1,
@@ -7658,14 +7026,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Line",
-      "def":
-          "Bus used to deliver power to the input terminals of a converter. Also see Bus, High Line and Low Line.",
+      "def": "Bus used to deliver power to the input terminals of a converter. Also see Bus, High Line and Low Line.",
     },
     {
       "id": 1,
       "word": "Line Code",
-      "def":
-          "Any method of converting digital information to analog form for transmission on a telephone line. 2B1Q, DMT, and CAP are all line codes.",
+      "def": "Any method of converting digital information to analog form for transmission on a telephone line. 2B1Q, DMT, and CAP are all line codes.",
     },
     {
       "id": 1,
@@ -7681,14 +7047,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "line impedance",
-      "def":
-          "Impedance as measured across the terminals of a transmission line. Frequently, the characteristic impedance of the line.",
+      "def": "Impedance as measured across the terminals of a transmission line. Frequently, the characteristic impedance of the line.",
     },
     {
       "id": 1,
       "word": "line printer",
-      "def":
-          "A printing device that can simultaneously print several character graphics on hard copy. A line typically consists of 120 characters.",
+      "def": "A printing device that can simultaneously print several character graphics on hard copy. A line typically consists of 120 characters.",
     },
     {
       "id": 1,
@@ -7705,32 +7069,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Linear",
-      "def":
-          "A circuit or component whose transfer function can be accurately described by a first order equation (a straight line, hence the term linear).",
+      "def": "A circuit or component whose transfer function can be accurately described by a first order equation (a straight line, hence the term linear).",
     },
     {
       "id": 1,
       "word": "linear circuit",
-      "def":
-          "A circuit whose output is either an amplified version of its input, or a predetermined variation of its input.",
+      "def": "A circuit whose output is either an amplified version of its input, or a predetermined variation of its input.",
     },
     {
       "id": 1,
       "word": "Linear Material",
-      "def":
-          "Magnetic material that exhibits fairly constant permeability over a wide range of MMF.",
+      "def": "Magnetic material that exhibits fairly constant permeability over a wide range of MMF.",
     },
     {
       "id": 1,
       "word": "linear polymer",
-      "def":
-          "A polymer whose molecules form long chains without cross-linked or branch structures. Usually thermoplastic.",
+      "def": "A polymer whose molecules form long chains without cross-linked or branch structures. Usually thermoplastic.",
     },
     {
       "id": 1,
       "word": "Linear Power Transformer",
-      "def":
-          "Transformers that generally operate between 47Hz and 400Hz in power conversion, which alter the input voltage needed for the load. Linear power transformers are very inefficient.",
+      "def": "Transformers that generally operate between 47Hz and 400Hz in power conversion, which alter the input voltage needed for the load. Linear power transformers are very inefficient.",
     },
     {
       "id": 1,
@@ -7786,8 +7145,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Load Decoupling",
-      "def":
-          "Placement of filter components (typically mF capacitors) at the power terminals of the load in order to reduce noise.",
+      "def": "Placement of filter components (typically mF capacitors) at the power terminals of the load in order to reduce noise.",
     },
     {
       "id": 1,
@@ -7804,20 +7162,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Load Loss",
-      "def":
-          "These losses are caused by the resistance of the windings under loaded conditions.",
+      "def": "These losses are caused by the resistance of the windings under loaded conditions.",
     },
     {
       "id": 1,
       "word": "Load Regulation",
-      "def":
-          "Percentage change in output voltage caused by varying the output load over a specified range (with input line, temperature, etc. remaining constant).",
+      "def": "Percentage change in output voltage caused by varying the output load over a specified range (with input line, temperature, etc. remaining constant).",
     },
     {
       "id": 1,
       "word": "local area network",
-      "def":
-          "A privately owned, geographically limited network interconnecting electronic equipment, as in an office building to promote distributed processing and local communications.",
+      "def": "A privately owned, geographically limited network interconnecting electronic equipment, as in an office building to promote distributed processing and local communications.",
     },
     {
       "id": 1,
@@ -7828,8 +7183,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Local Loop",
-      "def":
-          "Refers to the physical copper pair or loop of wire from Central Office to the subscriber.",
+      "def": "Refers to the physical copper pair or loop of wire from Central Office to the subscriber.",
     },
     {
       "id": 1,
@@ -7840,14 +7194,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Local sensing",
-      "def":
-          "Using the output terminals of the converter to provide feedback to voltage regulation circuits. Also see Remote Sensing.",
+      "def": "Using the output terminals of the converter to provide feedback to voltage regulation circuits. Also see Remote Sensing.",
     },
     {
       "id": 1,
       "word": "locator",
-      "def":
-          "The device included in the design of most AMP hand crimping tools to position a terminal and assure the proper insertion depth of the stripped wire prior to crimping.",
+      "def": "The device included in the design of most AMP hand crimping tools to position a terminal and assure the proper insertion depth of the stripped wire prior to crimping.",
     },
     {
       "id": 1,
@@ -7858,14 +7210,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "logic gate",
-      "def":
-          "A digital circuit with one or more inputs, and an output which depends logically on the input signal combinations. See also gate and IGFET.",
+      "def": "A digital circuit with one or more inputs, and an output which depends logically on the input signal combinations. See also gate and IGFET.",
     },
     {
       "id": 1,
       "word": "Logic Inhibit/Enable",
-      "def":
-          "Signal (typically TTL/CMOS compatible) used to turn a power supply output on/off. Also called Remote On/Off.",
+      "def": "Signal (typically TTL/CMOS compatible) used to turn a power supply output on/off. Also called Remote On/Off.",
     },
     {
       "id": 1,
@@ -7876,20 +7226,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Longitudinal Change",
-      "def":
-          "The change in length of tubing when recovered. Expressed in the percent of change from the original length.",
+      "def": "The change in length of tubing when recovered. Expressed in the percent of change from the original length.",
     },
     {
       "id": 1,
       "word": "loom",
-      "def":
-          "Flexible tubing or sheath, usually nonmetallic, for protecting electrical wires. A cotton-braided sheath is commonly used.",
+      "def": "Flexible tubing or sheath, usually nonmetallic, for protecting electrical wires. A cotton-braided sheath is commonly used.",
     },
     {
       "id": 1,
       "word": "loose piece",
-      "def":
-          "A contact (or terminal) that is produced, packaged, and terminated individually for hand application tooling.",
+      "def": "A contact (or terminal) that is produced, packaged, and terminated individually for hand application tooling.",
     },
     {
       "id": 1,
@@ -7904,44 +7251,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Loss Factor",
-      "def":
-          "The product of the power factor and dielectric constant of an insulating material.",
+      "def": "The product of the power factor and dielectric constant of an insulating material.",
     },
     {
       "id": 1,
       "word": "lossy",
-      "def":
-          "The property of being a poor conductor that absorbs and dissipates energy.",
+      "def": "The property of being a poor conductor that absorbs and dissipates energy.",
     },
     {
       "id": 1,
       "word": "Lot Number",
-      "def":
-          "The number that identifies one production run of material. Also known as a batch number.",
+      "def": "The number that identifies one production run of material. Also known as a batch number.",
     },
     {
       "id": 1,
       "word": "Low Line",
-      "def":
-          "Minimum value of input line voltage speified for normal converter operation.",
+      "def": "Minimum value of input line voltage speified for normal converter operation.",
     },
     {
       "id": 1,
       "word": "Low Noise Amplifier",
-      "def":
-          "An amplifier with low noise figure that is typically used at the front end of a radio receiver.",
+      "def": "An amplifier with low noise figure that is typically used at the front end of a radio receiver.",
     },
     {
       "id": 1,
       "word": "Low Pass Filter",
-      "def":
-          "A reactive circuit that rejects signals whose frequencies are above the 3 dB point frequency and propagates signals whose frequencies are below the 3 dB point frequency.",
+      "def": "A reactive circuit that rejects signals whose frequencies are above the 3 dB point frequency and propagates signals whose frequencies are below the 3 dB point frequency.",
     },
     {
       "id": 1,
       "word": "low-density polyethylenes",
-      "def":
-          "Those polyethylenes whose density ranges from about 0.915 to 0.925. Relatively soft but tough materials.",
+      "def": "Those polyethylenes whose density ranges from about 0.915 to 0.925. Relatively soft but tough materials.",
     },
     {
       "id": 1,
@@ -7952,8 +7292,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Low-loss Dielectric",
-      "def":
-          "An insulating material that has a relatively low dielectric loss, such as olyethylene or Teflon.",
+      "def": "An insulating material that has a relatively low dielectric loss, such as olyethylene or Teflon.",
     },
     {
       "id": 1,
@@ -7968,8 +7307,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Lug",
-      "def":
-          "A termination, usually crimped or soldered to a conductor, that allows connection to be made with a retaining screw.",
+      "def": "A termination, usually crimped or soldered to a conductor, that allows connection to be made with a retaining screw.",
     },
     {
       "id": 1,
@@ -7980,14 +7318,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MAC",
-      "def":
-          "Moves Adds and Changes - When data and voice services (to include: outlets and cabling, patching, etc.) of a given location are moved to a new location or removed completely.",
+      "def": "Moves Adds and Changes - When data and voice services (to include: outlets and cabling, patching, etc.) of a given location are moved to a new location or removed completely.",
     },
     {
       "id": 1,
       "word": "machine language",
-      "def":
-          "Assigned and defined patterns of bits which convey instructions or data to a computer. The first level of computer language.",
+      "def": "Assigned and defined patterns of bits which convey instructions or data to a computer. The first level of computer language.",
     },
     {
       "id": 1,
@@ -8004,20 +7340,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Magnet Wire",
-      "def":
-          "Copper or aluminum wire with electrical insulating material applied to the surface to prevent continuity between adjacent turns in a winding.",
+      "def": "Copper or aluminum wire with electrical insulating material applied to the surface to prevent continuity between adjacent turns in a winding.",
     },
     {
       "id": 1,
       "word": "Magnetic Energy",
-      "def":
-          "The product of the flux density (B) and the (de)magnetizing force (H) in a magnetic circuit required to reach that flux density.",
+      "def": "The product of the flux density (B) and the (de)magnetizing force (H) in a magnetic circuit required to reach that flux density.",
     },
     {
       "id": 1,
       "word": "Magnetic Lines Of Force",
-      "def":
-          "An imaginary line representing a magnetic field, which at every point has the direction of the magnetic flux at that point.",
+      "def": "An imaginary line representing a magnetic field, which at every point has the direction of the magnetic flux at that point.",
     },
     {
       "id": 1,
@@ -8027,8 +7360,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Magnetic Path Length",
-      "def":
-          "The length of the closed path that magnetic flux follows around a magnetic circuit. Ampere's Law determines it.",
+      "def": "The length of the closed path that magnetic flux follows around a magnetic circuit. Ampere's Law determines it.",
     },
     {
       "id": 1,
@@ -8050,14 +7382,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Marking",
-      "def":
-          "A printed identification number or symbol applied to the surface of a wire or cable.",
+      "def": "A printed identification number or symbol applied to the surface of a wire or cable.",
     },
     {
       "id": 1,
       "word": "mask",
-      "def":
-          "A patterned medium placed between a substrate and a process source in order to confine the effects of the process to selected portions of the substrate.",
+      "def": "A patterned medium placed between a substrate and a process source in order to confine the effects of the process to selected portions of the substrate.",
     },
     {
       "id": 1,
@@ -8068,8 +7398,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "master pattern",
-      "def":
-          "A 1:1 scale pattern used to produce the printed circuit within the accuracy specified on the master drawing.",
+      "def": "A 1:1 scale pattern used to produce the printed circuit within the accuracy specified on the master drawing.",
     },
     {
       "id": 1,
@@ -8080,8 +7409,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "matched impedance",
-      "def":
-          "The coupling of two circuits in such a way that the impedance of one circuit equals the impedance of the other.",
+      "def": "The coupling of two circuits in such a way that the impedance of one circuit equals the impedance of the other.",
     },
     {
       "id": 1,
@@ -8091,14 +7419,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Material dispersion",
-      "def":
-          "Dispersion resulting from the different velocities of each wavelength in an optical fiber.",
+      "def": "Dispersion resulting from the different velocities of each wavelength in an optical fiber.",
     },
     {
       "id": 1,
       "word": "Material Modification Code",
-      "def":
-          "MOD Code - A code designating a particular stage in the production process. Most MOD codes describe the way the product is packaged.",
+      "def": "MOD Code - A code designating a particular stage in the production process. Most MOD codes describe the way the product is packaged.",
     },
     {
       "id": 1,
@@ -8113,26 +7439,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Maximum Ambient Operating Temperature",
-      "def":
-          "The highest ambient temperature at which a circuit is expected to operate.",
+      "def": "The highest ambient temperature at which a circuit is expected to operate.",
     },
     {
       "id": 1,
       "word": "Maximum Ambient Operating Temperature",
-      "def":
-          "The highest ambient temperature at which a circuit is expected to operate.",
+      "def": "The highest ambient temperature at which a circuit is expected to operate.",
     },
     {
       "id": 1,
       "word": "Maximum Device Voltage",
-      "def":
-          "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
+      "def": "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
     },
     {
       "id": 1,
       "word": "Maximum Fault Current",
-      "def":
-          "The rated maximum value of peak pulse current of specified amplitude and wave shape that may be applied without damage.",
+      "def": "The rated maximum value of peak pulse current of specified amplitude and wave shape that may be applied without damage.",
     },
     {
       "id": 1,
@@ -8143,14 +7465,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Maximum Interrupt Voltage",
-      "def":
-          "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
+      "def": "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
     },
     {
       "id": 1,
       "word": "Maximum Load",
-      "def":
-          "Highest amount of output load allowable under the continuous operating specifications of a converter.",
+      "def": "Highest amount of output load allowable under the continuous operating specifications of a converter.",
     },
     {
       "id": 1,
@@ -8172,32 +7492,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Maximum Resistance",
-      "def":
-          "The maximum resistance of a PolySwitch device at room temperature one hour after being tripped or after reflow soldering.",
+      "def": "The maximum resistance of a PolySwitch device at room temperature one hour after being tripped or after reflow soldering.",
     },
     {
       "id": 1,
       "word": "Maximum Resistance",
-      "def":
-          "The maximum resistance of a PolySwitch device at room temperature one hour after being tripped or after reflow soldering.",
+      "def": "The maximum resistance of a PolySwitch device at room temperature one hour after being tripped or after reflow soldering.",
     },
     {
       "id": 1,
       "word": "Maximum Switching Current",
-      "def":
-          "The maximum current that a device switches at safely without damage.",
+      "def": "The maximum current that a device switches at safely without damage.",
     },
     {
       "id": 1,
       "word": "Maximum Voltage",
-      "def":
-          "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
+      "def": "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
     },
     {
       "id": 1,
       "word": "Maxwell",
-      "def":
-          "The unit of magnetic flux in the CGS system. One Maxwell = 10-8 webers.",
+      "def": "The unit of magnetic flux in the CGS system. One Maxwell = 10-8 webers.",
     },
     {
       "id": 1,
@@ -8207,8 +7522,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MCM",
-      "def":
-          "Thousand circular mils. Above 4/0 AWG wire, circular mil areas (CMA) are used rather than AWG wire size. See kcmil.",
+      "def": "Thousand circular mils. Above 4/0 AWG wire, circular mil areas (CMA) are used rather than AWG wire size. See kcmil.",
     },
     {
       "id": 1,
@@ -8234,8 +7548,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Mean Time to Failure",
-      "def":
-          "MTTF - The measured operating time of a system or component divided by the number of failures that occurred during that time",
+      "def": "MTTF - The measured operating time of a system or component divided by the number of failures that occurred during that time",
     },
     {
       "id": 1,
@@ -8246,8 +7559,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "mechanized assembly",
-      "def":
-          "The joining together of parts and/or subassemblies with the aid of operators and semiautomatic equipment.",
+      "def": "The joining together of parts and/or subassemblies with the aid of operators and semiautomatic equipment.",
     },
     {
       "id": 1,
@@ -8258,8 +7570,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Media II",
-      "def":
-          "A 6-row, 90-column card used to program a device. The card measures 3.250 in. by 7.375 in. and the coded program or data is placed on the card in the form of small round punched holes.",
+      "def": "A 6-row, 90-column card used to program a device. The card measures 3.250 in. by 7.375 in. and the coded program or data is placed on the card in the form of small round punched holes.",
     },
     {
       "id": 1,
@@ -8270,8 +7581,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "mega",
-      "def":
-          "A prefix that indicates a factor of one million or 106, abbreviated as 'M.'",
+      "def": "A prefix that indicates a factor of one million or 106, abbreviated as 'M.'",
     },
     {
       "id": 1,
@@ -8281,26 +7591,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "melt index",
-      "def":
-          "Extrusion rate of a thermoplastic material through an orifice of specified diameter and length under specified conditions of time, temperature, and pressure.",
+      "def": "Extrusion rate of a thermoplastic material through an orifice of specified diameter and length under specified conditions of time, temperature, and pressure.",
     },
     {
       "id": 1,
       "word": "Melt/Flow Index",
-      "def":
-          "Measurement of the flow of thermoplastic material under given conditions of temperature and pressure. Expressed as grams per unit of time.",
+      "def": "Measurement of the flow of thermoplastic material under given conditions of temperature and pressure. Expressed as grams per unit of time.",
     },
     {
       "id": 1,
       "word": "Melting Point",
-      "def":
-          "The temperature at which crystallinity disappears when crystalline material is heated.",
+      "def": "The temperature at which crystallinity disappears when crystalline material is heated.",
     },
     {
       "id": 1,
       "word": "memory",
-      "def":
-          "That portion specially designed to receive and store information for use at a later time. Also called storage.",
+      "def": "That portion specially designed to receive and store information for use at a later time. Also called storage.",
     },
     {
       "id": 1,
@@ -8322,8 +7628,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "metallization",
-      "def":
-          "A metal film selectively deposited on a substrate to serve as conductive interconnections between the elements of the integrated circuit, and as points (pads) for external connections.",
+      "def": "A metal film selectively deposited on a substrate to serve as conductive interconnections between the elements of the integrated circuit, and as points (pads) for external connections.",
     },
     {
       "id": 1,
@@ -8340,8 +7645,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Metropolitan Area Network",
-      "def":
-          "MAN - A data communication network covering the geographic area of a city. Often used by a CAP to carry backbone traffic in their serving area.",
+      "def": "MAN - A data communication network covering the geographic area of a city. Often used by a CAP to carry backbone traffic in their serving area.",
     },
     {
       "id": 1,
@@ -8352,14 +7656,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MHz",
-      "def":
-          "Megahertz.Millions of cycles (Hertz) per second. A frequency or frequency range (bandwidth) through which a cabling system is specified.",
+      "def": "Megahertz.Millions of cycles (Hertz) per second. A frequency or frequency range (bandwidth) through which a cabling system is specified.",
     },
     {
       "id": 1,
       "word": "MIC",
-      "def":
-          "Microwave Integrated Circuit - A circuit that is contained either on a single die or in a single package, intended to operate at microwave frequencies",
+      "def": "Microwave Integrated Circuit - A circuit that is contained either on a single die or in a single package, intended to operate at microwave frequencies",
     },
     {
       "id": 1,
@@ -8381,8 +7683,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "microminiature circuitry",
-      "def":
-          "Circuitry fabricated in accordance with microminiaturization techniques.",
+      "def": "Circuitry fabricated in accordance with microminiaturization techniques.",
     },
     {
       "id": 1,
@@ -8398,8 +7699,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "microprocessor",
-      "def":
-          "A single chip or small group of chips that contain all the functions of a computer processor; does not include peripherals.",
+      "def": "A single chip or small group of chips that contain all the functions of a computer processor; does not include peripherals.",
     },
     {
       "id": 1,
@@ -8415,14 +7715,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Microwave Distribution System",
-      "def":
-          "A network of microwave radio links used to distribute data or video signals to subscribers.",
+      "def": "A network of microwave radio links used to distribute data or video signals to subscribers.",
     },
     {
       "id": 1,
       "word": "Microwave Integrated Circuit",
-      "def":
-          "MIC - A circuit that is contained either on a single die or in a single package, intended to operate at microwave frequencies",
+      "def": "MIC - A circuit that is contained either on a single die or in a single package, intended to operate at microwave frequencies",
     },
     {
       "id": 1,
@@ -8450,8 +7748,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Military Specification",
-      "def":
-          "MIL-SPEC - Military requirements; the demand imposed upon the system/device to meet a military operational need.",
+      "def": "MIL-SPEC - Military requirements; the demand imposed upon the system/device to meet a military operational need.",
     },
     {
       "id": 1,
@@ -8462,8 +7759,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "milli",
-      "def":
-          "A prefix meaning 10-3, or one thousandth. One millivolt would be 0.001 volt. Abbreviated as 'm.'",
+      "def": "A prefix meaning 10-3, or one thousandth. One millivolt would be 0.001 volt. Abbreviated as 'm.'",
     },
     {
       "id": 1,
@@ -8478,38 +7774,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MIL-SPEC",
-      "def":
-          "Military Specification - Military requirements; the demand imposed upon the system/device to meet a military operational need.",
+      "def": "Military Specification - Military requirements; the demand imposed upon the system/device to meet a military operational need.",
     },
     {
       "id": 1,
       "word": "MIM",
-      "def":
-          "Metal-insulator-metal, a common structure of series capacitors on integrated circuits.",
+      "def": "Metal-insulator-metal, a common structure of series capacitors on integrated circuits.",
     },
     {
       "id": 1,
       "word": "miniaturization",
-      "def":
-          "The technique of packaging by reducing size and weight of electronic parts in step with the change from vacuum tubes to transistors and diodes.",
+      "def": "The technique of packaging by reducing size and weight of electronic parts in step with the change from vacuum tubes to transistors and diodes.",
     },
     {
       "id": 1,
       "word": "minicomputer",
-      "def":
-          "A computer system midway in price and performance between mainframe and microcomputer.",
+      "def": "A computer system midway in price and performance between mainframe and microcomputer.",
     },
     {
       "id": 1,
       "word": "Minimum Discernable Signal",
-      "def":
-          "The smallest input signal level to a receiver that will produce a discernable output signal.",
+      "def": "The smallest input signal level to a receiver that will produce a discernable output signal.",
     },
     {
       "id": 1,
       "word": "Minimum Full Recovery Temperature",
-      "def":
-          "The minimum temperature required to fully shrink a product, that is, for the product to recover completely.",
+      "def": "The minimum temperature required to fully shrink a product, that is, for the product to recover completely.",
     },
     {
       "id": 1,
@@ -8520,8 +7810,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Minimum Operating Temperature",
-      "def":
-          "Minimum ambient temperature at which a converter will start and operate within specifications.",
+      "def": "Minimum ambient temperature at which a converter will start and operate within specifications.",
     },
     {
       "id": 1,
@@ -8537,8 +7826,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Misalignment loss",
-      "def":
-          "The loss of power resulting from angular misalignment, lateral displacement, and end separation.",
+      "def": "The loss of power resulting from angular misalignment, lateral displacement, and end separation.",
     },
     {
       "id": 1,
@@ -8549,8 +7837,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Mismatch Loss",
-      "def":
-          "The power that a device could absorb if its impedance were perfectly matched to that of its surroundings divided by the power that it does absorb.",
+      "def": "The power that a device could absorb if its impedance were perfectly matched to that of its surroundings divided by the power that it does absorb.",
     },
     {
       "id": 1,
@@ -8566,8 +7853,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MMDS",
-      "def":
-          "Multipoint microwave distribution system (also known as wireless cable).",
+      "def": "Multipoint microwave distribution system (also known as wireless cable).",
     },
     {
       "id": 1,
@@ -8577,8 +7863,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "mnemonic language",
-      "def":
-          "A programming language that is based on easily remembered symbols and that can be assembled into machine language by the computer.",
+      "def": "A programming language that is based on easily remembered symbols and that can be assembled into machine language by the computer.",
     },
     {
       "id": 1,
@@ -8589,8 +7874,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MOD Code",
-      "def":
-          "Material Modification Code - A code designating a particular stage in the production process. Most MOD codes describe the way the product is packaged.",
+      "def": "Material Modification Code - A code designating a particular stage in the production process. Most MOD codes describe the way the product is packaged.",
     },
     {
       "id": 1,
@@ -8607,8 +7891,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Mode of Failure",
-      "def":
-          "The manner in which a failure occurs. Reason for which a converter either does not meet or stops meeting its specified parameters.",
+      "def": "The manner in which a failure occurs. Reason for which a converter either does not meet or stops meeting its specified parameters.",
     },
     {
       "id": 1,
@@ -8618,8 +7901,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "modifier",
-      "def":
-          "Additive to a resin compoundwhich changes the compound's properties or processing characteristics.",
+      "def": "Additive to a resin compoundwhich changes the compound's properties or processing characteristics.",
     },
     {
       "id": 1,
@@ -8630,20 +7912,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Modular jack",
-      "def":
-          "The standard female connector for twisted pair cable. A 'telephone jack'.",
+      "def": "The standard female connector for twisted pair cable. A 'telephone jack'.",
     },
     {
       "id": 1,
       "word": "Modular plug",
-      "def":
-          "The standard male connector for twisted pair cable. A 'telephone plug'.",
+      "def": "The standard male connector for twisted pair cable. A 'telephone plug'.",
     },
     {
       "id": 1,
       "word": "modulate",
-      "def":
-          "To vary the amplitude, frequency, or phase of an oscillation rate - usually at a signal frequency.",
+      "def": "To vary the amplitude, frequency, or phase of an oscillation rate - usually at a signal frequency.",
     },
     {
       "id": 1,
@@ -8654,8 +7933,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Modulation Frequency",
-      "def":
-          "The frequency or frequency interval of the intelligence signal used to modulate a carrier wave.",
+      "def": "The frequency or frequency interval of the intelligence signal used to modulate a carrier wave.",
     },
     {
       "id": 1,
@@ -8672,8 +7950,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "modulus",
-      "def":
-          "Defines the capability of a device in terms of number of distinct states. For example, a modulo-10 counter has a modulus of 10 and, therefore, has 10 distinct states.",
+      "def": "Defines the capability of a device in terms of number of distinct states. For example, a modulo-10 counter has a modulus of 10 and, therefore, has 10 distinct states.",
     },
     {
       "id": 1,
@@ -8695,20 +7972,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "monolithic integrated circuit",
-      "def":
-          "Monolithic means 'from one stone,' hence a single silicon chip containing an integrated circuit.",
+      "def": "Monolithic means 'from one stone,' hence a single silicon chip containing an integrated circuit.",
     },
     {
       "id": 1,
       "word": "Monolithic Microwave Integrated Circuit",
-      "def":
-          "A semiconductor circuit that contains more than one component and is fabricated on a semiconductor die.",
+      "def": "A semiconductor circuit that contains more than one component and is fabricated on a semiconductor die.",
     },
     {
       "id": 1,
       "word": "monomer",
-      "def":
-          "The simple, unpolymerized form of a compound which is the building block of a polymer.",
+      "def": "The simple, unpolymerized form of a compound which is the building block of a polymer.",
     },
     {
       "id": 1,
@@ -8742,8 +8016,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "mother-daughter board connector",
-      "def":
-          "A connector designed for interconnection of printed circuit boards, typically with perpendicular engagement.",
+      "def": "A connector designed for interconnection of printed circuit boards, typically with perpendicular engagement.",
     },
     {
       "id": 1,
@@ -8795,8 +8068,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "MTTF",
-      "def":
-          "mean time to failure - The measured operating time of a system or component divided by the number of failures that occurred during that time",
+      "def": "mean time to failure - The measured operating time of a system or component divided by the number of failures that occurred during that time",
     },
     {
       "id": 1,
@@ -8806,8 +8078,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "multichip IC",
-      "def":
-          "A special form of hybrid where two or more semiconductor chips are attached separately to a substrate.",
+      "def": "A special form of hybrid where two or more semiconductor chips are attached separately to a substrate.",
     },
     {
       "id": 1,
@@ -8823,8 +8094,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "multilayer board",
-      "def":
-          "A printed circuit board having traces not only on both sides but sandwiched between board layers.",
+      "def": "A printed circuit board having traces not only on both sides but sandwiched between board layers.",
     },
     {
       "id": 1,
@@ -8835,14 +8105,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Multimode",
-      "def":
-          "A type of optical fiber in which the light travels in multiple paths. Utilizes LEDs or lasers as light sources.",
+      "def": "A type of optical fiber in which the light travels in multiple paths. Utilizes LEDs or lasers as light sources.",
     },
     {
       "id": 1,
       "word": "multimode fiber",
-      "def":
-          "A fiber that allows a light signal to take various paths to arrive at the end of the fiber causing some light rays to arrive later than others.",
+      "def": "A fiber that allows a light signal to take various paths to arrive at the end of the fiber causing some light rays to arrive later than others.",
     },
     {
       "id": 1,
@@ -8876,14 +8144,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Multi-user outlet",
-      "def":
-          "A work area outlet designed to support multiple users. Also called multi-user telecommunications outlet assembly or MUTOA.",
+      "def": "A work area outlet designed to support multiple users. Also called multi-user telecommunications outlet assembly or MUTOA.",
     },
     {
       "id": 1,
       "word": "MUTOA",
-      "def":
-          "A work area outlet designed to support multiple users. Also called multi-user telecommunications outlet assembly or MUTOA.",
+      "def": "A work area outlet designed to support multiple users. Also called multi-user telecommunications outlet assembly or MUTOA.",
     },
     {
       "id": 1,
@@ -8904,8 +8170,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "n region",
-      "def":
-          "The region in a semiconductor where conduction electron density exceeds hole density. Also called n zone.",
+      "def": "The region in a semiconductor where conduction electron density exceeds hole density. Also called n zone.",
     },
     {
       "id": 1,
@@ -8916,8 +8181,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NAB",
-      "def":
-          "Abbreviation for National Association of Broadcasters. For several years, prior to January 1, 1958, it was known as National Association of Radio and Television Broadcasters (NARTB).",
+      "def": "Abbreviation for National Association of Broadcasters. For several years, prior to January 1, 1958, it was known as National Association of Radio and Television Broadcasters (NARTB).",
     },
     {
       "id": 1,
@@ -8927,14 +8191,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NAND gate",
-      "def":
-          "A logic circuit which performs the AND function and then inverts the result. A NOT-AND gate. See also AND gate, and NOR gate.",
+      "def": "A logic circuit which performs the AND function and then inverts the result. A NOT-AND gate. See also AND gate, and NOR gate.",
     },
     {
       "id": 1,
       "word": "nano",
-      "def":
-          "A prefix that indicates a factor 10-9, which is 0.000000001 or one billionth, abbreviated as 'n.'",
+      "def": "A prefix that indicates a factor 10-9, which is 0.000000001 or one billionth, abbreviated as 'n.'",
     },
     {
       "id": 1,
@@ -8944,14 +8206,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Narrow Band",
-      "def":
-          "A vaguely defined term to indicate bandwidth less than approximately one-third of an octave (1/3 of the center frequency).",
+      "def": "A vaguely defined term to indicate bandwidth less than approximately one-third of an octave (1/3 of the center frequency).",
     },
     {
       "id": 1,
       "word": "narrow-band EMI",
-      "def":
-          "EMI generated from a device operating at a specific and limited range of frequencies. See also EMI.",
+      "def": "EMI generated from a device operating at a specific and limited range of frequencies. See also EMI.",
     },
     {
       "id": 1,
@@ -8962,8 +8222,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NAVSTAR",
-      "def":
-          "Navigation Satellite Timing and Ranging. (The official U.S. Government name given to the GPS satellite system)",
+      "def": "Navigation Satellite Timing and Ranging. (The official U.S. Government name given to the GPS satellite system)",
     },
     {
       "id": 1,
@@ -8979,8 +8238,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NC",
-      "def":
-          "Normally Closed meaning the state of the contacts when the control circuit is not energized.",
+      "def": "Normally Closed meaning the state of the contacts when the control circuit is not energized.",
     },
     {
       "id": 1,
@@ -9000,8 +8258,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Negative feedback",
-      "def":
-          "Recycling of a signal that is 180? out of phase with the input to decrease amplification. Used in linear circuits to stabilize performance and minimize distortion.",
+      "def": "Recycling of a signal that is 180? out of phase with the input to decrease amplification. Used in linear circuits to stabilize performance and minimize distortion.",
     },
     {
       "id": 1,
@@ -9035,26 +8292,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Network Interface Card",
-      "def":
-          "NIC - The circuit board installed in a PC that provides the interface between a communicating PC and the network.",
+      "def": "NIC - The circuit board installed in a PC that provides the interface between a communicating PC and the network.",
     },
     {
       "id": 1,
       "word": "Network Management System",
-      "def":
-          "NMS - A system responsible for managing at least part of a network. NMSs communicate with agents to help keep track of network statistics and resources.",
+      "def": "NMS - A system responsible for managing at least part of a network. NMSs communicate with agents to help keep track of network statistics and resources.",
     },
     {
       "id": 1,
       "word": "network-leased line",
-      "def":
-          "May refer to either a telephone or teletype network; usually has reference to telephone lines.",
+      "def": "May refer to either a telephone or teletype network; usually has reference to telephone lines.",
     },
     {
       "id": 1,
       "word": "network-private wire",
-      "def":
-          "May refer to either private telephone or private teletype network.",
+      "def": "May refer to either private telephone or private teletype network.",
     },
     {
       "id": 1,
@@ -9071,14 +8324,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NEXT",
-      "def":
-          "Near End Crosstalk.The unwanted noise coupled into a device's receive circuit from its transmit circuit.",
+      "def": "Near End Crosstalk.The unwanted noise coupled into a device's receive circuit from its transmit circuit.",
     },
     {
       "id": 1,
       "word": "next higher assembly",
-      "def":
-          "A term used to designate an assembly of the next higher level in the breakdown of a system.",
+      "def": "A term used to designate an assembly of the next higher level in the breakdown of a system.",
     },
     {
       "id": 1,
@@ -9093,8 +8344,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Nitrile-Butadiene Rubber",
-      "def":
-          "NBR - Specific properties depend on the actual composition but generally, this rubber offers excellent resistance to oils and solvents.",
+      "def": "NBR - Specific properties depend on the actual composition but generally, this rubber offers excellent resistance to oils and solvents.",
     },
     {
       "id": 1,
@@ -9105,26 +8355,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NMOS",
-      "def":
-          "N-channel metal-oxide semiconductor. A MOS IC using n-type material for the channels.",
+      "def": "N-channel metal-oxide semiconductor. A MOS IC using n-type material for the channels.",
     },
     {
       "id": 1,
       "word": "NO",
-      "def":
-          "Normally Open meaning the state of the contacts when the control circuit is not energized.",
+      "def": "Normally Open meaning the state of the contacts when the control circuit is not energized.",
     },
     {
       "id": 1,
       "word": "No Load Loss (Core Losses)",
-      "def":
-          "These losses are caused by the magnetizing of the core and are always present. The way they are measured is by running full voltage with no load on the transformer",
+      "def": "These losses are caused by the magnetizing of the core and are always present. The way they are measured is by running full voltage with no load on the transformer",
     },
     {
       "id": 1,
       "word": "No Load Voltage",
-      "def":
-          "Voltage level present at the output pins of a converter when 0% load is applied.",
+      "def": "Voltage level present at the output pins of a converter when 0% load is applied.",
     },
     {
       "id": 1,
@@ -9152,8 +8398,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Noise Floor",
-      "def":
-          "The level of signal below which a receiver cannot detect a signal due to the noise generated within the receiver.",
+      "def": "The level of signal below which a receiver cannot detect a signal due to the noise generated within the receiver.",
     },
     {
       "id": 1,
@@ -9163,44 +8408,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Nominal",
-      "def":
-          "A descriptor applied to a dimension representing the center of the range of tolerance or a value if o tolerance is applied.",
+      "def": "A descriptor applied to a dimension representing the center of the range of tolerance or a value if o tolerance is applied.",
     },
     {
       "id": 1,
       "word": "Nominal Value",
-      "def":
-          "Ideal value that is used as a reference point. Typically, it is not the same as the value actually measured.",
+      "def": "Ideal value that is used as a reference point. Typically, it is not the same as the value actually measured.",
     },
     {
       "id": 1,
       "word": "Non-Harmonic Signals",
-      "def":
-          "Spurious signals produced by a circuit, the frequencies of which are not integral multiples of any signals either produced or processed by the circuit.",
+      "def": "Spurious signals produced by a circuit, the frequencies of which are not integral multiples of any signals either produced or processed by the circuit.",
     },
     {
       "id": 1,
       "word": "Nonlinear Material",
-      "def":
-          "Magnetic material that exhibits a permeability which changes dramatically when MMF is varied.",
+      "def": "Magnetic material that exhibits a permeability which changes dramatically when MMF is varied.",
     },
     {
       "id": 1,
       "word": "Non-Linearity",
-      "def":
-          "An impedance that does not linear relationship with voltage and current. The deviation of any parameter from a linear relationship with another.",
+      "def": "An impedance that does not linear relationship with voltage and current. The deviation of any parameter from a linear relationship with another.",
     },
     {
       "id": 1,
       "word": "Non-recurring Engineering",
-      "def":
-          "NRE - Engineering activity that is required to design, develop or enhance a product but is not required for the production of an existing product.",
+      "def": "NRE - Engineering activity that is required to design, develop or enhance a product but is not required for the production of an existing product.",
     },
     {
       "id": 1,
       "word": "NOR gate",
-      "def":
-          "A logic circuit which performs the OR function and then inverts the result. A NOT-OR gate.",
+      "def": "A logic circuit which performs the OR function and then inverts the result. A NOT-OR gate.",
     },
     {
       "id": 1,
@@ -9211,8 +8449,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NOT",
-      "def":
-          "The logical operator having that property which if P is a statement, then the not of P (P) is true if P is false, and the not of P (P) is false if P is true.",
+      "def": "The logical operator having that property which if P is a statement, then the not of P (P) is true if P is false, and the not of P (P) is false if P is true.",
     },
     {
       "id": 1,
@@ -9223,8 +8460,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "NRE",
-      "def":
-          "non-recurring engineering - Engineering activity that is required to design, develop or enhance a product but is not required for the production of an existing product.",
+      "def": "non-recurring engineering - Engineering activity that is required to design, develop or enhance a product but is not required for the production of an existing product.",
     },
     {
       "id": 1,
@@ -9246,32 +8482,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "n-type conductivity",
-      "def":
-          "The conductivity associated with conduction electrons in a semiconductor.",
+      "def": "The conductivity associated with conduction electrons in a semiconductor.",
     },
     {
       "id": 1,
       "word": "N-type Material",
-      "def":
-          "A semiconductor material to which a donor dopant has been added, resulting in net negative charge",
+      "def": "A semiconductor material to which a donor dopant has been added, resulting in net negative charge",
     },
     {
       "id": 1,
       "word": "n-type semiconductor",
-      "def":
-          "An extrinsic semiconductor in which the conduction electron density exceeds the hole density. The net ionized impurity concentration is donor type.",
+      "def": "An extrinsic semiconductor in which the conduction electron density exceeds the hole density. The net ionized impurity concentration is donor type.",
     },
     {
       "id": 1,
       "word": "numerical aperture",
-      "def":
-          "The light gathering ability of a fiber, defined as the sine of half the angle that contains 90% of the optical power that is captured by the fiber.",
+      "def": "The light gathering ability of a fiber, defined as the sine of half the angle that contains 90% of the optical power that is captured by the fiber.",
     },
     {
       "id": 1,
       "word": "numerical control",
-      "def":
-          "Pertaining to the automatic control of processes by proper machine interpretation of numerical data.",
+      "def": "Pertaining to the automatic control of processes by proper machine interpretation of numerical data.",
     },
     {
       "id": 1,
@@ -9299,14 +8530,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Octave",
-      "def":
-          "A frequency interval whose maximum value is twice the minimum value",
+      "def": "A frequency interval whose maximum value is twice the minimum value",
     },
     {
       "id": 1,
       "word": "Octave Band",
-      "def":
-          "A frequency interval whose maximum value is twice the minimum value",
+      "def": "A frequency interval whose maximum value is twice the minimum value",
     },
     {
       "id": 1,
@@ -9321,8 +8550,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Oersted",
-      "def":
-          "The unit of magnetic field strength (H) in the CGS system. One Oersted equals the magnetomotive force of one Gilbert per centimeter of flux path.",
+      "def": "The unit of magnetic field strength (H) in the CGS system. One Oersted equals the magnetomotive force of one Gilbert per centimeter of flux path.",
     },
     {
       "id": 1,
@@ -9333,50 +8561,42 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Off-Line Power Supply",
-      "def":
-          "Power supply (linear or switching) that operates directly off the AC line. The input voltage is rectified and filtered prior to any isolation transformer.",
+      "def": "Power supply (linear or switching) that operates directly off the AC line. The input voltage is rectified and filtered prior to any isolation transformer.",
     },
     {
       "id": 1,
       "word": "offset current",
-      "def":
-          "An operational amplifier characteristic. The difference in current at the two inputs to bring the output voltage to zero.",
+      "def": "An operational amplifier characteristic. The difference in current at the two inputs to bring the output voltage to zero.",
     },
     {
       "id": 1,
       "word": "Off-State Capacitance",
-      "def":
-          "Capacitance in the off-state measured at a specified frequency, amplitude, and DC bias.",
+      "def": "Capacitance in the off-state measured at a specified frequency, amplitude, and DC bias.",
     },
     {
       "id": 1,
       "word": "Off-State Current",
-      "def":
-          "DC value of the current through a SiBar device that results from the application of the off-state voltage, VD. IDM designates the maximum off-state current.",
+      "def": "DC value of the current through a SiBar device that results from the application of the off-state voltage, VD. IDM designates the maximum off-state current.",
     },
     {
       "id": 1,
       "word": "Off-State Voltage",
-      "def":
-          "DC voltage when a SiBar device is in the off-state. VDM designates the maximum off-state voltage.",
+      "def": "DC voltage when a SiBar device is in the off-state. VDM designates the maximum off-state voltage.",
     },
     {
       "id": 1,
       "word": "OFT",
-      "def":
-          "Optional Flame Test - Canadian Standards Association?s test for flameretardance. Tubing with an OFT rating is highly flameretardant.",
+      "def": "Optional Flame Test - Canadian Standards Association?s test for flameretardance. Tubing with an OFT rating is highly flameretardant.",
     },
     {
       "id": 1,
       "word": "ohm",
-      "def":
-          "The unit of measurement for electrical resistance. A circuit is said to have a resistance of one ohm when an applied emf of one volt causes a current of one ampere to flow.",
+      "def": "The unit of measurement for electrical resistance. A circuit is said to have a resistance of one ohm when an applied emf of one volt causes a current of one ampere to flow.",
     },
     {
       "id": 1,
       "word": "Ohm's Law",
-      "def":
-          "The law that relates voltage and current in a circuit. Ohm's Law is:",
+      "def": "The law that relates voltage and current in a circuit. Ohm's Law is:",
     },
     {
       "id": 1,
@@ -9387,14 +8607,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "olefin",
-      "def":
-          "Types of unsaturated aliphatic hydrocarbons, including ethylene, propylene, and butene. They are the bases for such plastics as polypropylene and polyethylene.",
+      "def": "Types of unsaturated aliphatic hydrocarbons, including ethylene, propylene, and butene. They are the bases for such plastics as polypropylene and polyethylene.",
     },
     {
       "id": 1,
       "word": "on-line memory",
-      "def":
-          "A memory media, with direct electrical interconnections, used as a nonremovable part of a computer system. For example, ROM ICs.",
+      "def": "A memory media, with direct electrical interconnections, used as a nonremovable part of a computer system. For example, ROM ICs.",
     },
     {
       "id": 1,
@@ -9404,8 +8622,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "On-State Voltage",
-      "def":
-          "Voltage across a SiBar device in the on-state condition at a specified current, IT.",
+      "def": "Voltage across a SiBar device in the on-state condition at a specified current, IT.",
     },
     {
       "id": 1,
@@ -9416,20 +8633,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Open Circuit Inductance (LO)",
-      "def":
-          "The inductance measured at the winding of a transformer at a low flux density level.",
+      "def": "The inductance measured at the winding of a transformer at a low flux density level.",
     },
     {
       "id": 1,
       "word": "open loop",
-      "def":
-          "Refers to operation of an amplifier without feedback, as opposed to closed loop which is operation with feedback.",
+      "def": "Refers to operation of an amplifier without feedback, as opposed to closed loop which is operation with feedback.",
     },
     {
       "id": 1,
       "word": "Open Systems Interconnection(OSI)",
-      "def":
-          "A 7-layer architecture model for communications systems developed by ISO and used as a reference model for most network architectures.",
+      "def": "A 7-layer architecture model for communications systems developed by ISO and used as a reference model for most network architectures.",
     },
     {
       "id": 1,
@@ -9439,8 +8653,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "operand",
-      "def":
-          "One of the quantities entering into, or arising from, a computer operation. An operand may be an argument, a parameter, a result, or the location code for the next instruction.",
+      "def": "One of the quantities entering into, or arising from, a computer operation. An operand may be an argument, a parameter, a result, or the location code for the next instruction.",
     },
     {
       "id": 1,
@@ -9463,20 +8676,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Operating Temperature",
-      "def":
-          "The maximum internal temperature at which a system, harness, or connector ay operate in continuous service; generally expressed as a time and temperature.",
+      "def": "The maximum internal temperature at which a system, harness, or connector ay operate in continuous service; generally expressed as a time and temperature.",
     },
     {
       "id": 1,
       "word": "Operating Temperature Range",
-      "def":
-          "The specified temperature range over which a circuit or component is designed to operate without damage.",
+      "def": "The specified temperature range over which a circuit or component is designed to operate without damage.",
     },
     {
       "id": 1,
       "word": "operating time",
-      "def":
-          "The time interval between satisfaction of the specified input conditions and the occurrence of the specified operation.",
+      "def": "The time interval between satisfaction of the specified input conditions and the occurrence of the specified operation.",
     },
     {
       "id": 1,
@@ -9487,20 +8697,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "optical character recognition",
-      "def":
-          "Automatic recognition of printed characters with a character reader. Commonly referred to by the abbreviation OCR.",
+      "def": "Automatic recognition of printed characters with a character reader. Commonly referred to by the abbreviation OCR.",
     },
     {
       "id": 1,
       "word": "optical fiber",
-      "def":
-          "Also called fiber-optic cable. A thin, flexible glass or plastic fiber capable of transmitting light over considerable distances by internal reflection.",
+      "def": "Also called fiber-optic cable. A thin, flexible glass or plastic fiber capable of transmitting light over considerable distances by internal reflection.",
     },
     {
       "id": 1,
       "word": "Optional Flame Test",
-      "def":
-          "OFT - Canadian Standards Association?s test for flameretardance. Tubing with an OFT rating is highly flameretardant.",
+      "def": "OFT - Canadian Standards Association?s test for flameretardance. Tubing with an OFT rating is highly flameretardant.",
     },
     {
       "id": 1,
@@ -9510,8 +8717,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "OR gate",
-      "def":
-          "A multiple-input gate circuit whose output is energized when any one or more of the inputs is in a prescribed state. Used in digital logic.",
+      "def": "A multiple-input gate circuit whose output is energized when any one or more of the inputs is in a prescribed state. Used in digital logic.",
     },
     {
       "id": 1,
@@ -9532,8 +8738,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "output",
-      "def":
-          "Information transferred from the internal storage of a computer to output devices or external storage.",
+      "def": "Information transferred from the internal storage of a computer to output devices or external storage.",
     },
     {
       "id": 1,
@@ -9550,8 +8755,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Output Impedance",
-      "def":
-          "Ratio of change in output voltage to a change in output load current. Sometimes referred to as Dynamic Response.",
+      "def": "Ratio of change in output voltage to a change in output load current. Sometimes referred to as Dynamic Response.",
     },
     {
       "id": 1,
@@ -9561,32 +8765,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Output Voltage",
-      "def":
-          "Value of DC voltage measured at the output terminal of a converter.",
+      "def": "Value of DC voltage measured at the output terminal of a converter.",
     },
     {
       "id": 1,
       "word": "Output Voltage Accuracy",
-      "def":
-          "Maximum allowable deviation of the DC output of a converter from its ideal or nominal value. Expressed as a percentage of output voltage. Often called output voltage tolerance",
+      "def": "Maximum allowable deviation of the DC output of a converter from its ideal or nominal value. Expressed as a percentage of output voltage. Often called output voltage tolerance",
     },
     {
       "id": 1,
       "word": "Output Voltage Range",
-      "def":
-          "Minimum and maximum output voltage limits within which a converter meets its operating specifications.",
+      "def": "Minimum and maximum output voltage limits within which a converter meets its operating specifications.",
     },
     {
       "id": 1,
       "word": "ovaled",
-      "def":
-          "A terminal (or contact) whose barrel has been made oval in shape to aid in placing two wires in the barrel.",
+      "def": "A terminal (or contact) whose barrel has been made oval in shape to aid in placing two wires in the barrel.",
     },
     {
       "id": 1,
       "word": "Overcurrent Protection",
-      "def":
-          "Output monitoring circuit activated if the converter exceeds a preset current level.",
+      "def": "Output monitoring circuit activated if the converter exceeds a preset current level.",
     },
     {
       "id": 1,
@@ -9596,20 +8795,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Overshoot",
-      "def":
-          "Transient change in output voltage that exceeds specified accuracy limits. Typically occurs on converter turn on/off or with a step change in output load or input line.",
+      "def": "Transient change in output voltage that exceeds specified accuracy limits. Typically occurs on converter turn on/off or with a step change in output load or input line.",
     },
     {
       "id": 1,
       "word": "Overtemperature Protection",
-      "def":
-          "Design feature that protects the silicon die from exceeding its designed operating temperature range. The device will thermally cycle until the abnormal condition is corrected.",
+      "def": "Design feature that protects the silicon die from exceeding its designed operating temperature range. The device will thermally cycle until the abnormal condition is corrected.",
     },
     {
       "id": 1,
       "word": "Overvoltage",
-      "def":
-          "Voltage for a circuit exceeds the allowable limit for that circuit. Can be transient or long-lasting.",
+      "def": "Voltage for a circuit exceeds the allowable limit for that circuit. Can be transient or long-lasting.",
     },
     {
       "id": 1,
@@ -9637,14 +8833,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "oxide",
-      "def":
-          "A compound of oxygen with one or more metallic elements. Rust is an oxide of iron.",
+      "def": "A compound of oxygen with one or more metallic elements. Rust is an oxide of iron.",
     },
     {
       "id": 1,
       "word": "Oxide Passivation",
-      "def":
-          "A layer of oxide, usually silicon dioxide either formed from the surface of a semiconductor die or deposited on the surface of a the die using chemical vapor deposition.",
+      "def": "A layer of oxide, usually silicon dioxide either formed from the surface of a semiconductor die or deposited on the surface of a the die using chemical vapor deposition.",
     },
     {
       "id": 1,
@@ -9672,14 +8866,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Package",
-      "def":
-          "Container for a semiconductor die that protects it and has electrodes that facilitate electrical connection of the die to the external circuit.",
+      "def": "Container for a semiconductor die that protects it and has electrodes that facilitate electrical connection of the die to the external circuit.",
     },
     {
       "id": 1,
       "word": "Packaging",
-      "def":
-          "The process of physically locating, connecting, and protecting devices or components.",
+      "def": "The process of physically locating, connecting, and protecting devices or components.",
     },
     {
       "id": 1,
@@ -9696,8 +8888,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "packet switching",
-      "def":
-          "(systems) A data transmission process, using addressed packets of data, whereby the communication channel is occupied only for the duration of the transmission of the packet.",
+      "def": "(systems) A data transmission process, using addressed packets of data, whereby the communication channel is occupied only for the duration of the transmission of the packet.",
     },
     {
       "id": 1,
@@ -9714,8 +8905,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "PAL",
-      "def":
-          "Programmable Array Logic : PAL is an AND gate array whose outputs are Ored together in a way determined by the manufacturer of the device.",
+      "def": "Programmable Array Logic : PAL is an AND gate array whose outputs are Ored together in a way determined by the manufacturer of the device.",
     },
     {
       "id": 1,
@@ -9725,8 +8915,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Panel",
-      "def":
-          "The side or front (usually metal) of a piece of equipment on which connectors are mounted.",
+      "def": "The side or front (usually metal) of a piece of equipment on which connectors are mounted.",
     },
     {
       "id": 1,
@@ -9737,8 +8926,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "parallel circuit",
-      "def":
-          "A circuit in which two or more loads are connected to a single voltage source, at a common point.",
+      "def": "A circuit in which two or more loads are connected to a single voltage source, at a common point.",
     },
     {
       "id": 1,
@@ -9749,8 +8937,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "parallel splice",
-      "def":
-          "A splice wherein two wires are joined together side-by-side, either from the same end of the splice, or from opposite ends of the splice.",
+      "def": "A splice wherein two wires are joined together side-by-side, either from the same end of the splice, or from opposite ends of the splice.",
     },
     {
       "id": 1,
@@ -9772,8 +8959,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "parity bit",
-      "def":
-          "A binary digit appended to an array of bits to make the sum of all the bits always odd or always even.",
+      "def": "A binary digit appended to an array of bits to make the sum of all the bits always odd or always even.",
     },
     {
       "id": 1,
@@ -9789,14 +8975,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Pascal",
-      "def":
-          "A high-level, highly structured, general-purpose programming language. Named after Blaise Pascal.",
+      "def": "A high-level, highly structured, general-purpose programming language. Named after Blaise Pascal.",
     },
     {
       "id": 1,
       "word": "Passband",
-      "def":
-          "The frequency interval that is propagated through a filter with minimum insertion loss.",
+      "def": "The frequency interval that is propagated through a filter with minimum insertion loss.",
     },
     {
       "id": 1,
@@ -9823,44 +9007,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Passive Components",
-      "def":
-          "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
+      "def": "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
     },
     {
       "id": 1,
       "word": "Passive Device",
-      "def":
-          "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
+      "def": "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
     },
     {
       "id": 1,
       "word": "passive element",
-      "def":
-          "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
+      "def": "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
     },
     {
       "id": 1,
       "word": "Passive Network",
-      "def":
-          "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
+      "def": "Devices that do not amplify or produce a signal. Components which have no gain characteristics, such as capacitors and resistors.",
     },
     {
       "id": 1,
       "word": "passive substrate",
-      "def":
-          "A support made of insulating material used as a base for the deposition of film components.",
+      "def": "A support made of insulating material used as a base for the deposition of film components.",
     },
     {
       "id": 1,
       "word": "Patch cord",
-      "def":
-          "A cable assembly with (usually) a plug on each end, used to make a cross connection.",
+      "def": "A cable assembly with (usually) a plug on each end, used to make a cross connection.",
     },
     {
       "id": 1,
       "word": "Patch panel",
-      "def":
-          "A rack-mountable panel (usually 19' wide) containing connecting hardware.Used to patch between groups of cables and equipment.",
+      "def": "A rack-mountable panel (usually 19' wide) containing connecting hardware.Used to patch between groups of cables and equipment.",
     },
     {
       "id": 1,
@@ -9871,20 +9048,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "path",
-      "def":
-          "That portion of a printed circuit pattern which carries current between two pads or between a pad and the terminal area (printed contact, edge pad). See also pad, and terminal area.",
+      "def": "That portion of a printed circuit pattern which carries current between two pads or between a pad and the terminal area (printed contact, edge pad). See also pad, and terminal area.",
     },
     {
       "id": 1,
       "word": "Path Loss",
-      "def":
-          "The reduction in transmitted power as measured at a receiver due the distance the signal traveled from the transmitter, atmospheric absorption and other factors.",
+      "def": "The reduction in transmitted power as measured at a receiver due the distance the signal traveled from the transmitter, atmospheric absorption and other factors.",
     },
     {
       "id": 1,
       "word": "PBX",
-      "def":
-          "Private Branch Exchange.The premises telephone switch.Handles telecom functions.",
+      "def": "Private Branch Exchange.The premises telephone switch.Handles telecom functions.",
     },
     {
       "id": 1,
@@ -9906,8 +9080,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pcm",
-      "def":
-          "Pulse code modulation. A scheme by which an analog signal is sampled and converted to a digital signal for transmission.",
+      "def": "Pulse code modulation. A scheme by which an analog signal is sampled and converted to a digital signal for transmission.",
     },
     {
       "id": 1,
@@ -9917,8 +9090,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "PCS",
-      "def":
-          "Personal Communications Services. A term used in the United States for any mobile telephone services in the 1900 MHz frequency band.",
+      "def": "Personal Communications Services. A term used in the United States for any mobile telephone services in the 1900 MHz frequency band.",
     },
     {
       "id": 1,
@@ -9944,44 +9116,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Peak Pulse Current",
-      "def":
-          "Rated maximum value of peak pulse current of specified amplitude and waveshape.",
+      "def": "Rated maximum value of peak pulse current of specified amplitude and waveshape.",
     },
     {
       "id": 1,
       "word": "peaks",
-      "def":
-          "Momentary high amplitude levels occurring in electronic equipment.",
+      "def": "Momentary high amplitude levels occurring in electronic equipment.",
     },
     {
       "id": 1,
       "word": "Peak-to-Peak",
-      "def":
-          "The magnitude of the arithmetic difference between the maximum and minimum values for a varying quantity.",
+      "def": "The magnitude of the arithmetic difference between the maximum and minimum values for a varying quantity.",
     },
     {
       "id": 1,
       "word": "Peak-to-Peak Amplitude",
-      "def":
-          "The magnitude of the arithmetic difference between the maximum and minimum values for a varying quantity.",
+      "def": "The magnitude of the arithmetic difference between the maximum and minimum values for a varying quantity.",
     },
     {
       "id": 1,
       "word": "Percent Bandwidth",
-      "def":
-          "The bandwidth divided by the center frequency of the band, expressed as a percentage.",
+      "def": "The bandwidth divided by the center frequency of the band, expressed as a percentage.",
     },
     {
       "id": 1,
       "word": "Percent Ripple",
-      "def":
-          "The percentage of ripple or AC flux to total flux, or in an inductor, the percentage of alternating current to average current.",
+      "def": "The percentage of ripple or AC flux to total flux, or in an inductor, the percentage of alternating current to average current.",
     },
     {
       "id": 1,
       "word": "Percent Saturation",
-      "def":
-          "The 100% permeability minus the percent of initial permeability. ie 20% saturation = 80% of initial permeability.",
+      "def": "The 100% permeability minus the percent of initial permeability. ie 20% saturation = 80% of initial permeability.",
     },
     {
       "id": 1,
@@ -9991,20 +9156,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Periodic and Random Deviation",
-      "def":
-          "PARD - Noise and ripple voltage superimposed on a converter's DC output. Typically specified at full load, it is expressed in peak-to-peak or RMS volts over a given bandwidth.",
+      "def": "PARD - Noise and ripple voltage superimposed on a converter's DC output. Typically specified at full load, it is expressed in peak-to-peak or RMS volts over a given bandwidth.",
     },
     {
       "id": 1,
       "word": "peripheral equipment",
-      "def":
-          "Equipment separate from the main computer; includes all forms of attachments to main computer systems.",
+      "def": "Equipment separate from the main computer; includes all forms of attachments to main computer systems.",
     },
     {
       "id": 1,
       "word": "Peripheral Seal",
-      "def":
-          "A seal provided around the periphery of connector inserts to prevent the ingress of fluids or contaminants at the perimeter of mated connectors.",
+      "def": "A seal provided around the periphery of connector inserts to prevent the ingress of fluids or contaminants at the perimeter of mated connectors.",
     },
     {
       "id": 1,
@@ -10015,8 +9177,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Permanent Virtual Circuit",
-      "def":
-          "PVC - A defined virtual link with fixed end-points that are set-up by the network manager. A single virtual path may support multiple PVCs.",
+      "def": "PVC - A defined virtual link with fixed end-points that are set-up by the network manager. A single virtual path may support multiple PVCs.",
     },
     {
       "id": 1,
@@ -10038,14 +9199,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "PGA",
-      "def":
-          "pin grid array - A ceramic substrate with rows of short round pins extending out the bottom in an x-y or fence array.",
+      "def": "pin grid array - A ceramic substrate with rows of short round pins extending out the bottom in an x-y or fence array.",
     },
     {
       "id": 1,
       "word": "Phase",
-      "def":
-          "In a periodic function, the fraction of a period that has elapsed since some arbitrary reference point.",
+      "def": "In a periodic function, the fraction of a period that has elapsed since some arbitrary reference point.",
     },
     {
       "id": 1,
@@ -10056,8 +9215,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "phase control",
-      "def":
-          "A circuit technique for proportional control of an output signal by conduction only during certain phases of an ac line voltage.",
+      "def": "A circuit technique for proportional control of an output signal by conduction only during certain phases of an ac line voltage.",
     },
     {
       "id": 1,
@@ -10068,14 +9226,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "phase locked loop",
-      "def":
-          "In communications, a circuit technique by which a local oscillator is synchronized in phase and frequency with a signal being received.",
+      "def": "In communications, a circuit technique by which a local oscillator is synchronized in phase and frequency with a signal being received.",
     },
     {
       "id": 1,
       "word": "Phase Modulation",
-      "def":
-          "PM - The modification of the phase of a higher frequency, constant magnitude carrier signal controlled by the amplitude and phase of a lower frequency baseband or audio signal.",
+      "def": "PM - The modification of the phase of a higher frequency, constant magnitude carrier signal controlled by the amplitude and phase of a lower frequency baseband or audio signal.",
     },
     {
       "id": 1,
@@ -10112,14 +9268,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "photodetector",
-      "def":
-          "A device that is sensitive to light and will produce an electric current in its presence.",
+      "def": "A device that is sensitive to light and will produce an electric current in its presence.",
     },
     {
       "id": 1,
       "word": "photoresist",
-      "def":
-          "A lightsensitive organic coating that can be selectively deposited to resist the action of the etchant (etching solution) and produce the desired circuit pattern.",
+      "def": "A lightsensitive organic coating that can be selectively deposited to resist the action of the etchant (etching solution) and produce the desired circuit pattern.",
     },
     {
       "id": 1,
@@ -10129,8 +9283,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pi",
-      "def":
-          "A lumped-element filter using, for low pass, two parallel capacitive elements and a series inductive element between them.",
+      "def": "A lumped-element filter using, for low pass, two parallel capacitive elements and a series inductive element between them.",
     },
     {
       "id": 1,
@@ -10150,14 +9303,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Pi-Filter",
-      "def":
-          "A filter consisting of two capacitors connected in parallel with a series inductor. These fileters arc commoonly found near DC-DC converters to filter ripple curent and voltage.",
+      "def": "A filter consisting of two capacitors connected in parallel with a series inductor. These fileters arc commoonly found near DC-DC converters to filter ripple curent and voltage.",
     },
     {
       "id": 1,
       "word": "pigments",
-      "def":
-          "Coloring matter, often in powder form, having a wide range of colors and physical properties.",
+      "def": "Coloring matter, often in powder form, having a wide range of colors and physical properties.",
     },
     {
       "id": 1,
@@ -10168,14 +9319,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Pigtail",
-      "def":
-          "A short length of fiber permanently attached to a component, such as a source, detector, or coupler.",
+      "def": "A short length of fiber permanently attached to a component, such as a source, detector, or coupler.",
     },
     {
       "id": 1,
       "word": "pin contact",
-      "def":
-          "A male type contact, usually designed to mate with a socket or female contact. It is normally connected to the 'dead' side of a circuit.",
+      "def": "A male type contact, usually designed to mate with a socket or female contact. It is normally connected to the 'dead' side of a circuit.",
     },
     {
       "id": 1,
@@ -10186,44 +9335,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pin grid array",
-      "def":
-          "PGA - A ceramic substrate with rows of short round pins extending out the bottom in an x-y or fence array.",
+      "def": "PGA - A ceramic substrate with rows of short round pins extending out the bottom in an x-y or fence array.",
     },
     {
       "id": 1,
       "word": "Pin photodiode",
-      "def":
-          "A photodiode having a large intrinsic layer sandwiched between p-type and n-type layers.",
+      "def": "A photodiode having a large intrinsic layer sandwiched between p-type and n-type layers.",
     },
     {
       "id": 1,
       "word": "Pinch-Off",
-      "def":
-          "The cessation of drain-source current flow in a field effect transistor.",
+      "def": "The cessation of drain-source current flow in a field effect transistor.",
     },
     {
       "id": 1,
       "word": "Pinch-Off Voltage",
-      "def":
-          "The gate-source voltage required to stop drain-source current flow in a field effect transistor.",
+      "def": "The gate-source voltage required to stop drain-source current flow in a field effect transistor.",
     },
     {
       "id": 1,
       "word": "pinholes",
-      "def":
-          "Small holes occurring as imperfections, which extend through the printed element to the base. (Examples: holes in screened resistors, thin film elements, screened epoxy masks.)",
+      "def": "Small holes occurring as imperfections, which extend through the printed element to the base. (Examples: holes in screened resistors, thin film elements, screened epoxy masks.)",
     },
     {
       "id": 1,
       "word": "Pistoning",
-      "def":
-          "The movement of a fiber axially in and out of a ferrule end, often caused by changes in temperature.",
+      "def": "The movement of a fiber axially in and out of a ferrule end, often caused by changes in temperature.",
     },
     {
       "id": 1,
       "word": "pits",
-      "def":
-          "Small holes occurring as imperfections which do not penetrate entirely through the printed element.",
+      "def": "Small holes occurring as imperfections which do not penetrate entirely through the printed element.",
     },
     {
       "id": 1,
@@ -10234,14 +9376,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "plastic",
-      "def":
-          "High polymeric substances, including both natural and synthetic products, but excluding the rubbers, that are capable of flowing under heat and pressure at one time or another.",
+      "def": "High polymeric substances, including both natural and synthetic products, but excluding the rubbers, that are capable of flowing under heat and pressure at one time or another.",
     },
     {
       "id": 1,
       "word": "Plastic Deformation",
-      "def":
-          "Change in dimensions under a load that does not recover when the load is removed.",
+      "def": "Change in dimensions under a load that does not recover when the load is removed.",
     },
     {
       "id": 1,
@@ -10262,14 +9402,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "plated-thru hole",
-      "def":
-          "A drilled hole in a printed circuit board which has been plated to establish electrical continuity from one side of the board to the other.",
+      "def": "A drilled hole in a printed circuit board which has been plated to establish electrical continuity from one side of the board to the other.",
     },
     {
       "id": 1,
       "word": "Plating",
-      "def":
-          "The overlaying of a thin coating of metal on metallic components to improve conductivity, facilitate soldering, or prevent corrosion.",
+      "def": "The overlaying of a thin coating of metal on metallic components to improve conductivity, facilitate soldering, or prevent corrosion.",
     },
     {
       "id": 1,
@@ -10279,20 +9417,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Plenum",
-      "def":
-          "The air space between walls, under structural floors, and above drop ceilings, which can be used to route intrabuilding cabling. Plenum-rated cable is required in such locations.",
+      "def": "The air space between walls, under structural floors, and above drop ceilings, which can be used to route intrabuilding cabling. Plenum-rated cable is required in such locations.",
     },
     {
       "id": 1,
       "word": "Plenum cable",
-      "def":
-          "A cable whose flammability and smoke characteristics allow it to be routed in a plenum area without being enclosed in a conduit.",
+      "def": "A cable whose flammability and smoke characteristics allow it to be routed in a plenum area without being enclosed in a conduit.",
     },
     {
       "id": 1,
       "word": "Plug",
-      "def":
-          "The part of a connector that is normally ?removable? from the other, permanently mounted part; usually that half of a two-piece connector that contains the pin contacts.",
+      "def": "The part of a connector that is normally ?removable? from the other, permanently mounted part; usually that half of a two-piece connector that contains the pin contacts.",
     },
     {
       "id": 1,
@@ -10303,8 +9438,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Plug Connector",
-      "def":
-          "An electrical connector that is intended to be attached to the free end of a conductor, wire, cable, or bundle, and that couples or mates to a receptacle connector.",
+      "def": "An electrical connector that is intended to be attached to the free end of a conductor, wire, cable, or bundle, and that couples or mates to a receptacle connector.",
     },
     {
       "id": 1,
@@ -10315,14 +9449,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "PMOS",
-      "def":
-          "P-channel metal-oxide semiconductor. A MOS IC using p-type material for the channels.",
+      "def": "P-channel metal-oxide semiconductor. A MOS IC using p-type material for the channels.",
     },
     {
       "id": 1,
       "word": "PNP (p-n-p) Transistor",
-      "def":
-          "A bipolar transistor with a p-type emitter, n-type base and p-type collector.",
+      "def": "A bipolar transistor with a p-type emitter, n-type base and p-type collector.",
     },
     {
       "id": 1,
@@ -10339,20 +9471,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "point-to-point connection",
-      "def":
-          "A network configuration in which a connection or transmission channel is established between two, and only two, circuits.",
+      "def": "A network configuration in which a connection or transmission channel is established between two, and only two, circuits.",
     },
     {
       "id": 1,
       "word": "Poke Through",
-      "def":
-          "A term describing stray wires in a solder joint that poke through the insulation.",
+      "def": "A term describing stray wires in a solder joint that poke through the insulation.",
     },
     {
       "id": 1,
       "word": "Polarity",
-      "def":
-          "Ability of a converter to produce an output that is positive or negative referenced to ground. Also see Floating Output.",
+      "def": "Ability of a converter to produce an output that is positive or negative referenced to ground. Also see Floating Output.",
     },
     {
       "id": 1,
@@ -10374,20 +9503,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "poly",
-      "def":
-          "A prefix meaning many. Thus, polymer means many mers, signifying a repeated structural unit.",
+      "def": "A prefix meaning many. Thus, polymer means many mers, signifying a repeated structural unit.",
     },
     {
       "id": 1,
       "word": "Polyamide",
-      "def":
-          "A polymer formed by the reaction of a diamine and a diacid. Nylons are commercial polyamides characterized by toughness, solvent resistance, and sharp melting point.",
+      "def": "A polymer formed by the reaction of a diamine and a diacid. Nylons are commercial polyamides characterized by toughness, solvent resistance, and sharp melting point.",
     },
     {
       "id": 1,
       "word": "polybutadiene",
-      "def":
-          "A family of thermosetting molding compounds offering good physical properties, excellent electrical properties, and outstanding resistance to water and aqueous liquids.",
+      "def": "A family of thermosetting molding compounds offering good physical properties, excellent electrical properties, and outstanding resistance to water and aqueous liquids.",
     },
     {
       "id": 1,
@@ -10398,44 +9524,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "polyimide",
-      "def":
-          "Available for wire insulation in both film form and as a magnet wire enamel. It is chemically inert and is radiation resistant.",
+      "def": "Available for wire insulation in both film form and as a magnet wire enamel. It is chemically inert and is radiation resistant.",
     },
     {
       "id": 1,
       "word": "polymer",
-      "def":
-          "A compound formed by polymerization which results in the chemical union of monomers or the continued reaction between lower molecular weight polymers.",
+      "def": "A compound formed by polymerization which results in the chemical union of monomers or the continued reaction between lower molecular weight polymers.",
     },
     {
       "id": 1,
       "word": "polymerize",
-      "def":
-          "To unite chemically two or more monomers or polymers of the same kind to form a molecule with higher molecular weight.",
+      "def": "To unite chemically two or more monomers or polymers of the same kind to form a molecule with higher molecular weight.",
     },
     {
       "id": 1,
       "word": "Polyolefin",
-      "def":
-          "A family of polymers (such as polyethylene and polypropylene) made from olefin monomers.",
+      "def": "A family of polymers (such as polyethylene and polypropylene) made from olefin monomers.",
     },
     {
       "id": 1,
       "word": "polypropylene",
-      "def":
-          "A plastic similar to polyethylene but is lighter and offers even better heat resistance, tensile strength, abrasion resistance, and lower dielectric constant.",
+      "def": "A plastic similar to polyethylene but is lighter and offers even better heat resistance, tensile strength, abrasion resistance, and lower dielectric constant.",
     },
     {
       "id": 1,
       "word": "PolySwitch Resettable Devices",
-      "def":
-          "PolySwitch is a trademarked term that applies to our PTC resettable devices.",
+      "def": "PolySwitch is a trademarked term that applies to our PTC resettable devices.",
     },
     {
       "id": 1,
       "word": "polyurethane",
-      "def":
-          "This material is primarily of interest as a magnet wire enamel for wires which can be soldered without prior removal of the film.",
+      "def": "This material is primarily of interest as a magnet wire enamel for wires which can be soldered without prior removal of the film.",
     },
     {
       "id": 1,
@@ -10463,8 +9582,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Positive feedback",
-      "def":
-          "Recycling of a signal that is in phase with the input to increase amplification. Used in digital circuits to standardize the wave forms in spite of any anomolies in the input.",
+      "def": "Recycling of a signal that is in phase with the input to increase amplification. Used in digital circuits to standardize the wave forms in spite of any anomolies in the input.",
     },
     {
       "id": 1,
@@ -10475,14 +9593,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "positive logic",
-      "def":
-          "Digital logic is termed positive when logic 1 is assigned the more positive level (ie higher voltage level than logic 0). Logic 0 is assigned the lower (more negative) level.",
+      "def": "Digital logic is termed positive when logic 1 is assigned the more positive level (ie higher voltage level than logic 0). Logic 0 is assigned the lower (more negative) level.",
     },
     {
       "id": 1,
       "word": "Positive Temperature Coefficient",
-      "def":
-          "A term used to describe a material whose resistivity increases as temperature increases. PolySwitch devices make use of conductive polymers that show nonlinear PTC behavior.",
+      "def": "A term used to describe a material whose resistivity increases as temperature increases. PolySwitch devices make use of conductive polymers that show nonlinear PTC behavior.",
     },
     {
       "id": 1,
@@ -10499,38 +9615,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Postal, Telegraph and Telephone Company",
-      "def":
-          "PTT - Generic term for a provider of these services. A governmental agency in many countries.",
+      "def": "PTT - Generic term for a provider of these services. A governmental agency in many countries.",
     },
     {
       "id": 1,
       "word": "Post-Reflow Resistance",
-      "def":
-          "The resistance of a PolySwitch device at room temperature one hour after it has been connected to a circuit board by reflow soldering under specified conditions.",
+      "def": "The resistance of a PolySwitch device at room temperature one hour after it has been connected to a circuit board by reflow soldering under specified conditions.",
     },
     {
       "id": 1,
       "word": "Post-Reflow Resistance",
-      "def":
-          "The resistance of a PolySwitch device at room temperature one hour after it has been connected to a circuit board by reflow soldering under specified conditions.",
+      "def": "The resistance of a PolySwitch device at room temperature one hour after it has been connected to a circuit board by reflow soldering under specified conditions.",
     },
     {
       "id": 1,
       "word": "Post-Trip Resistance",
-      "def":
-          "The resistance of a PolySwitch device at room temperature one hour after the device has been tripped for the first time, under specified conditions.",
+      "def": "The resistance of a PolySwitch device at room temperature one hour after the device has been tripped for the first time, under specified conditions.",
     },
     {
       "id": 1,
       "word": "Post-Trip Resistance",
-      "def":
-          "The resistance of a PolySwitch device at room temperature one hour after the device has been tripped for the first time, under specified conditions.",
+      "def": "The resistance of a PolySwitch device at room temperature one hour after the device has been tripped for the first time, under specified conditions.",
     },
     {
       "id": 1,
       "word": "pot",
-      "def":
-          "To embed a component in a material within a casing that becomes part of the product, primarily for protection.",
+      "def": "To embed a component in a material within a casing that becomes part of the product, primarily for protection.",
     },
     {
       "id": 1,
@@ -10558,8 +9668,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Power",
-      "def":
-          "The rate of doing work. The unit of power is the watt, abbreviated as 'W' and equal to 1 joule per second (see 'joule').",
+      "def": "The rate of doing work. The unit of power is the watt, abbreviated as 'W' and equal to 1 joule per second (see 'joule').",
     },
     {
       "id": 1,
@@ -10581,8 +9690,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Power Divider",
-      "def":
-          "A circuit that splits the power of an input signal into two or more locations without producing impedance mismatch.",
+      "def": "A circuit that splits the power of an input signal into two or more locations without producing impedance mismatch.",
     },
     {
       "id": 1,
@@ -10593,14 +9701,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Power Good",
-      "def":
-          "Signal (typically a visible LED) that indicates the DC output of the primary channel of a converter is still present.",
+      "def": "Signal (typically a visible LED) that indicates the DC output of the primary channel of a converter is still present.",
     },
     {
       "id": 1,
       "word": "Power Loss Density (mW/cm3)",
-      "def":
-          "The power absorbed by a body of ferromagnetic material and dissipated as heat.",
+      "def": "The power absorbed by a body of ferromagnetic material and dissipated as heat.",
     },
     {
       "id": 1,
@@ -10610,8 +9716,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Power sum",
-      "def":
-          "A mathematical addition of noise from multiple disturbers. Applied to NEXT and ELFEXT requirements.",
+      "def": "A mathematical addition of noise from multiple disturbers. Applied to NEXT and ELFEXT requirements.",
     },
     {
       "id": 1,
@@ -10622,32 +9727,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Power Transformer",
-      "def":
-          "Magnetic-core transformer for operation at 60 hertz, with nearly zero source impedance, to transfer power from line voltage to some required voltage.",
+      "def": "Magnetic-core transformer for operation at 60 hertz, with nearly zero source impedance, to transfer power from line voltage to some required voltage.",
     },
     {
       "id": 1,
       "word": "PPS",
-      "def":
-          "Precise Positioning Service (see also SPS). The GPS service provided for the US military usage.",
+      "def": "Precise Positioning Service (see also SPS). The GPS service provided for the US military usage.",
     },
     {
       "id": 1,
       "word": "PPTC Device",
-      "def":
-          "(Polymeric Positive Temperature Coefficient) Resettable device used to protect against overcurrent faults in electronic circuits.",
+      "def": "(Polymeric Positive Temperature Coefficient) Resettable device used to protect against overcurrent faults in electronic circuits.",
     },
     {
       "id": 1,
       "word": "PPTC Technology",
-      "def":
-          "PPTC stands for Positive Polymeric Temperature Coefficient. This is the technology that is used in our PolySwitch devices.",
+      "def": "PPTC stands for Positive Polymeric Temperature Coefficient. This is the technology that is used in our PolySwitch devices.",
     },
     {
       "id": 1,
       "word": "precision formed contact",
-      "def":
-          "A contact which is stamped from a flat sheet of metal and then formed through a progressive die.",
+      "def": "A contact which is stamped from a flat sheet of metal and then formed through a progressive die.",
     },
     {
       "id": 1,
@@ -10662,20 +9762,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pressure differential",
-      "def":
-          "The difference in pressure between one side of a connector and the other, as in a bulkhead mounting. Or the pressure difference between the inside and outside of a sealed connector.",
+      "def": "The difference in pressure between one side of a connector and the other, as in a bulkhead mounting. Or the pressure difference between the inside and outside of a sealed connector.",
     },
     {
       "id": 1,
       "word": "Pretinned",
-      "def":
-          "Description of an electrical component to which solder has been applied prior to soldering.",
+      "def": "Description of an electrical component to which solder has been applied prior to soldering.",
     },
     {
       "id": 1,
       "word": "Pretinned Solder Cup",
-      "def":
-          "Solder cup whose inner surfaces have been precoated with a small amount of solder.",
+      "def": "Solder cup whose inner surfaces have been precoated with a small amount of solder.",
     },
     {
       "id": 1,
@@ -10685,20 +9782,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Primary Current",
-      "def":
-          "Input side of an isolated DC-DC converter. See Secondary Circuit.",
+      "def": "Input side of an isolated DC-DC converter. See Secondary Circuit.",
     },
     {
       "id": 1,
       "word": "Primary Insulation",
-      "def":
-          "The inner member of a dual-wall wire insulation. The insulation applied directly on the conductor. Also referred to as the core. See also Core.",
+      "def": "The inner member of a dual-wall wire insulation. The insulation applied directly on the conductor. Also referred to as the core. See also Core.",
     },
     {
       "id": 1,
       "word": "Primary Winding",
-      "def":
-          "The winding in a transformer that supplies the exciting MMF to the core.",
+      "def": "The winding in a transformer that supplies the exciting MMF to the core.",
     },
     {
       "id": 1,
@@ -10715,14 +9809,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "printed circuit board",
-      "def":
-          "PCB - An insulating board serving as a base for a printed circuit. When the printing process is completed, the board may include printed components, as well as printed wiring.",
+      "def": "PCB - An insulating board serving as a base for a printed circuit. When the printing process is completed, the board may include printed components, as well as printed wiring.",
     },
     {
       "id": 1,
       "word": "printed circuit edge connector",
-      "def":
-          "A connector designed specifically for making removable and reliable interconnections between the terminal area (edge pads) of a printed circuit board and the external wiring.",
+      "def": "A connector designed specifically for making removable and reliable interconnections between the terminal area (edge pads) of a printed circuit board and the external wiring.",
     },
     {
       "id": 1,
@@ -10744,8 +9836,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "printed wiring",
-      "def":
-          "A type of printed circuit intended primarily to provide point-to-point electric connections and shielding.",
+      "def": "A type of printed circuit intended primarily to provide point-to-point electric connections and shielding.",
     },
     {
       "id": 1,
@@ -10756,8 +9847,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "printing",
-      "def":
-          "The act or art of reproducing a pattern on a surface by any of various processes, such as vapor deposition, photo etching, embossing, diffusion, or screening.",
+      "def": "The act or art of reproducing a pattern on a surface by any of various processes, such as vapor deposition, photo etching, embossing, diffusion, or screening.",
     },
     {
       "id": 1,
@@ -10767,8 +9857,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "processor",
-      "def":
-          "That portion of a digital computer which performs the arithmetic, logic, and system control operations.",
+      "def": "That portion of a digital computer which performs the arithmetic, logic, and system control operations.",
     },
     {
       "id": 1,
@@ -10779,8 +9868,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "production model",
-      "def":
-          "A model in its final mechanical and electrical design form, and manufactured using production tooling and methods.",
+      "def": "A model in its final mechanical and electrical design form, and manufactured using production tooling and methods.",
     },
     {
       "id": 1,
@@ -10791,8 +9879,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "programmable memory",
-      "def":
-          "A memory whose locations are addressable by the computer's program counter, ie a program within this memory may directly control the operation of the arithmetic and control unit.",
+      "def": "A memory whose locations are addressable by the computer's program counter, ie a program within this memory may directly control the operation of the arithmetic and control unit.",
     },
     {
       "id": 1,
@@ -10803,26 +9890,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "programming system",
-      "def":
-          "The programming language, the computer program, and the computer's means (processor) of convertingthe language into absolute coding.",
+      "def": "The programming language, the computer program, and the computer's means (processor) of convertingthe language into absolute coding.",
     },
     {
       "id": 1,
       "word": "PROM",
-      "def":
-          "Programmable read only memory. A ROM that can be programmed by the user, but that cannot be reprogrammed.",
+      "def": "Programmable read only memory. A ROM that can be programmed by the user, but that cannot be reprogrammed.",
     },
     {
       "id": 1,
       "word": "propagation delay",
-      "def":
-          "Time required for an electronic digital device, or transmission network, to transfer information from its input to its output.",
+      "def": "Time required for an electronic digital device, or transmission network, to transfer information from its input to its output.",
     },
     {
       "id": 1,
       "word": "Propagation delay skew",
-      "def":
-          "The difference in propagation delay between the slowest and fastest pairs in a cable or system.",
+      "def": "The difference in propagation delay between the slowest and fastest pairs in a cable or system.",
     },
     {
       "id": 1,
@@ -10833,14 +9916,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "protocol",
-      "def":
-          "A formal set of conventions or rules governing the format, timing, and error control to facilitate message exchanges among electronic equipment.",
+      "def": "A formal set of conventions or rules governing the format, timing, and error control to facilitate message exchanges among electronic equipment.",
     },
     {
       "id": 1,
       "word": "prototype",
-      "def":
-          "A model suitable for use in complete evaluation of form, design, and performance.",
+      "def": "A model suitable for use in complete evaluation of form, design, and performance.",
     },
     {
       "id": 1,
@@ -10855,14 +9936,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "psi",
-      "def":
-          "Pounds per square inch, normally used for measuring air pressure.",
+      "def": "Pounds per square inch, normally used for measuring air pressure.",
     },
     {
       "id": 1,
       "word": "PTC",
-      "def":
-          "A term used to describe a material whose resistivity increases as temperature increases. PolySwitch devices make use of conductive polymers that show nonlinear PTC behavior.",
+      "def": "A term used to describe a material whose resistivity increases as temperature increases. PolySwitch devices make use of conductive polymers that show nonlinear PTC behavior.",
     },
     {
       "id": 1,
@@ -10873,20 +9952,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "p-type",
-      "def":
-          "Semiconductor material that has been doped with an excess of acceptor impurity atoms that produce free holes in the material. Conduction mode is by holes.",
+      "def": "Semiconductor material that has been doped with an excess of acceptor impurity atoms that produce free holes in the material. Conduction mode is by holes.",
     },
     {
       "id": 1,
       "word": "p-type conductivity",
-      "def":
-          "The conductivity associated with holes in a semiconductor, which is equivalent to a positive charge.",
+      "def": "The conductivity associated with holes in a semiconductor, which is equivalent to a positive charge.",
     },
     {
       "id": 1,
       "word": "P-type Material",
-      "def":
-          "A semiconductor material that has had acceptor atoms added, thereby imparting a net positive charge.",
+      "def": "A semiconductor material that has had acceptor atoms added, thereby imparting a net positive charge.",
     },
     {
       "id": 1,
@@ -10897,8 +9973,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pull out",
-      "def":
-          "Force required to separate a cable from a connector by pulling them apart. See also contact retention.",
+      "def": "Force required to separate a cable from a connector by pulling them apart. See also contact retention.",
     },
     {
       "id": 1,
@@ -10908,8 +9983,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pull test",
-      "def":
-          "The application of longitudinal stress for the purpose of testing. See also tensile strength.",
+      "def": "The application of longitudinal stress for the purpose of testing. See also tensile strength.",
     },
     {
       "id": 1,
@@ -10920,20 +9994,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pulse broadening",
-      "def":
-          "The spreading or lengthening of a light pulse due to modal or spectral dispersion.",
+      "def": "The spreading or lengthening of a light pulse due to modal or spectral dispersion.",
     },
     {
       "id": 1,
       "word": "Pulse spreading",
-      "def":
-          "The dispersion of an optical signal with time as it propagates through an optical fiber.",
+      "def": "The dispersion of an optical signal with time as it propagates through an optical fiber.",
     },
     {
       "id": 1,
       "word": "Pulse Transformers",
-      "def":
-          "Transformers designed for excitation that consists of short duration pulses repeated at a specific rate.",
+      "def": "Transformers designed for excitation that consists of short duration pulses repeated at a specific rate.",
     },
     {
       "id": 1,
@@ -10944,8 +10015,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Pulse Width Modulation",
-      "def":
-          "(PWM) Circuit used in converters to regulate output voltage. Regulation is achived by varying the conduction time of the transistor switches.",
+      "def": "(PWM) Circuit used in converters to regulate output voltage. Regulation is achived by varying the conduction time of the transistor switches.",
     },
     {
       "id": 1,
@@ -10956,8 +10026,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "pulseforming network",
-      "def":
-          "A device to store electricity and release it in pulses at specified time intervals (frequency).",
+      "def": "A device to store electricity and release it in pulses at specified time intervals (frequency).",
     },
     {
       "id": 1,
@@ -10967,8 +10036,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Pure Inductors",
-      "def":
-          "Used at all frequencies to provide an electronic circuit with inductive reactance.",
+      "def": "Used at all frequencies to provide an electronic circuit with inductive reactance.",
     },
     {
       "id": 1,
@@ -10979,8 +10047,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Push-back",
-      "def":
-          "That property of a braid or shield that allows the braid or shield to be pushed back easily along the cable core.",
+      "def": "That property of a braid or shield that allows the braid or shield to be pushed back easily along the cable core.",
     },
     {
       "id": 1,
@@ -11041,14 +10108,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Quality Assurance",
-      "def":
-          "Systematic, planned, and documented activities designed to provide confidence that a product will meet specifications.",
+      "def": "Systematic, planned, and documented activities designed to provide confidence that a product will meet specifications.",
     },
     {
       "id": 1,
       "word": "Quality Control",
-      "def":
-          "Activities that monitor, measure, and control the characteristics of a material, component, or product to documented specifications.",
+      "def": "Activities that monitor, measure, and control the characteristics of a material, component, or product to documented specifications.",
     },
     {
       "id": 1,
@@ -11059,32 +10124,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Quantum efficiency",
-      "def":
-          "In a photodiode, the ratio of primary carriers (electron-hole pairs) created to incident photons. A quantum efficiency of 70% means 7 out of 10 incident photons create a carrier.",
+      "def": "In a photodiode, the ratio of primary carriers (electron-hole pairs) created to incident photons. A quantum efficiency of 70% means 7 out of 10 incident photons create a carrier.",
     },
     {
       "id": 1,
       "word": "queue",
-      "def":
-          "Waiting lines resulting from temporary delays in providing service.",
+      "def": "Waiting lines resulting from temporary delays in providing service.",
     },
     {
       "id": 1,
       "word": "Quick Disconnect",
-      "def":
-          "A type of connector shell that permits rapid locking and unlocking of two connector halves.",
+      "def": "A type of connector shell that permits rapid locking and unlocking of two connector halves.",
     },
     {
       "id": 1,
       "word": "Quiescent operating point",
-      "def":
-          "The dc voltages, currents, and dissipation associated with a circuit while it is not being subjected to an input signal.",
+      "def": "The dc voltages, currents, and dissipation associated with a circuit while it is not being subjected to an input signal.",
     },
     {
       "id": 1,
       "word": "QUIP",
-      "def":
-          "QUad In-line Package. A packaging technique similar to a DIP but having two rows of pins along each long side, or a total of four rows.",
+      "def": "QUad In-line Package. A packaging technique similar to a DIP but having two rows of pins along each long side, or a total of four rows.",
     },
     {
       "id": 1,
@@ -11094,8 +10154,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "R1max",
-      "def":
-          "The maximum resistance of a PolySwitch device at room temperature one hour after being tripped or after reflow soldering.",
+      "def": "The maximum resistance of a PolySwitch device at room temperature one hour after being tripped or after reflow soldering.",
     },
     {
       "id": 1,
@@ -11105,14 +10164,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Ra max",
-      "def":
-          "Maximum functional resistance of device before and after defined stress tests.",
+      "def": "Maximum functional resistance of device before and after defined stress tests.",
     },
     {
       "id": 1,
       "word": "Ra min",
-      "def":
-          "Minimum functional resistance of device before and after defined stress tests.",
+      "def": "Minimum functional resistance of device before and after defined stress tests.",
     },
     {
       "id": 1,
@@ -11129,8 +10186,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Radiated Frequency",
-      "def":
-          "The frequency of a signal that is transmitted by a radio, radar, navigational aid, or other radio frequency equipment. Radiated frequency is abbreviated as 'RF.'",
+      "def": "The frequency of a signal that is transmitted by a radio, radar, navigational aid, or other radio frequency equipment. Radiated frequency is abbreviated as 'RF.'",
     },
     {
       "id": 1,
@@ -11141,14 +10197,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Radio",
-      "def":
-          "A collection of circuits that converts electromagnetic energy gathered from free space to electrical or sound energy, vice versa or both.",
+      "def": "A collection of circuits that converts electromagnetic energy gathered from free space to electrical or sound energy, vice versa or both.",
     },
     {
       "id": 1,
       "word": "Radio Frequency",
-      "def":
-          "Any electromagnetic frequency from a few hertz up to frequencies in the infrared portion of the spectrum, to approximately 300 THz (terahertz).",
+      "def": "Any electromagnetic frequency from a few hertz up to frequencies in the infrared portion of the spectrum, to approximately 300 THz (terahertz).",
     },
     {
       "id": 1,
@@ -11182,26 +10236,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Rated Temperature",
-      "def":
-          "The maximum temperature at which a component can operate for extended periods with acceptable changes in its basic properties.",
+      "def": "The maximum temperature at which a component can operate for extended periods with acceptable changes in its basic properties.",
     },
     {
       "id": 1,
       "word": "Rated Voltage",
-      "def":
-          "The maximum voltage at which an electric component can operate for extended periods without undue degradation.",
+      "def": "The maximum voltage at which an electric component can operate for extended periods without undue degradation.",
     },
     {
       "id": 1,
       "word": "Ratio",
-      "def":
-          "The division of one quantity by another, thereby indicating their relative magnitudes and phase.",
+      "def": "The division of one quantity by another, thereby indicating their relative magnitudes and phase.",
     },
     {
       "id": 1,
       "word": "raw data",
-      "def":
-          "Data which has not been processed; may or may not be in machine-compatible form.",
+      "def": "Data which has not been processed; may or may not be in machine-compatible form.",
     },
     {
       "id": 1,
@@ -11212,8 +10262,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Rayleigh scattering",
-      "def":
-          "The scattering of light that results from small inhomogenei-ties in material density or composition.",
+      "def": "The scattering of light that results from small inhomogenei-ties in material density or composition.",
     },
     {
       "id": 1,
@@ -11228,8 +10277,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Reactance",
-      "def":
-          "Frequency-dependent impedance that is capable of storing but not dissipating energy. Reactance can be capacitive or inductive.",
+      "def": "Frequency-dependent impedance that is capable of storing but not dissipating energy. Reactance can be capacitive or inductive.",
     },
     {
       "id": 1,
@@ -11251,8 +10299,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "real-time operation",
-      "def":
-          "Solving problems as fast as they occur so that the results can be used to guide the operation.",
+      "def": "Solving problems as fast as they occur so that the results can be used to guide the operation.",
     },
     {
       "id": 1,
@@ -11263,8 +10310,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Receiver Protector",
-      "def":
-          "A circuit or device that prevents incident high power, potentially-damaging signals from propagating to sensitive receiver components.",
+      "def": "A circuit or device that prevents incident high power, potentially-damaging signals from propagating to sensitive receiver components.",
     },
     {
       "id": 1,
@@ -11286,20 +10332,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Recover (Heat-shrinkable Components)",
-      "def":
-          "Activation of the elastic memory principle (usually with heat) to cause a tubing or molded part to return to its original size.",
+      "def": "Activation of the elastic memory principle (usually with heat) to cause a tubing or molded part to return to its original size.",
     },
     {
       "id": 1,
       "word": "Recovered ID",
-      "def":
-          "RID - In heat-shrink tubing, the guaranteed maximum internal diameter of tubing after being freely recovered.",
+      "def": "RID - In heat-shrink tubing, the guaranteed maximum internal diameter of tubing after being freely recovered.",
     },
     {
       "id": 1,
       "word": "Recovery Temperature",
-      "def":
-          "The minimum temperature required to fully shrink a product, that is, for the product to recover completely.",
+      "def": "The minimum temperature required to fully shrink a product, that is, for the product to recover completely.",
     },
     {
       "id": 1,
@@ -11316,74 +10359,62 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Rectifier",
-      "def":
-          "Device that allows current to flow in only one direction, such as a diode.",
+      "def": "Device that allows current to flow in only one direction, such as a diode.",
     },
     {
       "id": 1,
       "word": "redundancy",
-      "def":
-          "Any deliberate duplication, or partial duplication, of circuitry or information to decrease the probability of a system or communication failure.",
+      "def": "Any deliberate duplication, or partial duplication, of circuitry or information to decrease the probability of a system or communication failure.",
     },
     {
       "id": 1,
       "word": "Reduntant Operation",
-      "def":
-          "Parallel configuration of converters used in distributed power system to increase system reliabiltiy. Converters may be used in a 'N+1' architucture.",
+      "def": "Parallel configuration of converters used in distributed power system to increase system reliabiltiy. Converters may be used in a 'N+1' architucture.",
     },
     {
       "id": 1,
       "word": "reflection",
-      "def":
-          "The backward transmission of electrical energy caused by a change in impedance.",
+      "def": "The backward transmission of electrical energy caused by a change in impedance.",
     },
     {
       "id": 1,
       "word": "Reflection Coefficient",
-      "def":
-          "At a specified plane in a uniform transmission line, the vector ratio of the reflected to the incident waves. The symbol for reflection coefficient is 'G'.",
+      "def": "At a specified plane in a uniform transmission line, the vector ratio of the reflected to the incident waves. The symbol for reflection coefficient is 'G'.",
     },
     {
       "id": 1,
       "word": "reflection coefficient",
-      "def":
-          "The fraction of light power reflected backward at the fiber end face. This accounts for about a .2 to .3 dB loss, typically.",
+      "def": "The fraction of light power reflected backward at the fiber end face. This accounts for about a .2 to .3 dB loss, typically.",
     },
     {
       "id": 1,
       "word": "Reflection Loss",
-      "def":
-          "The part of transmission loss due to power reflected by a discontinuity (impedance mismatch) in a transmission line.",
+      "def": "The part of transmission loss due to power reflected by a discontinuity (impedance mismatch) in a transmission line.",
     },
     {
       "id": 1,
       "word": "reflective codes",
-      "def":
-          "Codes which appear to be the mirror image of normal counting codes.",
+      "def": "Codes which appear to be the mirror image of normal counting codes.",
     },
     {
       "id": 1,
       "word": "refractive index",
-      "def":
-          "(n) The ratio of the speed of light in a vacuum (c) to the speed of light in an alternate medium(v). n=c/v",
+      "def": "(n) The ratio of the speed of light in a vacuum (c) to the speed of light in an alternate medium(v). n=c/v",
     },
     {
       "id": 1,
       "word": "Regenerative repeater",
-      "def":
-          "A repeater designed for digital transmission that bothamplifies and reshapes the signal.",
+      "def": "A repeater designed for digital transmission that bothamplifies and reshapes the signal.",
     },
     {
       "id": 1,
       "word": "Regional Bell Operating Companies",
-      "def":
-          "RBOC - Seven LEC telephone companies created after AT&amp;T divestiture.",
+      "def": "RBOC - Seven LEC telephone companies created after AT&amp;T divestiture.",
     },
     {
       "id": 1,
       "word": "register",
-      "def":
-          "A memory device capable of containing one or more computer bits or words.",
+      "def": "A memory device capable of containing one or more computer bits or words.",
     },
     {
       "id": 1,
@@ -11394,8 +10425,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Regulation",
-      "def":
-          "Ability of a converter to maintain an output voltge to within specified limits under varying conditions of input line and output load. Also see Linear Regulation.",
+      "def": "Ability of a converter to maintain an output voltge to within specified limits under varying conditions of input line and output load. Also see Linear Regulation.",
     },
     {
       "id": 1,
@@ -11412,14 +10442,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Reliability",
-      "def":
-          "The probability that a device, component or system will perform adequately for the expected time under given conditions.",
+      "def": "The probability that a device, component or system will perform adequately for the expected time under given conditions.",
     },
     {
       "id": 1,
       "word": "Remote LAN Access",
-      "def":
-          "A data communications such as a corporate or campus environment in which the computer networks can be accessed remotely via public telecommunications networks.",
+      "def": "A data communications such as a corporate or campus environment in which the computer networks can be accessed remotely via public telecommunications networks.",
     },
     {
       "id": 1,
@@ -11435,8 +10463,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Removable Contact",
-      "def":
-          "A contact that can be mechanically joined to or removed from an insert. Usually special tools are required to lock the contact in place or remove it for repair or replacement.",
+      "def": "A contact that can be mechanically joined to or removed from an insert. Usually special tools are required to lock the contact in place or remove it for repair or replacement.",
     },
     {
       "id": 1,
@@ -11452,38 +10479,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "reset",
-      "def":
-          "The operation of returning an electronic, or electrical, device to its original or 'start' point. Most AMP data terminals offer manual reset, automatic reset, or both.",
+      "def": "The operation of returning an electronic, or electrical, device to its original or 'start' point. Most AMP data terminals offer manual reset, automatic reset, or both.",
     },
     {
       "id": 1,
       "word": "Residual Flux",
-      "def":
-          "The flux that remains in a core when the applied MMF is returned to zero.",
+      "def": "The flux that remains in a core when the applied MMF is returned to zero.",
     },
     {
       "id": 1,
       "word": "Residual FM",
-      "def":
-          "Undesirable, apparent frequency modulation of a signal source caused by noise or spurious signals.",
+      "def": "Undesirable, apparent frequency modulation of a signal source caused by noise or spurious signals.",
     },
     {
       "id": 1,
       "word": "residual forces",
-      "def":
-          "The elastic forces which remain after each contact member has been deformed or deflected to its final state.",
+      "def": "The elastic forces which remain after each contact member has been deformed or deflected to its final state.",
     },
     {
       "id": 1,
       "word": "resiliency",
-      "def":
-          "That property of a strained body which enables it to recover its size and shape as it is unloaded after some initial deformation.",
+      "def": "That property of a strained body which enables it to recover its size and shape as it is unloaded after some initial deformation.",
     },
     {
       "id": 1,
       "word": "resist",
-      "def":
-          "A material such as ink, paint, metallic plating, etc used to protect the desired portions of the conductive pattern from the action of the etchant, solder, or plating.",
+      "def": "A material such as ink, paint, metallic plating, etc used to protect the desired portions of the conductive pattern from the action of the etchant, solder, or plating.",
     },
     {
       "id": 1,
@@ -11506,8 +10527,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Resistance Sorted Devices",
-      "def":
-          "Resistance sorted devices (part number suffix 'Rx') are supplied with resistance values that are within specified limits of the product's full range of resistance.",
+      "def": "Resistance sorted devices (part number suffix 'Rx') are supplied with resistance values that are within specified limits of the product's full range of resistance.",
     },
     {
       "id": 1,
@@ -11518,38 +10538,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "resonance",
-      "def":
-          "The frequency at which capacitive reactance and inductive reactance are equal and therefore cancel one another's effects.",
+      "def": "The frequency at which capacitive reactance and inductive reactance are equal and therefore cancel one another's effects.",
     },
     {
       "id": 1,
       "word": "Resonant Converter",
-      "def":
-          "Switching converter technology in which a resonant tank circuit operating at very high frequencies is used to transfer energy to the output.",
+      "def": "Switching converter technology in which a resonant tank circuit operating at very high frequencies is used to transfer energy to the output.",
     },
     {
       "id": 1,
       "word": "Resonant Frequency",
-      "def":
-          "The frequency at which the inductive and capacitive reactances of a circuit are equal in magnitude, thereby canceling each other's effects. The symbol for resonant frequency is 'fR.'",
+      "def": "The frequency at which the inductive and capacitive reactances of a circuit are equal in magnitude, thereby canceling each other's effects. The symbol for resonant frequency is 'fR.'",
     },
     {
       "id": 1,
       "word": "Responsivity",
-      "def":
-          "The ratio of a photodetector I s electrical output to its optical input in amperes/watt.",
+      "def": "The ratio of a photodetector I s electrical output to its optical input in amperes/watt.",
     },
     {
       "id": 1,
       "word": "restricted entry",
-      "def":
-          "A design feature incorporated in a female contact to prevent the entry of an oversize pin or test probe.",
+      "def": "A design feature incorporated in a female contact to prevent the entry of an oversize pin or test probe.",
     },
     {
       "id": 1,
       "word": "retaining ring",
-      "def":
-          "A small circular steel ring, often resembling the letter 'C,' that is usually inserted into a slot in a pivot pin to hold the pin in a specified position.",
+      "def": "A small circular steel ring, often resembling the letter 'C,' that is usually inserted into a slot in a pivot pin to hold the pin in a specified position.",
     },
     {
       "id": 1,
@@ -11560,44 +10574,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "RETMA",
-      "def":
-          "Abbreviation for Radio-Electronics-Television Manufacturers' Association. Now changed to Electronics Industries Association (EIA).",
+      "def": "Abbreviation for Radio-Electronics-Television Manufacturers' Association. Now changed to Electronics Industries Association (EIA).",
     },
     {
       "id": 1,
       "word": "Return",
-      "def":
-          "Common terminal on the output of a DC-DC converter. It is the return current path for the output. Also see Common.",
+      "def": "Common terminal on the output of a DC-DC converter. It is the return current path for the output. Also see Common.",
     },
     {
       "id": 1,
       "word": "Return loss",
-      "def":
-          "A measure of the signal reflected back toward the transmitter as a result of impedance variations in the cabling system.",
+      "def": "A measure of the signal reflected back toward the transmitter as a result of impedance variations in the cabling system.",
     },
     {
       "id": 1,
       "word": "Return reflection",
-      "def":
-          "Reflected optical energy that propagates backward to the source in an optical fiber.",
+      "def": "Reflected optical energy that propagates backward to the source in an optical fiber.",
     },
     {
       "id": 1,
       "word": "Return reflection loss",
-      "def":
-          "The attenuation of reflected light; high return loss is desirable, especially in single-mode fibers.",
+      "def": "The attenuation of reflected light; high return loss is desirable, especially in single-mode fibers.",
     },
     {
       "id": 1,
       "word": "Reverse Current",
-      "def":
-          "Current flowing from input to output or input to case of an isolated converter at a specified voltage level.",
+      "def": "Current flowing from input to output or input to case of an isolated converter at a specified voltage level.",
     },
     {
       "id": 1,
       "word": "Reverse Voltage Protection",
-      "def":
-          "Converter feature that prevents damage to internal components if a reverse voltage is inadvertently applied to the input or ouput terminals.",
+      "def": "Converter feature that prevents damage to internal components if a reverse voltage is inadvertently applied to the input or ouput terminals.",
     },
     {
       "id": 1,
@@ -11608,14 +10615,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Rex Univariable Whisker Press",
-      "def":
-          "A machine invented at Microwave Associates (predecessor of M/A-COM) to form and manufacture the precise, sharply pointed whiskers that were required for point contact diodes.",
+      "def": "A machine invented at Microwave Associates (predecessor of M/A-COM) to form and manufacture the precise, sharply pointed whiskers that were required for point contact diodes.",
     },
     {
       "id": 1,
       "word": "RF",
-      "def":
-          "Radiated Frequency. Also used as an abbreviation for Radio Frequency, used as a noun or adjective.",
+      "def": "Radiated Frequency. Also used as an abbreviation for Radio Frequency, used as a noun or adjective.",
     },
     {
       "id": 1,
@@ -11631,8 +10636,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "RFI",
-      "def":
-          "RFI is an acronym for Radio-Frequency Interference. It is an older and more restrictive term that is used interchangeably with EMI (Also see EMI.)",
+      "def": "RFI is an acronym for Radio-Frequency Interference. It is an older and more restrictive term that is used interchangeably with EMI (Also see EMI.)",
     },
     {
       "id": 1,
@@ -11648,8 +10652,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "rib",
-      "def":
-          "Configuration designed into a plastic part to provide lateral, horizontal, or other structural support.",
+      "def": "Configuration designed into a plastic part to provide lateral, horizontal, or other structural support.",
     },
     {
       "id": 1,
@@ -11660,8 +10663,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ribbon cable",
-      "def":
-          "Round conductor flat cable. A form of flexible flat cable (ffc) consisting of parallel round conductors in a flexible insulating material and designed for mass termination.",
+      "def": "Round conductor flat cable. A form of flexible flat cable (ffc) consisting of parallel round conductors in a flexible insulating material and designed for mass termination.",
     },
     {
       "id": 1,
@@ -11683,8 +10685,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Ring network",
-      "def":
-          "A network topology in which terminals are connected in a point-to-point serial fashion in an unbroken circular configuration.",
+      "def": "A network topology in which terminals are connected in a point-to-point serial fashion in an unbroken circular configuration.",
     },
     {
       "id": 1,
@@ -11700,8 +10701,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Ripple Voltage",
-      "def":
-          "The periodic alternating voltage imposed on the voltage output of a switching voltage converter. The ripple voltage is normally specified as a peak-to-peak value.",
+      "def": "The periodic alternating voltage imposed on the voltage output of a switching voltage converter. The ripple voltage is normally specified as a peak-to-peak value.",
     },
     {
       "id": 1,
@@ -11712,26 +10712,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Riser",
-      "def":
-          "Backbone cabling connecting telecom closets situated vertically on separate floors.",
+      "def": "Backbone cabling connecting telecom closets situated vertically on separate floors.",
     },
     {
       "id": 1,
       "word": "RJ11",
-      "def":
-          "A wiring pattern for 6-position modular jacks.Used to refer to the jacks themselves.",
+      "def": "A wiring pattern for 6-position modular jacks.Used to refer to the jacks themselves.",
     },
     {
       "id": 1,
       "word": "RJ21",
-      "def":
-          "A wiring pattern for a 25-pair (AMP CHAMP) connector.Also used to refer to the connectors themselves.",
+      "def": "A wiring pattern for a 25-pair (AMP CHAMP) connector.Also used to refer to the connectors themselves.",
     },
     {
       "id": 1,
       "word": "RJ45",
-      "def":
-          "A wiring pattern for8-position modular jacks.Used to refer to the jacks themselves.",
+      "def": "A wiring pattern for8-position modular jacks.Used to refer to the jacks themselves.",
     },
     {
       "id": 1,
@@ -11758,20 +10754,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "rms",
-      "def":
-          "Root Mean Square - The effective value of an alternating current, corresponding to the direct current value that will produce the same heating effect.",
+      "def": "Root Mean Square - The effective value of an alternating current, corresponding to the direct current value that will produce the same heating effect.",
     },
     {
       "id": 1,
       "word": "robotics",
-      "def":
-          "The theory and application of robots, a completely self-contained electronic, electric, or mechanical device, to such activities as manufacturing.",
+      "def": "The theory and application of robots, a completely self-contained electronic, electric, or mechanical device, to such activities as manufacturing.",
     },
     {
       "id": 1,
       "word": "roentgen",
-      "def":
-          "The amount of radiation that will produce one electrostatic unit of ions per cubic centimeter volume.",
+      "def": "The amount of radiation that will produce one electrostatic unit of ions per cubic centimeter volume.",
     },
     {
       "id": 1,
@@ -11782,38 +10775,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "root mean square",
-      "def":
-          "RMS - The effective value of an alternating current, corresponding to the direct current value that will produce the same heating effect.",
+      "def": "RMS - The effective value of an alternating current, corresponding to the direct current value that will produce the same heating effect.",
     },
     {
       "id": 1,
       "word": "Rope Lay",
-      "def":
-          "A type of conductor lay that uses stranded conductors as components to build a larger conductor.",
+      "def": "A type of conductor lay that uses stranded conductors as components to build a larger conductor.",
     },
     {
       "id": 1,
       "word": "rotary switch",
-      "def":
-          "A multiposition switch operated by rotating a control knob (attached to its shaft) either clockwise, counterclockwise, or both.",
+      "def": "A multiposition switch operated by rotating a control knob (attached to its shaft) either clockwise, counterclockwise, or both.",
     },
     {
       "id": 1,
       "word": "rotor",
-      "def":
-          "The rotating member of a motor that includes a shaft. Commonly called the armature.",
+      "def": "The rotating member of a motor that includes a shaft. Commonly called the armature.",
     },
     {
       "id": 1,
       "word": "routine",
-      "def":
-          "A series of computer instructions for performing a specific, limited task.",
+      "def": "A series of computer instructions for performing a specific, limited task.",
     },
     {
       "id": 1,
       "word": "Royer Converter",
-      "def":
-          "Self-oscillating, push-pull switching circuit configuration commonly used in low cost, low power DC-DC converters. Also called the classical converter.",
+      "def": "Self-oscillating, push-pull switching circuit configuration commonly used in low cost, low power DC-DC converters. Also called the classical converter.",
     },
     {
       "id": 1,
@@ -11824,8 +10811,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "RS 232, 422, 449+A2043",
-      "def":
-          "A series of standards defining the physical link between units of data communication equipment.",
+      "def": "A series of standards defining the physical link between units of data communication equipment.",
     },
     {
       "id": 1,
@@ -11836,8 +10822,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "RTCA",
-      "def":
-          "Radio Technical Commission for Aeronautics (For WAAS &amp; EGNOS services)",
+      "def": "Radio Technical Commission for Aeronautics (For WAAS &amp; EGNOS services)",
     },
     {
       "id": 1,
@@ -11853,8 +10838,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "rubber",
-      "def":
-          "An elastomer capable of rapid elastic recovery. Specifically, natural rubber, the standard of comparison for elastomers.",
+      "def": "An elastomer capable of rapid elastic recovery. Specifically, natural rubber, the standard of comparison for elastomers.",
     },
     {
       "id": 1,
@@ -11876,14 +10860,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Saturable Reactor",
-      "def":
-          "Describes the main element of a magnetic amplifier used to control electrical power such as for electrical resistance element heating of furnaces.",
+      "def": "Describes the main element of a magnetic amplifier used to control electrical power such as for electrical resistance element heating of furnaces.",
     },
     {
       "id": 1,
       "word": "Saturated",
-      "def":
-          "The state of operation of a device or circuit in which there is no increase in output for an increase in input",
+      "def": "The state of operation of a device or circuit in which there is no increase in output for an increase in input",
     },
     {
       "id": 1,
@@ -11911,8 +10893,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SAW",
-      "def":
-          "Surface acoustic wave. Often short for surface acoustic wave filter.",
+      "def": "Surface acoustic wave. Often short for surface acoustic wave filter.",
     },
     {
       "id": 1,
@@ -11922,8 +10903,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SC connector",
-      "def":
-          "A duplex optical fiber connector. The standard connector for optical fiber per the 568 cabling standard.",
+      "def": "A duplex optical fiber connector. The standard connector for optical fiber per the 568 cabling standard.",
     },
     {
       "id": 1,
@@ -11933,8 +10913,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "scale factor",
-      "def":
-          "One or more coefficients used to multiply or divide quantities in a problem in order to convert them to a given magnitude (eg plus one to minus one).",
+      "def": "One or more coefficients used to multiply or divide quantities in a problem in order to convert them to a given magnitude (eg plus one to minus one).",
     },
     {
       "id": 1,
@@ -11951,8 +10930,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "schematic",
-      "def":
-          "A 'scheme' for presenting information. Thus, a circuit schematic - in diagrammatic form - indicates the components, wiring, and connections of the circuit.",
+      "def": "A 'scheme' for presenting information. Thus, a circuit schematic - in diagrammatic form - indicates the components, wiring, and connections of the circuit.",
     },
     {
       "id": 1,
@@ -11963,20 +10941,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Schottky",
-      "def":
-          "A metal-semiconductor junction that has a nonlinear voltage versus current characteristic.",
+      "def": "A metal-semiconductor junction that has a nonlinear voltage versus current characteristic.",
     },
     {
       "id": 1,
       "word": "Schottky TTL",
-      "def":
-          "A type of TTL notable for faster operating speeds than standard TTL.",
+      "def": "A type of TTL notable for faster operating speeds than standard TTL.",
     },
     {
       "id": 1,
       "word": "Scoop-proof",
-      "def":
-          "A feature that prevents the damage of contacts during misaligned mating.",
+      "def": "A feature that prevents the damage of contacts during misaligned mating.",
     },
     {
       "id": 1,
@@ -11992,8 +10967,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "scribing",
-      "def":
-          "The scratching of a brittle substrate, such as alumina or silicon, to ensure cleavage along the scratch line. Wafers are scribed and then broken to produce integrated circuit chips.",
+      "def": "The scratching of a brittle substrate, such as alumina or silicon, to ensure cleavage along the scratch line. Wafers are scribed and then broken to produce integrated circuit chips.",
     },
     {
       "id": 1,
@@ -12018,26 +10992,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SE",
-      "def":
-          "Shielding Effectiveness - The reduction in field strength resulting from interposing a metallic barrier between a source and receptor of electromagnetic energy.",
+      "def": "Shielding Effectiveness - The reduction in field strength resulting from interposing a metallic barrier between a source and receptor of electromagnetic energy.",
     },
     {
       "id": 1,
       "word": "Sealant",
-      "def":
-          "Soft, tacky, pliable material that seals where mechanical strength is not required.",
+      "def": "Soft, tacky, pliable material that seals where mechanical strength is not required.",
     },
     {
       "id": 1,
       "word": "Sealed",
-      "def":
-          "Environmentally protected by the thermoplastic inserts or core of encapsulant/ adhesive that has melted down around the substrate.",
+      "def": "Environmentally protected by the thermoplastic inserts or core of encapsulant/ adhesive that has melted down around the substrate.",
     },
     {
       "id": 1,
       "word": "sealing plug",
-      "def":
-          "A plug used to fill and seal an unoccupied contact cavity in a housing or insert. Its role is especially vital in environmental connectors.",
+      "def": "A plug used to fill and seal an unoccupied contact cavity in a housing or insert. Its role is especially vital in environmental connectors.",
     },
     {
       "id": 1,
@@ -12048,20 +11018,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Secondary Circuit",
-      "def":
-          "Output side of an isolated DC-DC converter. Also see Primary Circuit.",
+      "def": "Output side of an isolated DC-DC converter. Also see Primary Circuit.",
     },
     {
       "id": 1,
       "word": "Secondary Winding",
-      "def":
-          "The winding in a transformer that supplies the load with electrical energy which has been converted from the induced magnetic energy in the core.",
+      "def": "The winding in a transformer that supplies the load with electrical energy which has been converted from the induced magnetic energy in the core.",
     },
     {
       "id": 1,
       "word": "sector",
-      "def":
-          "The smallest addressable unit of information (set of bits) in a drum or disk memory.",
+      "def": "The smallest addressable unit of information (set of bits) in a drum or disk memory.",
     },
     {
       "id": 1,
@@ -12078,14 +11045,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "self-aligning",
-      "def":
-          "Mating parts designed so that they can engage only in the proper relative position.",
+      "def": "Mating parts designed so that they can engage only in the proper relative position.",
     },
     {
       "id": 1,
       "word": "self-extinguishing",
-      "def":
-          "A loosely-used term describing a material's ability to cease burning when the source of flame is removed. See also flame resistance.",
+      "def": "A loosely-used term describing a material's ability to cease burning when the source of flame is removed. See also flame resistance.",
     },
     {
       "id": 1,
@@ -12095,8 +11060,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Self-Powered Hub",
-      "def":
-          "Class of devices that derive power from its own source. Examples include monitors and self-powered USB hubs.",
+      "def": "Class of devices that derive power from its own source. Examples include monitors and self-powered USB hubs.",
     },
     {
       "id": 1,
@@ -12119,20 +11083,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "semi-rigid",
-      "def":
-          "A cable containing a flexible inner core and a relatively inflexible sheathing.",
+      "def": "A cable containing a flexible inner core and a relatively inflexible sheathing.",
     },
     {
       "id": 1,
       "word": "Sendust",
-      "def":
-          "A 9% silicon, 6% aluminum, and 85% iron alloy in particulate form. The particles are coated with a dielectric film, compacted, and cured to form magnetic parts such as inductor cores.",
+      "def": "A 9% silicon, 6% aluminum, and 85% iron alloy in particulate form. The particles are coated with a dielectric film, compacted, and cured to form magnetic parts such as inductor cores.",
     },
     {
       "id": 1,
       "word": "Sense Line",
-      "def":
-          "Output line used in a remote sensing connection to route the output voltage (at the load) back to the control feedback loop. Also see Remote Sensing.",
+      "def": "Output line used in a remote sensing connection to route the output voltage (at the load) back to the control feedback loop. Also see Remote Sensing.",
     },
     {
       "id": 1,
@@ -12143,8 +11104,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "sensitivity switch",
-      "def":
-          "A switch having a snapaction, microgap mechanism which is operated directly by a defined force through a defined travel.",
+      "def": "A switch having a snapaction, microgap mechanism which is operated directly by a defined force through a defined travel.",
     },
     {
       "id": 1,
@@ -12161,14 +11121,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "sequencer",
-      "def":
-          "A mechanical or electronic device used to initiate and control the predetermined sequence of a series of events.",
+      "def": "A mechanical or electronic device used to initiate and control the predetermined sequence of a series of events.",
     },
     {
       "id": 1,
       "word": "sequencing",
-      "def":
-          "The process of performing a series of operations in a predetermined order.",
+      "def": "The process of performing a series of operations in a predetermined order.",
     },
     {
       "id": 1,
@@ -12185,20 +11143,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "serial transfer",
-      "def":
-          "Data transfer in which elements of information are transferred sequentially.",
+      "def": "Data transfer in which elements of information are transferred sequentially.",
     },
     {
       "id": 1,
       "word": "serial transmission",
-      "def":
-          "Transmitting character bits in line sequence. Generally used in telegraphic-type operation.",
+      "def": "Transmitting character bits in line sequence. Generally used in telegraphic-type operation.",
     },
     {
       "id": 1,
       "word": "series",
-      "def":
-          "Connecting components in a circuit end-to-end to provide a single path for current flow.",
+      "def": "Connecting components in a circuit end-to-end to provide a single path for current flow.",
     },
     {
       "id": 1,
@@ -12215,38 +11170,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Series Resistance",
-      "def":
-          "The real part of the complex impedance of a semiconductor device. The resistance of the semiconductor package, die attach and bond wire are typically included in series resistance.",
+      "def": "The real part of the complex impedance of a semiconductor device. The resistance of the semiconductor package, die attach and bond wire are typically included in series resistance.",
     },
     {
       "id": 1,
       "word": "Series-Shunt",
-      "def":
-          "The circuit configuration including two components, the first in series with the transmission line and the second in shunt with the transmission line.",
+      "def": "The circuit configuration including two components, the first in series with the transmission line and the second in shunt with the transmission line.",
     },
     {
       "id": 1,
       "word": "serrations",
-      "def":
-          "The small grooves or indentations within a terminal wire barrel. The serrations increase the tensile strength and improve the electrical conductivity of the crimped termination.",
+      "def": "The small grooves or indentations within a terminal wire barrel. The serrations increase the tensile strength and improve the electrical conductivity of the crimped termination.",
     },
     {
       "id": 1,
       "word": "Service Life",
-      "def":
-          "Period of time during which the product is expected to perform satisfactorily.",
+      "def": "Period of time during which the product is expected to perform satisfactorily.",
     },
     {
       "id": 1,
       "word": "Service Loop",
-      "def":
-          "The extra cable required at a breakout to facilitate maintenance and servicing.",
+      "def": "The extra cable required at a breakout to facilitate maintenance and servicing.",
     },
     {
       "id": 1,
       "word": "Service Rating",
-      "def":
-          "The maximum voltage or current that a termination is designed to carry continuously.",
+      "def": "The maximum voltage or current that a termination is designed to carry continuously.",
     },
     {
       "id": 1,
@@ -12256,8 +11205,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Settling Time",
-      "def":
-          "The time required for the device to attain 90 percent of the detected RF output referenced to the 10 percent level.",
+      "def": "The time required for the device to attain 90 percent of the detected RF output referenced to the 10 percent level.",
     },
     {
       "id": 1,
@@ -12302,8 +11250,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "shielded keyboard",
-      "def":
-          "A keyboard assembly that has been designed to withstand severe EMI environments. Such shielding can also prevent noise from the keyboard from affecting nearby equipment.",
+      "def": "A keyboard assembly that has been designed to withstand severe EMI environments. Such shielding can also prevent noise from the keyboard from affecting nearby equipment.",
     },
     {
       "id": 1,
@@ -12326,8 +11273,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "shift",
-      "def":
-          "To move information serially right or left in a register(s). Information shifted out of a register may be lost, or it may be re-entered at the other end of the register.",
+      "def": "To move information serially right or left in a register(s). Information shifted out of a register may be lost, or it may be re-entered at the other end of the register.",
     },
     {
       "id": 1,
@@ -12350,20 +11296,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Short Circuit Protection",
-      "def":
-          "Maximum steady-state current level at which the power switch output is regulated in response to an overcurrent fault.",
+      "def": "Maximum steady-state current level at which the power switch output is regulated in response to an overcurrent fault.",
     },
     {
       "id": 1,
       "word": "Shot noise",
-      "def":
-          "Noise caused by random current fluctuations arising from the discrete nature of electrons.",
+      "def": "Noise caused by random current fluctuations arising from the discrete nature of electrons.",
     },
     {
       "id": 1,
       "word": "Shrink Ratio",
-      "def":
-          "An expression of how much the inside diameter of shrink tubing will reduce in size when recovered. The inverse of the expansion ratio. See also Expansion Ratio.",
+      "def": "An expression of how much the inside diameter of shrink tubing will reduce in size when recovered. The inverse of the expansion ratio. See also Expansion Ratio.",
     },
     {
       "id": 1,
@@ -12385,8 +11328,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Sideband Suppression",
-      "def":
-          "In a mixer or modulator, the degree to which undesired sidebands are reduced in amplitude.",
+      "def": "In a mixer or modulator, the degree to which undesired sidebands are reduced in amplitude.",
     },
     {
       "id": 1,
@@ -12397,8 +11339,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Signal Cable",
-      "def":
-          "A cable designed to carry current of less than 12 amperes per conductor.",
+      "def": "A cable designed to carry current of less than 12 amperes per conductor.",
     },
     {
       "id": 1,
@@ -12409,14 +11350,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Signal Rise Time",
-      "def":
-          "The time for a signal to switch from low to high, usually measured between 10% and 90% of the maximum amplitude.",
+      "def": "The time for a signal to switch from low to high, usually measured between 10% and 90% of the maximum amplitude.",
     },
     {
       "id": 1,
       "word": "signal-to-noise ratio",
-      "def":
-          "SNR - The ratio of signal strength to noise level in an electronic system.",
+      "def": "SNR - The ratio of signal strength to noise level in an electronic system.",
     },
     {
       "id": 1,
@@ -12427,14 +11366,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "silicon",
-      "def":
-          "The semiconductor material most widely used for transistors, diodes, and monolithic integrated circuits. A brittle, gray, light metal.",
+      "def": "The semiconductor material most widely used for transistors, diodes, and monolithic integrated circuits. A brittle, gray, light metal.",
     },
     {
       "id": 1,
       "word": "silicon dioxide",
-      "def":
-          "The result of oxidizing silicon quartz. Selectively etched silicon dioxide permits the selective doping that generates components in monolithic integrated circuits.",
+      "def": "The result of oxidizing silicon quartz. Selectively etched silicon dioxide permits the selective doping that generates components in monolithic integrated circuits.",
     },
     {
       "id": 1,
@@ -12457,32 +11394,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "silicon-controlled switch",
-      "def":
-          "SCS - A semiconductor device with leads to all four regions. Can be integrated with transistors in monolithic integrated circuits. Useful as a small SCR or complementary SCR.",
+      "def": "SCS - A semiconductor device with leads to all four regions. Can be integrated with transistors in monolithic integrated circuits. Useful as a small SCR or complementary SCR.",
     },
     {
       "id": 1,
       "word": "silo",
-      "def":
-          "A housing construction feature which increases the electrical current creepage path for high voltage ratings. May also provide polarization for mating connectors.",
+      "def": "A housing construction feature which increases the electrical current creepage path for high voltage ratings. May also provide polarization for mating connectors.",
     },
     {
       "id": 1,
       "word": "Simple Network Management Protocol",
-      "def":
-          "SNMP - A network management standard initially established to allow multi-vendor networking devices to be managed more easily with common management tools.",
+      "def": "SNMP - A network management standard initially established to allow multi-vendor networking devices to be managed more easily with common management tools.",
     },
     {
       "id": 1,
       "word": "Simple Winding",
-      "def":
-          "A winding for a toroidal core which results in 78% of the cores inside diameter remaining. Often times this will produce a single layer winding.",
+      "def": "A winding for a toroidal core which results in 78% of the cores inside diameter remaining. Often times this will produce a single layer winding.",
     },
     {
       "id": 1,
       "word": "simplex",
-      "def":
-          "A circuit which allows telecommunications in only one direction at a time; a one-way path for telegraph-type signals.",
+      "def": "A circuit which allows telecommunications in only one direction at a time; a one-way path for telegraph-type signals.",
     },
     {
       "id": 1,
@@ -12497,8 +11429,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "sine wave",
-      "def":
-          "A wave which can be expressed as the sine of a linear function of time, space, or both. A waveform (often viewed on an oscilloscope) of a pure alternating current or voltage.",
+      "def": "A wave which can be expressed as the sine of a linear function of time, space, or both. A waveform (often viewed on an oscilloscope) of a pure alternating current or voltage.",
     },
     {
       "id": 1,
@@ -12515,26 +11446,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "single mode",
-      "def":
-          "A fiber that allows only one path for the light to take due to the fiber's very small diameter - less than 10 microns.",
+      "def": "A fiber that allows only one path for the light to take due to the fiber's very small diameter - less than 10 microns.",
     },
     {
       "id": 1,
       "word": "Singlemode",
-      "def":
-          "A type of optical fiber in which the light travels in a single path. Utilizes lasers as a light source.",
+      "def": "A type of optical fiber in which the light travels in a single path. Utilizes lasers as a light source.",
     },
     {
       "id": 1,
       "word": "Single-mode fiber",
-      "def":
-          "An optical fiber that supports only one mode of light propa-gation above the cutoff wavelength.",
+      "def": "An optical fiber that supports only one mode of light propa-gation above the cutoff wavelength.",
     },
     {
       "id": 1,
       "word": "single-pole",
-      "def":
-          "A contact arrangement wherein all contacts - in one position or another - connect to one common contact.",
+      "def": "A contact arrangement wherein all contacts - in one position or another - connect to one common contact.",
     },
     {
       "id": 1,
@@ -12551,14 +11478,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Skew",
-      "def":
-          "Any out-of-squareness of the cut end of a piece of tubing after shrinking.",
+      "def": "Any out-of-squareness of the cut end of a piece of tubing after shrinking.",
     },
     {
       "id": 1,
       "word": "Skewing Of The Loop",
-      "def":
-          "When an air gap is added to a magnetic path, the hysteresis loop is made to lean over (permeability is reduced). It is said to be skewed or sheared.",
+      "def": "When an air gap is added to a magnetic path, the hysteresis loop is made to lean over (permeability is reduced). It is said to be skewed or sheared.",
     },
     {
       "id": 1,
@@ -12569,44 +11494,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "sleeve",
-      "def":
-          "The insulated, or metallic, covering over the barrel of the terminal.",
+      "def": "The insulated, or metallic, covering over the barrel of the terminal.",
     },
     {
       "id": 1,
       "word": "slotted tongue",
-      "def":
-          "A terminal that has a slot rather than a hole in the tongue, so that the terminal can be engaged and disengaged from a stud without completely removing the nut.",
+      "def": "A terminal that has a slot rather than a hole in the tongue, so that the terminal can be engaged and disengaged from a stud without completely removing the nut.",
     },
     {
       "id": 1,
       "word": "Slug Core",
-      "def":
-          "A core shaped like a rod, with the winding(s) placed around the diameter.",
+      "def": "A core shaped like a rod, with the winding(s) placed around the diameter.",
     },
     {
       "id": 1,
       "word": "SMA connector",
-      "def":
-          "A radio-frequency connector covered by Military Specification. It has an impedance of 50 ohms and an operating frequency range to 12.4 GHz.",
+      "def": "A radio-frequency connector covered by Military Specification. It has an impedance of 50 ohms and an operating frequency range to 12.4 GHz.",
     },
     {
       "id": 1,
       "word": "Small Signal",
-      "def":
-          "The magnitude of an AC signal which, when its amplitude is halved or doubled, the characteristic under measurement does not change.",
+      "def": "The magnitude of an AC signal which, when its amplitude is halved or doubled, the characteristic under measurement does not change.",
     },
     {
       "id": 1,
       "word": "Small Signal Analysis",
-      "def":
-          "The consideration of the performance of a circuit or device under small signal conditions",
+      "def": "The consideration of the performance of a circuit or device under small signal conditions",
     },
     {
       "id": 1,
       "word": "small-scale integration",
-      "def":
-          "SSI - A single circuit function implemented in monolithic silicon. In complexity, a circuit of less than 10 gates.",
+      "def": "SSI - A single circuit function implemented in monolithic silicon. In complexity, a circuit of less than 10 gates.",
     },
     {
       "id": 1,
@@ -12628,8 +11546,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SMR",
-      "def":
-          "Specialized mobile radio. A communications service at 800 MHz and 900 MHz used to provide dispatch messaging and cellular communications.",
+      "def": "Specialized mobile radio. A communications service at 800 MHz and 900 MHz used to provide dispatch messaging and cellular communications.",
     },
     {
       "id": 1,
@@ -12645,8 +11562,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SNR",
-      "def":
-          "Signal-to-noise ratio - The ratio of signal strength to noise level in an electronic system.",
+      "def": "Signal-to-noise ratio - The ratio of signal strength to noise level in an electronic system.",
     },
     {
       "id": 1,
@@ -12657,14 +11573,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Soft Magnetic Material",
-      "def":
-          "A ferromagnetic material that is easily magnetized and demagnetized.",
+      "def": "A ferromagnetic material that is easily magnetized and demagnetized.",
     },
     {
       "id": 1,
       "word": "Soft Start",
-      "def":
-          "Converter input circuit that limits the inrush of current at turn on.",
+      "def": "Converter input circuit that limits the inrush of current at turn on.",
     },
     {
       "id": 1,
@@ -12674,8 +11588,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SOG",
-      "def":
-          "Speed over Ground. (The actual speed the GPS unit is moving over the ground)",
+      "def": "Speed over Ground. (The actual speed the GPS unit is moving over the ground)",
     },
     {
       "id": 1,
@@ -12685,8 +11598,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Solder",
-      "def":
-          "An alloy that melts at relatively low temperatures and is used to join metals with higher melt points.",
+      "def": "An alloy that melts at relatively low temperatures and is used to join metals with higher melt points.",
     },
     {
       "id": 1,
@@ -12697,32 +11609,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Solder Contact",
-      "def":
-          "A contact or terminal having a cup, hollow cylinder, eyelet, or hook to accept a wire for a conventional soldered termination.",
+      "def": "A contact or terminal having a cup, hollow cylinder, eyelet, or hook to accept a wire for a conventional soldered termination.",
     },
     {
       "id": 1,
       "word": "Solder Cup",
-      "def":
-          "A tubular end of a terminal into which a wire conductor is inserted prior to being soldered.",
+      "def": "A tubular end of a terminal into which a wire conductor is inserted prior to being soldered.",
     },
     {
       "id": 1,
       "word": "Solderability",
-      "def":
-          "The property of a metal surface that allows it to be readily wetted by molten solder. See also Wetting.",
+      "def": "The property of a metal surface that allows it to be readily wetted by molten solder. See also Wetting.",
     },
     {
       "id": 1,
       "word": "solder-eyelet",
-      "def":
-          "A solder-type terminal, having a hole at its end through which a wire can be inserted prior to being soldered. See also eyelet.",
+      "def": "A solder-type terminal, having a hole at its end through which a wire can be inserted prior to being soldered. See also eyelet.",
     },
     {
       "id": 1,
       "word": "Soldering",
-      "def":
-          "A process of joining metallic surfaces with solder without melting the base metal.",
+      "def": "A process of joining metallic surfaces with solder without melting the base metal.",
     },
     {
       "id": 1,
@@ -12738,8 +11645,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "solenoid",
-      "def":
-          "An electrical conductor wound as a coil (helix) with a small pitch. When activated with an electrical current, it draws a movable core into the coil.",
+      "def": "An electrical conductor wound as a coil (helix) with a small pitch. When activated with an electrical current, it draws a movable core into the coil.",
     },
     {
       "id": 1,
@@ -12760,20 +11666,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Solvent Resistance",
-      "def":
-          "The ability of a material to retain physical and electrical properties after being immersed in specific solvents.",
+      "def": "The ability of a material to retain physical and electrical properties after being immersed in specific solvents.",
     },
     {
       "id": 1,
       "word": "Solvent Resistance Test",
-      "def":
-          "A test described in Raychem's PS300 publication to test the durability of the markings on PolySwitch devices when exposed to various solvents.",
+      "def": "A test described in Raychem's PS300 publication to test the durability of the markings on PolySwitch devices when exposed to various solvents.",
     },
     {
       "id": 1,
       "word": "Solvent Resistance Test",
-      "def":
-          "A test described in Raychem's PS300 publication to test the durability of the markings on PolySwitch devices when exposed to various solvents.",
+      "def": "A test described in Raychem's PS300 publication to test the durability of the markings on PolySwitch devices when exposed to various solvents.",
     },
     {
       "id": 1,
@@ -12789,8 +11692,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "sophisticated",
-      "def":
-          "Complex and intricate utilization of advanced art; requiring specific skills to operate.",
+      "def": "Complex and intricate utilization of advanced art; requiring specific skills to operate.",
     },
     {
       "id": 1,
@@ -12839,14 +11741,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "spdt",
-      "def":
-          "single-pole, double-throw - A three-contact switching arrangement which connects a circuit to either one of two alternate connections (called Form C).",
+      "def": "single-pole, double-throw - A three-contact switching arrangement which connects a circuit to either one of two alternate connections (called Form C).",
     },
     {
       "id": 1,
       "word": "specific gravity",
-      "def":
-          "The density (mass per unit volume) of any material divided by that of water at a standard temperature.",
+      "def": "The density (mass per unit volume) of any material divided by that of water at a standard temperature.",
     },
     {
       "id": 1,
@@ -12875,20 +11775,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SPICE",
-      "def":
-          "Semiconductor Parameter In Circuit Emulator - a software package that emulates circuit performance utilizing time domain analysis",
+      "def": "Semiconductor Parameter In Circuit Emulator - a software package that emulates circuit performance utilizing time domain analysis",
     },
     {
       "id": 1,
       "word": "Splice",
-      "def":
-          "A joint connecting conductors with good mechanical strength and conductivity; a terminal that permanently joins two or more wires.",
+      "def": "A joint connecting conductors with good mechanical strength and conductivity; a terminal that permanently joins two or more wires.",
     },
     {
       "id": 1,
       "word": "Splitter",
-      "def":
-          "A component that divides the power from a signal into two or more parts",
+      "def": "A component that divides the power from a signal into two or more parts",
     },
     {
       "id": 1,
@@ -12899,8 +11796,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "spring-finger action",
-      "def":
-          "A type of spring design - as used in a printed circuit connector or a socket contact - which permits easy, stress-free spring action to provide contact pressure and/or retention.",
+      "def": "A type of spring design - as used in a printed circuit connector or a socket contact - which permits easy, stress-free spring action to provide contact pressure and/or retention.",
     },
     {
       "id": 1,
@@ -12922,8 +11818,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "sputtering",
-      "def":
-          "A thin film technique in which the film material is ejected from the surface by the action of ion bombardment.",
+      "def": "A thin film technique in which the film material is ejected from the surface by the action of ion bombardment.",
     },
     {
       "id": 1,
@@ -12934,20 +11829,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Square-Law Detection",
-      "def":
-          "Detection of an RF/microwave signal where the magnitude of the detected video output voltage is proportional to the square of the RF input voltage",
+      "def": "Detection of an RF/microwave signal where the magnitude of the detected video output voltage is proportional to the square of the RF input voltage",
     },
     {
       "id": 1,
       "word": "Square-Law Detector",
-      "def":
-          "A detector circuit or device whose video output voltage is proportional to the square of the RF input voltage",
+      "def": "A detector circuit or device whose video output voltage is proportional to the square of the RF input voltage",
     },
     {
       "id": 1,
       "word": "Squareness Ratio",
-      "def":
-          "The ratio of residual flux density to the maximum (saturation) flux density.",
+      "def": "The ratio of residual flux density to the maximum (saturation) flux density.",
     },
     {
       "id": 1,
@@ -12958,26 +11850,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "SSI",
-      "def":
-          "Small Scale Integration - A single circuit function implemented in monolithic silicon. In complexity, a circuit of less than 10 gates.",
+      "def": "Small Scale Integration - A single circuit function implemented in monolithic silicon. In complexity, a circuit of less than 10 gates.",
     },
     {
       "id": 1,
       "word": "ST connector",
-      "def":
-          "A bayonet style optical fiber connector.An alternate style per the 568 standard.",
+      "def": "A bayonet style optical fiber connector.An alternate style per the 568 standard.",
     },
     {
       "id": 1,
       "word": "stamped and formed contact",
-      "def":
-          "A contact which is stamped from a flat sheet of metal and then formed through a progressive die.",
+      "def": "A contact which is stamped from a flat sheet of metal and then formed through a progressive die.",
     },
     {
       "id": 1,
       "word": "Standby Current",
-      "def":
-          "Current drawn by a converter when it has no load and has been shut down by a logical inhibit signal.",
+      "def": "Current drawn by a converter when it has no load and has been shut down by a logical inhibit signal.",
     },
     {
       "id": 1,
@@ -12988,14 +11876,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Standing Waves",
-      "def":
-          "The sum along a transmission medium of incident and reflected waves, characterized by maxima and minima along the medium.",
+      "def": "The sum along a transmission medium of incident and reflected waves, characterized by maxima and minima along the medium.",
     },
     {
       "id": 1,
       "word": "standing-wave",
-      "def":
-          "Distribution of current and voltage on a transmission line, resulting from two sets of waves traveling in opposite directions.",
+      "def": "Distribution of current and voltage on a transmission line, resulting from two sets of waves traveling in opposite directions.",
     },
     {
       "id": 1,
@@ -13006,32 +11892,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Star coupler",
-      "def":
-          "A fiber-optic coupler in which power at any input port is distributed to all output ports.",
+      "def": "A fiber-optic coupler in which power at any input port is distributed to all output ports.",
     },
     {
       "id": 1,
       "word": "Star network",
-      "def":
-          "A network in which all terminals are connected through a single point, such as a star coupler.",
+      "def": "A network in which all terminals are connected through a single point, such as a star coupler.",
     },
     {
       "id": 1,
       "word": "start of message",
-      "def":
-          "SOM - Usually a unique character in a data stream that indicates the beginning of a block of information data. See also start sentinel.",
+      "def": "SOM - Usually a unique character in a data stream that indicates the beginning of a block of information data. See also start sentinel.",
     },
     {
       "id": 1,
       "word": "start sentinel",
-      "def":
-          "The binary coded character used to determine the start of a message on a magnetic stripe credit card.",
+      "def": "The binary coded character used to determine the start of a message on a magnetic stripe credit card.",
     },
     {
       "id": 1,
       "word": "State Machine",
-      "def":
-          "A sequential network is used to control a digital system that carries out a step by step procedure or algorithm",
+      "def": "A sequential network is used to control a digital system that carries out a step by step procedure or algorithm",
     },
     {
       "id": 1,
@@ -13042,14 +11923,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "statistical quality control",
-      "def":
-          "The application of statistical methods to the identification, prediction, measure, and correction of problems in quality control.",
+      "def": "The application of statistical methods to the identification, prediction, measure, and correction of problems in quality control.",
     },
     {
       "id": 1,
       "word": "stator",
-      "def":
-          "The portion of a rotating machine that contains the stationary parts of the magnetic circuit and their associated windings.",
+      "def": "The portion of a rotating machine that contains the stationary parts of the magnetic circuit and their associated windings.",
     },
     {
       "id": 1,
@@ -13059,8 +11938,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Step Change",
-      "def":
-          "Sudden change in a converter parameter. Typically used in referring to changes in output load or input line during converter testing.",
+      "def": "Sudden change in a converter parameter. Typically used in referring to changes in output load or input line during converter testing.",
     },
     {
       "id": 1,
@@ -13082,8 +11960,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "stop sentinel",
-      "def":
-          "The binary coded character used to determine the end of a message on a magnetic stripe credit card.",
+      "def": "The binary coded character used to determine the end of a message on a magnetic stripe credit card.",
     },
     {
       "id": 1,
@@ -13093,8 +11970,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Storage Temperature Range",
-      "def":
-          "Range of ambient temperatures over which a component can be stored safely (Also see Operating Temperature Range)",
+      "def": "Range of ambient temperatures over which a component can be stored safely (Also see Operating Temperature Range)",
     },
     {
       "id": 1,
@@ -13104,14 +11980,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Strain Relief",
-      "def":
-          "The technique for or act of removing or lessening the strain or stress on a joint, splice, or termination. SolderSleeve devices provide strain relief.",
+      "def": "The technique for or act of removing or lessening the strain or stress on a joint, splice, or termination. SolderSleeve devices provide strain relief.",
     },
     {
       "id": 1,
       "word": "strain relief clamp",
-      "def":
-          "A device used to give mechanical support for the contacts from the weight of a wire bundle or cable. May be referred to as cable clamp.",
+      "def": "A device used to give mechanical support for the contacts from the weight of a wire bundle or cable. May be referred to as cable clamp.",
     },
     {
       "id": 1,
@@ -13121,14 +11995,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Stranded Conductor",
-      "def":
-          "A conductor composed of more than one single strand. The strands in stranded conductors are usually twisted or braided together.",
+      "def": "A conductor composed of more than one single strand. The strands in stranded conductors are usually twisted or braided together.",
     },
     {
       "id": 1,
       "word": "Strength member",
-      "def":
-          "That part of a fiber-optic cable composed of Kevlar aramid yarn, steel strands, or fiberglass filaments that increase the tensile strength of the cable.",
+      "def": "That part of a fiber-optic cable composed of Kevlar aramid yarn, steel strands, or fiberglass filaments that increase the tensile strength of the cable.",
     },
     {
       "id": 1,
@@ -13139,8 +12011,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Stripe",
-      "def":
-          "A continuous longitudinal or spiral color strip applied on the surface of a wire, cable, or tubing for identification.",
+      "def": "A continuous longitudinal or spiral color strip applied on the surface of a wire, cable, or tubing for identification.",
     },
     {
       "id": 1,
@@ -13157,8 +12028,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "stud hole",
-      "def":
-          "The hole or slot in the tongue of a terminal, made to accommodate a screw, bolt, or stud of a given size.",
+      "def": "The hole or slot in the tongue of a terminal, made to accommodate a screw, bolt, or stud of a given size.",
     },
     {
       "id": 1,
@@ -13169,14 +12039,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "subassembly",
-      "def":
-          "Two or more parts which form a portion of an assembly (or a unit replaceable as a whole), but having a part or parts which are individually replaceable.",
+      "def": "Two or more parts which form a portion of an assembly (or a unit replaceable as a whole), but having a part or parts which are individually replaceable.",
     },
     {
       "id": 1,
       "word": "subminiaturization",
-      "def":
-          "The packaging of miniaturized parts, using unusual assembly techniques to increase volumetric efficiency.",
+      "def": "The packaging of miniaturized parts, using unusual assembly techniques to increase volumetric efficiency.",
     },
     {
       "id": 1,
@@ -13187,50 +12055,42 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "subsystem",
-      "def":
-          "An interconnection combination of a set of related circuits, which form a logical subdivision of an equipment or operational system.",
+      "def": "An interconnection combination of a set of related circuits, which form a logical subdivision of an equipment or operational system.",
     },
     {
       "id": 1,
       "word": "SUPER CHAMP",
-      "def":
-          "The AMP trademark for a stamped hand tool designed to crimp 22-10 insulated terminals. This tool also cuts and strips wire and shears 4/40 through 10/32 bolts.",
+      "def": "The AMP trademark for a stamped hand tool designed to crimp 22-10 insulated terminals. This tool also cuts and strips wire and shears 4/40 through 10/32 bolts.",
     },
     {
       "id": 1,
       "word": "Super Compact",
-      "def":
-          "A software package that analyzes and optimizes RF/microwave circuits using frequency domain analysis.",
+      "def": "A software package that analyzes and optimizes RF/microwave circuits using frequency domain analysis.",
     },
     {
       "id": 1,
       "word": "superhigh frequency",
-      "def":
-          "shf - A Federal Communications Commission designation for the band from 3,000 to 30,000 MHz in the radio spectrum.",
+      "def": "shf - A Federal Communications Commission designation for the band from 3,000 to 30,000 MHz in the radio spectrum.",
     },
     {
       "id": 1,
       "word": "Supply Current",
-      "def":
-          "Rated output current of a given device. Power switch devices have been designed to support a continuous load (supply) current of 0.6A at ambient temperature.",
+      "def": "Rated output current of a given device. Power switch devices have been designed to support a continuous load (supply) current of 0.6A at ambient temperature.",
     },
     {
       "id": 1,
       "word": "Supply Voltage",
-      "def":
-          "Voltage level of the power switch input. Raychem power switch devices have been designed to operate using supply voltage levels from 3.0V to 5.5V.",
+      "def": "Voltage level of the power switch input. Raychem power switch devices have been designed to operate using supply voltage levels from 3.0V to 5.5V.",
     },
     {
       "id": 1,
       "word": "Surface Area",
-      "def":
-          "The effective surface area of a typical wound core available to dissipate heat.",
+      "def": "The effective surface area of a typical wound core available to dissipate heat.",
     },
     {
       "id": 1,
       "word": "Surface Resistance",
-      "def":
-          "The ratio of the direct current applied to an insulation system to the current that passes across the surface of the system.",
+      "def": "The ratio of the direct current applied to an insulation system to the current that passes across the surface of the system.",
     },
     {
       "id": 1,
@@ -13241,8 +12101,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "surge",
-      "def":
-          "A transient variation in the current and/or potential at a point in the circuit.",
+      "def": "A transient variation in the current and/or potential at a point in the circuit.",
     },
     {
       "id": 1,
@@ -13287,8 +12146,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Switching Frequency",
-      "def":
-          "The rate at which the DC input to a switching regulator is switched on and off.",
+      "def": "The rate at which the DC input to a switching regulator is switched on and off.",
     },
     {
       "id": 1,
@@ -13299,8 +12157,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Switching Time",
-      "def":
-          "The time required for the output of a switch to attain 90 percent of its steady-state level referenced to the 50 percent level of the command signal.",
+      "def": "The time required for the output of a switch to attain 90 percent of its steady-state level referenced to the 50 percent level of the command signal.",
     },
     {
       "id": 1,
@@ -13311,50 +12168,42 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Symmetrical Transmission",
-      "def":
-          "Transmission in which a channel sends and receives data with the same signaling rate.",
+      "def": "Transmission in which a channel sends and receives data with the same signaling rate.",
     },
     {
       "id": 1,
       "word": "synchronize",
-      "def":
-          "Make sure that the level or pulse is presented to the system, or subsystem, at the correct time.",
+      "def": "Make sure that the level or pulse is presented to the system, or subsystem, at the correct time.",
     },
     {
       "id": 1,
       "word": "synchronizer",
-      "def":
-          "A computer storage device used to compensate for difference in rate of flow of information, or time of occurrence of events, when transmitting information from one device to another.",
+      "def": "A computer storage device used to compensate for difference in rate of flow of information, or time of occurrence of events, when transmitting information from one device to another.",
     },
     {
       "id": 1,
       "word": "synchronous",
-      "def":
-          "A device or system in which all events occur in a predetermined timed sequence. Usually all parts operate to a common clock. See also asynchronous.",
+      "def": "A device or system in which all events occur in a predetermined timed sequence. Usually all parts operate to a common clock. See also asynchronous.",
     },
     {
       "id": 1,
       "word": "synchronous generator",
-      "def":
-          "An alternator (ac generator); a synchronous alternating-current device which transforms mechanical power into electrical energy.",
+      "def": "An alternator (ac generator); a synchronous alternating-current device which transforms mechanical power into electrical energy.",
     },
     {
       "id": 1,
       "word": "synchronous transmission",
-      "def":
-          "Transmission in which the data characters and bits are transmitted at a fixed rate with the transmitter and receiver synchronized.",
+      "def": "Transmission in which the data characters and bits are transmitted at a fixed rate with the transmitter and receiver synchronized.",
     },
     {
       "id": 1,
       "word": "system",
-      "def":
-          "An assembly of components united by some form of regulated interaction to function as an entity.",
+      "def": "An assembly of components united by some form of regulated interaction to function as an entity.",
     },
     {
       "id": 1,
       "word": "System Damage Voltage",
-      "def":
-          "Maximum voltage across a SiBar device at breakdown measured under a specified voltage rate of rise and current rate of rise.",
+      "def": "Maximum voltage across a SiBar device at breakdown measured under a specified voltage rate of rise and current rate of rise.",
     },
     {
       "id": 1,
@@ -13364,8 +12213,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "T rise",
-      "def":
-          "Change in temperature of a terminal from a no-load condition to full-current load.",
+      "def": "Change in temperature of a terminal from a no-load condition to full-current load.",
     },
     {
       "id": 1,
@@ -13382,8 +12230,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "T3",
-      "def":
-          "Digital transmision facility operating at 45 Mbps bandwidth. Composed of 28 DS-1 channels in many cases. Also known as DS-3.",
+      "def": "Digital transmision facility operating at 45 Mbps bandwidth. Composed of 28 DS-1 channels in many cases. Also known as DS-3.",
     },
     {
       "id": 1,
@@ -13416,20 +12263,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "tap (network)",
-      "def":
-          "The means of connecting a piece of equipment to the transmission media of a network.",
+      "def": "The means of connecting a piece of equipment to the transmission media of a network.",
     },
     {
       "id": 1,
       "word": "Tap loss",
-      "def":
-          "In a fiber-optic coupler, the ratio of power at the tap port to the power at the input port.",
+      "def": "In a fiber-optic coupler, the ratio of power at the tap port to the power at the input port.",
     },
     {
       "id": 1,
       "word": "Tap port",
-      "def":
-          "In a coupler in which the splitting ratio between output ports is not equal, the output port containing the lesser power.",
+      "def": "In a coupler in which the splitting ratio between output ports is not equal, the output port containing the lesser power.",
     },
     {
       "id": 1,
@@ -13452,8 +12296,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Tape Wrap",
-      "def":
-          "A term denoting a spirally or longitudinally applied tape material wrapped around insulated or uninsulated wire and used as a mechanical barrier.",
+      "def": "A term denoting a spirally or longitudinally applied tape material wrapped around insulated or uninsulated wire and used as a mechanical barrier.",
     },
     {
       "id": 1,
@@ -13514,8 +12357,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Technischer Uberwachungs-Verin (TUV)",
-      "def":
-          "Organization approved for testing products to VDE standards. US-based companies often use TUV in place of VDE because they hae established facilities in the US.",
+      "def": "Organization approved for testing products to VDE standards. US-based companies often use TUV in place of VDE because they hae established facilities in the US.",
     },
     {
       "id": 1,
@@ -13535,8 +12377,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Telecom closet",
-      "def":
-          "Telecommunications closet. The area of the building that houses the termination of the horizontal cabling.May also contain LAN electronics. Also called wiring closet",
+      "def": "Telecommunications closet. The area of the building that houses the termination of the horizontal cabling.May also contain LAN electronics. Also called wiring closet",
     },
     {
       "id": 1,
@@ -13553,8 +12394,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Telecommuter",
-      "def":
-          "Person who performs work at home while linked to the office by means of a telecommunications-equipped computer system.",
+      "def": "Person who performs work at home while linked to the office by means of a telecommunications-equipped computer system.",
     },
     {
       "id": 1,
@@ -13583,20 +12423,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Temperature Factor (TF)",
-      "def":
-          "The fractional change in initial permeability over a temperature range divided by the initial permeability.",
+      "def": "The fractional change in initial permeability over a temperature range divided by the initial permeability.",
     },
     {
       "id": 1,
       "word": "Temperature Range",
-      "def":
-          "The ambient temperature range of the air (or other medium) surrounding a PolySwitch device under normal operating conditions.",
+      "def": "The ambient temperature range of the air (or other medium) surrounding a PolySwitch device under normal operating conditions.",
     },
     {
       "id": 1,
       "word": "Temperature Rating",
-      "def":
-          "The maximum temperature at which the insulating material may be used in continuous operation without loss of its basic properties. Usually time dependent.",
+      "def": "The maximum temperature at which the insulating material may be used in continuous operation without loss of its basic properties. Usually time dependent.",
     },
     {
       "id": 1,
@@ -13607,14 +12444,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Tempest",
-      "def":
-          "A classified Department of Defense program to provide secure electronic equipment through extensive EMC techniques.",
+      "def": "A classified Department of Defense program to provide secure electronic equipment through extensive EMC techniques.",
     },
     {
       "id": 1,
       "word": "tensile",
-      "def":
-          "The amount of axial load (longitudinal stress) required to break or pull the wire from the crimped barrel of a terminal, splice, or contact. Also called 'pull test.'",
+      "def": "The amount of axial load (longitudinal stress) required to break or pull the wire from the crimped barrel of a terminal, splice, or contact. Also called 'pull test.'",
     },
     {
       "id": 1,
@@ -13630,8 +12465,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Terahertz",
-      "def":
-          "A frequency of, or a frequency in the range of a trillion hertz. Abbreviated THz.",
+      "def": "A frequency of, or a frequency in the range of a trillion hertz. Abbreviated THz.",
     },
     {
       "id": 1,
@@ -13647,14 +12481,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "terminal",
-      "def":
-          "An electrically conductive item designed to be attached to a circuit or device for convenience in making electrical connections.",
+      "def": "An electrically conductive item designed to be attached to a circuit or device for convenience in making electrical connections.",
     },
     {
       "id": 1,
       "word": "terminal area",
-      "def":
-          "The portion of a printed circuit - usually along the edge - used for making the input-output connections. Sometimes this term is used synonymously with pad. See also land, and pad.",
+      "def": "The portion of a printed circuit - usually along the edge - used for making the input-output connections. Sometimes this term is used synonymously with pad. See also land, and pad.",
     },
     {
       "id": 1,
@@ -13685,14 +12517,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Tesla",
-      "def":
-          "The MKSA (SI) unit for magnetic flux density, defined by Faraday's Law. A Tesla represents a volt-second per square meter per turn. One Tesla is equal to 10,000 Gauss.",
+      "def": "The MKSA (SI) unit for magnetic flux density, defined by Faraday's Law. A Tesla represents a volt-second per square meter per turn. One Tesla is equal to 10,000 Gauss.",
     },
     {
       "id": 1,
       "word": "Test Frequency",
-      "def":
-          "Is the industry/military standard for testing a range of inductances. It is not intended as the application frequency. Expressed in megahertz (MHz) or kilohertz (KHz)",
+      "def": "Is the industry/military standard for testing a range of inductances. It is not intended as the application frequency. Expressed in megahertz (MHz) or kilohertz (KHz)",
     },
     {
       "id": 1,
@@ -13703,8 +12533,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "thermal compression bond",
-      "def":
-          "The joining of metals by the combined effects of temperature and pressure.",
+      "def": "The joining of metals by the combined effects of temperature and pressure.",
     },
     {
       "id": 1,
@@ -13721,32 +12550,27 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "thermal expansion",
-      "def":
-          "The fractional change in length (sometimes volume) of a material for a unit of change in temperature.",
+      "def": "The fractional change in length (sometimes volume) of a material for a unit of change in temperature.",
     },
     {
       "id": 1,
       "word": "Thermal Gasket",
-      "def":
-          "Flexible pad or wafer with a very low thermal resistance that is put between a power module baseplate and heat sink to ensure high thermal conductivity across the junction",
+      "def": "Flexible pad or wafer with a very low thermal resistance that is put between a power module baseplate and heat sink to ensure high thermal conductivity across the junction",
     },
     {
       "id": 1,
       "word": "Thermal Joint Compound",
-      "def":
-          "A fluid or paste spread between the mating surfaces of a power device baseplate and a heat sink or system chassis.",
+      "def": "A fluid or paste spread between the mating surfaces of a power device baseplate and a heat sink or system chassis.",
     },
     {
       "id": 1,
       "word": "Thermal noise",
-      "def":
-          "Noise resulting from thermally induced random fluctuation in current in the receiver's load resistance.",
+      "def": "Noise resulting from thermally induced random fluctuation in current in the receiver's load resistance.",
     },
     {
       "id": 1,
       "word": "Thermal Protection",
-      "def":
-          "Feature that shuts the converter down if the internal tempurature exceeds preset limits. Also called thermal shutdown.",
+      "def": "Feature that shuts the converter down if the internal tempurature exceeds preset limits. Also called thermal shutdown.",
     },
     {
       "id": 1,
@@ -13757,8 +12581,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "thermal rating",
-      "def":
-          "The maximum and/or minimum temperature at which a material will perform its function without undue degradation.",
+      "def": "The maximum and/or minimum temperature at which a material will perform its function without undue degradation.",
     },
     {
       "id": 1,
@@ -13781,20 +12604,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Thermal Shock Test",
-      "def":
-          "A test in which the resistance of a PolySwitch device at room temperature is measured before and after a temperature cycling treatment (e.g., cycled 10 times between ?55?C and +125?C).",
+      "def": "A test in which the resistance of a PolySwitch device at room temperature is measured before and after a temperature cycling treatment (e.g., cycled 10 times between ?55?C and +125?C).",
     },
     {
       "id": 1,
       "word": "thermal timedelay switch",
-      "def":
-          "An overcurrent-protective device containing a heater element and thermal delay.",
+      "def": "An overcurrent-protective device containing a heater element and thermal delay.",
     },
     {
       "id": 1,
       "word": "Thermochromic Indicator",
-      "def":
-          "Special compound that changes color when the proper wetting temperature has been reached in the solder joint.",
+      "def": "Special compound that changes color when the proper wetting temperature has been reached in the solder joint.",
     },
     {
       "id": 1,
@@ -13805,20 +12625,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "thermoplastic elastomer",
-      "def":
-          "tpe - A jacket material which has many of the characteristics of rubber, as well as excellent electrical, mechanical, and chemical properties.",
+      "def": "tpe - A jacket material which has many of the characteristics of rubber, as well as excellent electrical, mechanical, and chemical properties.",
     },
     {
       "id": 1,
       "word": "Thermoset",
-      "def":
-          "A material that hardens or sets when heated and, once set, cannot be resoftened by heating. This application of heat is called ?curing.?",
+      "def": "A material that hardens or sets when heated and, once set, cannot be resoftened by heating. This application of heat is called ?curing.?",
     },
     {
       "id": 1,
       "word": "Thermosetting Adhesive",
-      "def":
-          "A curing adhesive that requires heat to promote curing. This type of plastic will not soften when reheated. See Epoxy.",
+      "def": "A curing adhesive that requires heat to promote curing. This type of plastic will not soften when reheated. See Epoxy.",
     },
     {
       "id": 1,
@@ -13845,14 +12662,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Thin Film",
-      "def":
-          "A film of material, ranging in thickness from a few hundred to a few thousand Angstroms, which is deposited by evaporation onto a substrate.",
+      "def": "A film of material, ranging in thickness from a few hundred to a few thousand Angstroms, which is deposited by evaporation onto a substrate.",
     },
     {
       "id": 1,
       "word": "thin film circuit",
-      "def":
-          "A circuit fabricated by deposition of materials in a vacuum to form passive components and conductors to a thickness of several hundred angstroms on an insulating substrate.",
+      "def": "A circuit fabricated by deposition of materials in a vacuum to form passive components and conductors to a thickness of several hundred angstroms on an insulating substrate.",
     },
     {
       "id": 1,
@@ -13862,44 +12677,37 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Three-Terminal Regulator",
-      "def":
-          "Regulator packaged in a standard 3-terminal transistor package. These devices can be a switching type or a linear shunt or series regulator.",
+      "def": "Regulator packaged in a standard 3-terminal transistor package. These devices can be a switching type or a linear shunt or series regulator.",
     },
     {
       "id": 1,
       "word": "Throughput loss",
-      "def":
-          "In a fiber-optic coupler, the ratio of power at the throughput port to the power at the input port.",
+      "def": "In a fiber-optic coupler, the ratio of power at the throughput port to the power at the input port.",
     },
     {
       "id": 1,
       "word": "Throughput port",
-      "def":
-          "In a coupler in which the splitting ratio between output ports is not equal, the ouput port containing the greater power.",
+      "def": "In a coupler in which the splitting ratio between output ports is not equal, the ouput port containing the greater power.",
     },
     {
       "id": 1,
       "word": "Thyristor",
-      "def":
-          "Commonly used to protect telecom equipment, data transmission lines and signal lines, Thyristor devices fold back from high to low resistance when responding to a voltage surge.",
+      "def": "Commonly used to protect telecom equipment, data transmission lines and signal lines, Thyristor devices fold back from high to low resistance when responding to a voltage surge.",
     },
     {
       "id": 1,
       "word": "time-delay",
-      "def":
-          "A circuit that delays the transmission of an impulse a definite and desired period of time.",
+      "def": "A circuit that delays the transmission of an impulse a definite and desired period of time.",
     },
     {
       "id": 1,
       "word": "time-delay relay",
-      "def":
-          "A relay in which the energizing or deenergizing of the coil precedes movement of the armature by an appreciable - and generally determinable - interval.",
+      "def": "A relay in which the energizing or deenergizing of the coil precedes movement of the armature by an appreciable - and generally determinable - interval.",
     },
     {
       "id": 1,
       "word": "time-delay switch",
-      "def":
-          "A switch having contacts which control a load circuit and are delayed from operating for a predetermined time interval.",
+      "def": "A switch having contacts which control a load circuit and are delayed from operating for a predetermined time interval.",
     },
     {
       "id": 1,
@@ -13921,8 +12729,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "tinning",
-      "def":
-          "A hot dip process for the application of solder coating on conductors and terminals primarily for minimizing in-process oxidation and enhancing solderability.",
+      "def": "A hot dip process for the application of solder coating on conductors and terminals primarily for minimizing in-process oxidation and enhancing solderability.",
     },
     {
       "id": 1,
@@ -13933,8 +12740,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "TO can",
-      "def":
-          "Transistor outline. A standard system for specifying the dimensions of a transistor package. Each different package is given a number: TO-5, TO-18, TO-52, etc.",
+      "def": "Transistor outline. A standard system for specifying the dimensions of a transistor package. Each different package is given a number: TO-5, TO-18, TO-52, etc.",
     },
     {
       "id": 1,
@@ -13944,14 +12750,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Tolerance",
-      "def":
-          "The total amount by which a quantity is allowed to vary from nominal; thus, the tolerance is half the algebraic difference between the maximum and minimum limits.",
+      "def": "The total amount by which a quantity is allowed to vary from nominal; thus, the tolerance is half the algebraic difference between the maximum and minimum limits.",
     },
     {
       "id": 1,
       "word": "tone-encoded keyboard",
-      "def":
-          "A keyboard encoded in rows and columns designed to be the same as those used in telephones.",
+      "def": "A keyboard encoded in rows and columns designed to be the same as those used in telephones.",
     },
     {
       "id": 1,
@@ -13979,26 +12783,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "track",
-      "def":
-          "The portion of a moving storage medium, such as a drum, tape, disc, or card, that contains the encoded data.",
+      "def": "The portion of a moving storage medium, such as a drum, tape, disc, or card, that contains the encoded data.",
     },
     {
       "id": 1,
       "word": "tracking",
-      "def":
-          "The action of a high voltage current creating a leakage or fault path across the surface of insulation by steadily forming a carbonized thin line between electrodes.",
+      "def": "The action of a high voltage current creating a leakage or fault path across the surface of insulation by steadily forming a carbonized thin line between electrodes.",
     },
     {
       "id": 1,
       "word": "Tracking",
-      "def":
-          "For a multiple output converter the parameter that gives the change in one output voltage caused by a change in the voltage level or load on another output.",
+      "def": "For a multiple output converter the parameter that gives the change in one output voltage caused by a change in the voltage level or load on another output.",
     },
     {
       "id": 1,
       "word": "transfer molding",
-      "def":
-          "A method of molding thermosetting materials, in which the plastic is first softened by heat and pressure in a transfer chamber, and then forced into a closed mold for final curing.",
+      "def": "A method of molding thermosetting materials, in which the plastic is first softened by heat and pressure in a transfer chamber, and then forced into a closed mold for final curing.",
     },
     {
       "id": 1,
@@ -14009,14 +12809,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Transient",
-      "def":
-          "Spike or step change in a converter paramenter. Commonly used in describing input line and output load characteristics.",
+      "def": "Spike or step change in a converter paramenter. Commonly used in describing input line and output load characteristics.",
     },
     {
       "id": 1,
       "word": "Transient Recovery Time",
-      "def":
-          "Time required for a converter output to return to within specified limits following a step change in output load current. Expressed as a percentage of rated value.",
+      "def": "Time required for a converter output to return to within specified limits following a step change in output load current. Expressed as a percentage of rated value.",
     },
     {
       "id": 1,
@@ -14027,8 +12825,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "transients",
-      "def":
-          "Undesirable voltage and current surges that are usually caused by capacitive or inductive energy discharges in electrical circuits.",
+      "def": "Undesirable voltage and current surges that are usually caused by capacitive or inductive energy discharges in electrical circuits.",
     },
     {
       "id": 1,
@@ -14057,14 +12854,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Transmission Control Protocol/Internet Protocol (TCP/IP)",
-      "def":
-          "A reliable, full duplex, connection-oriented end to end transport protocol running on top of IP.",
+      "def": "A reliable, full duplex, connection-oriented end to end transport protocol running on top of IP.",
     },
     {
       "id": 1,
       "word": "Transmission Line",
-      "def":
-          "A signal-carrying circuit with controlled electrical characteristics; used to transmit high-frequency or narrowpulse signals.",
+      "def": "A signal-carrying circuit with controlled electrical characteristics; used to transmit high-frequency or narrowpulse signals.",
     },
     {
       "id": 1,
@@ -14091,8 +12886,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Triaxial Cable",
-      "def":
-          "A concentrically constructed cable, with a common axis, composed of a center connector, first shield, and second shield, all insulated from each other.",
+      "def": "A concentrically constructed cable, with a common axis, composed of a center connector, first shield, and second shield, all insulated from each other.",
     },
     {
       "id": 1,
@@ -14109,20 +12903,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Trip Current",
-      "def":
-          "The smallest steady state current that, if passed through a PolySwitch device, will cause the device to trip, under specified conditions.",
+      "def": "The smallest steady state current that, if passed through a PolySwitch device, will cause the device to trip, under specified conditions.",
     },
     {
       "id": 1,
       "word": "Trip Cycle",
-      "def":
-          "The tripping and resetting of a PolySwitch device under specified conditions.",
+      "def": "The tripping and resetting of a PolySwitch device under specified conditions.",
     },
     {
       "id": 1,
       "word": "Trip Cycle Life",
-      "def":
-          "The number of trip cycles that a PolySwitch device will undergo without failure, with failure being defined in a specified way.",
+      "def": "The number of trip cycles that a PolySwitch device will undergo without failure, with failure being defined in a specified way.",
     },
     {
       "id": 1,
@@ -14138,20 +12929,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "TRK",
-      "def":
-          "Track. Direction of travel relative to a ground position (same as Course Over Ground)",
+      "def": "Track. Direction of travel relative to a ground position (same as Course Over Ground)",
     },
     {
       "id": 1,
       "word": "TRN",
-      "def":
-          "Turn. The degrees which must be added to or subtracted from the current heading to reach the course to the intended waypoint.",
+      "def": "Turn. The degrees which must be added to or subtracted from the current heading to reach the course to the intended waypoint.",
     },
     {
       "id": 1,
       "word": "truth table",
-      "def":
-          "A table that defines a logic function by listing all combinations of input values, and indicating for each combination the true output values.",
+      "def": "A table that defines a logic function by listing all combinations of input values, and indicating for each combination the true output values.",
     },
     {
       "id": 1,
@@ -14173,8 +12961,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Tuning Monotonicity",
-      "def":
-          "The degree to which the sign of the slope of the tuning response versus stimulus curve of a device does not change.",
+      "def": "The degree to which the sign of the slope of the tuning response versus stimulus curve of a device does not change.",
     },
     {
       "id": 1,
@@ -14185,8 +12972,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Turn Ratio",
-      "def":
-          "The ratio of the primary voltage (or turns) to the secondary voltage (or turns)",
+      "def": "The ratio of the primary voltage (or turns) to the secondary voltage (or turns)",
     },
     {
       "id": 1,
@@ -14202,8 +12988,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "two-piece connector",
-      "def":
-          "A board-to-board connector in which part of the connector is attached to each board.",
+      "def": "A board-to-board connector in which part of the connector is attached to each board.",
     },
     {
       "id": 1,
@@ -14229,26 +13014,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "UG",
-      "def":
-          "Used to describe coaxial connectors that are made to a Government Specification.",
+      "def": "Used to describe coaxial connectors that are made to a Government Specification.",
     },
     {
       "id": 1,
       "word": "uhf",
-      "def":
-          "Ultra High Frequency - A Federal Communications Commission designation for the band from 300 to 3000 MHz on the radio spectrum. In television, channels 14 to 83, or 470 to 890 MHz.",
+      "def": "Ultra High Frequency - A Federal Communications Commission designation for the band from 300 to 3000 MHz on the radio spectrum. In television, channels 14 to 83, or 470 to 890 MHz.",
     },
     {
       "id": 1,
       "word": "UL",
-      "def":
-          "Underwriters' Laboratories, Inc. An independent laboratory that tests equipment to determine whether it meets certain safety standards when properly used.",
+      "def": "Underwriters' Laboratories, Inc. An independent laboratory that tests equipment to determine whether it meets certain safety standards when properly used.",
     },
     {
       "id": 1,
       "word": "ultrahigh frequency",
-      "def":
-          "UHF - A Federal Communications Commission designation for the band from 300 to 3000 MHz on the radio spectrum. In television, channels 14 to 83, or 470 to 890 MHz.",
+      "def": "UHF - A Federal Communications Commission designation for the band from 300 to 3000 MHz on the radio spectrum. In television, channels 14 to 83, or 470 to 890 MHz.",
     },
     {
       "id": 1,
@@ -14259,38 +13040,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ultrasonic welding",
-      "def":
-          "Process using vibratory mechanical pressure at ultrasonic frequencies (20 to 40 kHz) to provide heat for welding some types of thermoplastics. See also ultrasonic bond.",
+      "def": "Process using vibratory mechanical pressure at ultrasonic frequencies (20 to 40 kHz) to provide heat for welding some types of thermoplastics. See also ultrasonic bond.",
     },
     {
       "id": 1,
       "word": "ultraviolet curing",
-      "def":
-          "Process of accomplishing complete cross-linkage of a polymer coating or other product using ultraviolet light on the work piece.",
+      "def": "Process of accomplishing complete cross-linkage of a polymer coating or other product using ultraviolet light on the work piece.",
     },
     {
       "id": 1,
       "word": "Ultraviolet Degradation",
-      "def":
-          "The degradation caused by long-time exposure of a material to sunlight or other ultraviolet rays.",
+      "def": "The degradation caused by long-time exposure of a material to sunlight or other ultraviolet rays.",
     },
     {
       "id": 1,
       "word": "umbilical connector",
-      "def":
-          "Used to connect ground support cables to a rocket or missile, and is then disconnected from the missile at the time of launching.",
+      "def": "Used to connect ground support cables to a rocket or missile, and is then disconnected from the missile at the time of launching.",
     },
     {
       "id": 1,
       "word": "UMTS",
-      "def":
-          "Universal mobile telecommunications system. The name of the third-generation mobile phone standard promoted by ETSI for use in Europe.",
+      "def": "Universal mobile telecommunications system. The name of the third-generation mobile phone standard promoted by ETSI for use in Europe.",
     },
     {
       "id": 1,
       "word": "Uncertainty",
-      "def":
-          "The degree to which a parameter or characteristic cannot be specifically determined.",
+      "def": "The degree to which a parameter or characteristic cannot be specifically determined.",
     },
     {
       "id": 1,
@@ -14307,20 +13082,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Underwriters Laboratory",
-      "def":
-          "UL - Independent organization that conducts safety testing of products to established standards.",
+      "def": "UL - Independent organization that conducts safety testing of products to established standards.",
     },
     {
       "id": 1,
       "word": "U-NII",
-      "def":
-          "Unlicensed national information infrastructure spectrum, 5.8-GHz.",
+      "def": "Unlicensed national information infrastructure spectrum, 5.8-GHz.",
     },
     {
       "id": 1,
       "word": "Uninterruptible Power Supply",
-      "def":
-          "UPS - Power supply that will continue to operate after the loss of AC input power.",
+      "def": "UPS - Power supply that will continue to operate after the loss of AC input power.",
     },
     {
       "id": 1,
@@ -14330,14 +13102,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Upconverter (Mixer)",
-      "def":
-          "A mixer whose desired output signal, called the RF signal, is the sum of the incident baseband (sometimes called the IF) and LO signals.",
+      "def": "A mixer whose desired output signal, called the RF signal, is the sum of the incident baseband (sometimes called the IF) and LO signals.",
     },
     {
       "id": 1,
       "word": "UPS",
-      "def":
-          "Uninterruptible Power Supply - Power supply that will continue to operate after the loss of AC input power.",
+      "def": "Uninterruptible Power Supply - Power supply that will continue to operate after the loss of AC input power.",
     },
     {
       "id": 1,
@@ -14353,8 +13123,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "UTP",
-      "def":
-          "Unshielded twisted pair cable. Cable made from pairs of wires which have been twisted together.",
+      "def": "Unshielded twisted pair cable. Cable made from pairs of wires which have been twisted together.",
     },
     {
       "id": 1,
@@ -14375,20 +13144,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "vacuum evaporation",
-      "def":
-          "A process for generating thin films, in which the film material is vaporized and the vapor deposits itself, through openings in a mask, onto a substrate.",
+      "def": "A process for generating thin films, in which the film material is vaporized and the vapor deposits itself, through openings in a mask, onto a substrate.",
     },
     {
       "id": 1,
       "word": "Varactor",
-      "def":
-          "A p-n junction diode that is designed to act as a voltage controlled capacitance when it is operated under reverse bias",
+      "def": "A p-n junction diode that is designed to act as a voltage controlled capacitance when it is operated under reverse bias",
     },
     {
       "id": 1,
       "word": "Varactor-tuned Oscillator",
-      "def":
-          "An oscillator whose frequency is a function of an externally generated voltage control signal.",
+      "def": "An oscillator whose frequency is a function of an externally generated voltage control signal.",
     },
     {
       "id": 1,
@@ -14398,8 +13164,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Varistor",
-      "def":
-          "(Variable Resistor) An overvoltage protection device whose resistance decreases during a voltage surge.",
+      "def": "(Variable Resistor) An overvoltage protection device whose resistance decreases during a voltage surge.",
     },
     {
       "id": 1,
@@ -14409,8 +13174,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "VCO",
-      "def":
-          "Voltage controlled oscillator - An oscillator whose frequency is a function of an externally generated voltage control signal.",
+      "def": "Voltage controlled oscillator - An oscillator whose frequency is a function of an externally generated voltage control signal.",
     },
     {
       "id": 1,
@@ -14420,8 +13184,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "VDE",
-      "def":
-          "Verband Deutscher Elektrontechniker - German organization that sets standards for product safety and noise emissions and test and certifies products to those standards.",
+      "def": "Verband Deutscher Elektrontechniker - German organization that sets standards for product safety and noise emissions and test and certifies products to those standards.",
     },
     {
       "id": 1,
@@ -14436,8 +13199,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Vector",
-      "def":
-          "A mathematical representation that has both magnitude and direction.",
+      "def": "A mathematical representation that has both magnitude and direction.",
     },
     {
       "id": 1,
@@ -14447,38 +13209,32 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Velocity of Propagation",
-      "def":
-          "The ratio of the speed of a radio frequency wave within a cable or dielectric as compared with the same wave in free space.",
+      "def": "The ratio of the speed of a radio frequency wave within a cable or dielectric as compared with the same wave in free space.",
     },
     {
       "id": 1,
       "word": "Verband Deutscher Elektrontechniker",
-      "def":
-          "VDE - German organization that sets standards for product safety and noise emissions and test and certifies products to those standards.",
+      "def": "VDE - German organization that sets standards for product safety and noise emissions and test and certifies products to those standards.",
     },
     {
       "id": 1,
       "word": "very high frequency",
-      "def":
-          "vhf - A Federal Communications Commission designation for the band from 30 to 300 MHz on the radio spectrum.",
+      "def": "vhf - A Federal Communications Commission designation for the band from 30 to 300 MHz on the radio spectrum.",
     },
     {
       "id": 1,
       "word": "very-large-scale integration",
-      "def":
-          "VLSI. An IC that in complexity contains over 1000 gates or their equivalent.",
+      "def": "VLSI. An IC that in complexity contains over 1000 gates or their equivalent.",
     },
     {
       "id": 1,
       "word": "vhf",
-      "def":
-          "Very High Frequency. A Federal Communications Commission designation for the band from 30 to 300 MHz on the radio spectrum.",
+      "def": "Very High Frequency. A Federal Communications Commission designation for the band from 30 to 300 MHz on the radio spectrum.",
     },
     {
       "id": 1,
       "word": "VHSIC",
-      "def":
-          "Very high speed integrated circuit. A Department of Defense program to develop exceptionally fast ICs.",
+      "def": "Very high speed integrated circuit. A Department of Defense program to develop exceptionally fast ICs.",
     },
     {
       "id": 1,
@@ -14488,8 +13244,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "vibration",
-      "def":
-          "(1)A continuously reversing change in the magnitude of a force. (2)A mechanical motion or oscillation about a given point of equilibrium.",
+      "def": "(1)A continuously reversing change in the magnitude of a force. (2)A mechanical motion or oscillation about a given point of equilibrium.",
     },
     {
       "id": 1,
@@ -14506,8 +13261,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "vinyl",
-      "def":
-          "A form of plastic used as insulation, which has high dielectric strength and low water absorption.",
+      "def": "A form of plastic used as insulation, which has high dielectric strength and low water absorption.",
     },
     {
       "id": 1,
@@ -14518,20 +13272,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "VLSI",
-      "def":
-          "Very Large Scale Integration - An IC that in complexity contains over 1000 gates or their equivalent.",
+      "def": "Very Large Scale Integration - An IC that in complexity contains over 1000 gates or their equivalent.",
     },
     {
       "id": 1,
       "word": "Vmax",
-      "def":
-          "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
+      "def": "The highest voltage that can safely be dropped across a PolySwitch device in its tripped state under specified fault conditions.",
     },
     {
       "id": 1,
       "word": "VMG",
-      "def":
-          "Velocity Made Good. The rate of closure to a destination based upon your current speed and course.",
+      "def": "Velocity Made Good. The rate of closure to a destination based upon your current speed and course.",
     },
     {
       "id": 1,
@@ -14546,8 +13297,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "voice-frequency",
-      "def":
-          "vf - Any frequency within that part of the audio-frequency range essential to speech transmission of commercial quality (ie 300 to 3400 Hz). Also referred to as telephone frequency.",
+      "def": "vf - Any frequency within that part of the audio-frequency range essential to speech transmission of commercial quality (ie 300 to 3400 Hz). Also referred to as telephone frequency.",
     },
     {
       "id": 1,
@@ -14557,14 +13307,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "volatile memory",
-      "def":
-          "A computer storage medium which is incapable of retaining information without continuous power dissipation.",
+      "def": "A computer storage medium which is incapable of retaining information without continuous power dissipation.",
     },
     {
       "id": 1,
       "word": "volt",
-      "def":
-          "Abbreviated V. The unit of measurement of electromotive force. It is equivalent to the force required to produce a current of 1 ampere through a resistance of 1 ohm.",
+      "def": "Abbreviated V. The unit of measurement of electromotive force. It is equivalent to the force required to produce a current of 1 ampere through a resistance of 1 ohm.",
     },
     {
       "id": 1,
@@ -14581,8 +13329,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Voltage Balance",
-      "def":
-          "For a multiple output converter, the percentage difference in voltage level of two outputs with opposite polarities and equal nominal values.",
+      "def": "For a multiple output converter, the percentage difference in voltage level of two outputs with opposite polarities and equal nominal values.",
     },
     {
       "id": 1,
@@ -14592,8 +13339,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Voltage Controlled Oscillator",
-      "def":
-          "An oscillator whose frequency is a function of an externally generated voltage control signal.",
+      "def": "An oscillator whose frequency is a function of an externally generated voltage control signal.",
     },
     {
       "id": 1,
@@ -14609,26 +13355,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "voltage regulator",
-      "def":
-          "A circuit capable of generating from a varying input voltage a constant output voltage to a varying load current.",
+      "def": "A circuit capable of generating from a varying input voltage a constant output voltage to a varying load current.",
     },
     {
       "id": 1,
       "word": "Voltage Standing Wave Ratio)",
-      "def":
-          "VSWR - A measure of the uniformity of impedance along a transmission line, or the quality of the impedance match between a line and the source or load.",
+      "def": "VSWR - A measure of the uniformity of impedance along a transmission line, or the quality of the impedance match between a line and the source or load.",
     },
     {
       "id": 1,
       "word": "Voltage Tuned Filter",
-      "def":
-          "VTF - An electronically tunable, reactive circuit intended to pass or block portions of the electromagnetic spectrum, controlled by an externally generated voltage signal.",
+      "def": "VTF - An electronically tunable, reactive circuit intended to pass or block portions of the electromagnetic spectrum, controlled by an externally generated voltage signal.",
     },
     {
       "id": 1,
       "word": "Volt-Ampere",
-      "def":
-          "VA - In an a.c. circuit, a measure of apparent power, given by: VA-EI, where E is the potential in volts; I is the curernt in amperes; and VA is apparent power in volt-amperes",
+      "def": "VA - In an a.c. circuit, a measure of apparent power, given by: VA-EI, where E is the potential in volts; I is the curernt in amperes; and VA is apparent power in volt-amperes",
     },
     {
       "id": 1,
@@ -14655,8 +13397,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "VSWR",
-      "def":
-          "Voltage Standing Wave Ratio - A measure of the uniformity of impedance along a transmission line, or the quality of the impedance match between a line and the source or load.",
+      "def": "Voltage Standing Wave Ratio - A measure of the uniformity of impedance along a transmission line, or the quality of the impedance match between a line and the source or load.",
     },
     {
       "id": 1,
@@ -14672,8 +13413,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "vulcanization",
-      "def":
-          "A chemical reaction in which the physical properties of an elastomer are changed by reacting it with sulfur or other cross-linking agents.",
+      "def": "A chemical reaction in which the physical properties of an elastomer are changed by reacting it with sulfur or other cross-linking agents.",
     },
     {
       "id": 1,
@@ -14684,8 +13424,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "W crimp",
-      "def":
-          "Used on SOLISTRAND* terminals. A confined type of crimp that makes two longitudinal indentations which form a 'W' cross section.",
+      "def": "Used on SOLISTRAND* terminals. A confined type of crimp that makes two longitudinal indentations which form a 'W' cross section.",
     },
     {
       "id": 1,
@@ -14711,8 +13450,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "WAN",
-      "def":
-          "Wide Area Network- A network which encompasses interconnectivity between devices over a wide geographic area.",
+      "def": "Wide Area Network- A network which encompasses interconnectivity between devices over a wide geographic area.",
     },
     {
       "id": 1,
@@ -14723,26 +13461,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "warmup time",
-      "def":
-          "Time measured from the application of power to an operable system (or device) to the instant when it is capable of functioning in its intended manner.",
+      "def": "Time measured from the application of power to an operable system (or device) to the instant when it is capable of functioning in its intended manner.",
     },
     {
       "id": 1,
       "word": "warp",
-      "def":
-          "Dimensional change in a molded, extruded, formed, or fabricated plastic part after processing.",
+      "def": "Dimensional change in a molded, extruded, formed, or fabricated plastic part after processing.",
     },
     {
       "id": 1,
       "word": "Water Absorption Test",
-      "def":
-          "A method to determine the water uptake of a material. It is time and temperature dependent.",
+      "def": "A method to determine the water uptake of a material. It is time and temperature dependent.",
     },
     {
       "id": 1,
       "word": "Water Blocking",
-      "def":
-          "The sticking together of insulated wires; usually caused by heat.",
+      "def": "The sticking together of insulated wires; usually caused by heat.",
     },
     {
       "id": 1,
@@ -14753,8 +13487,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wattage rating",
-      "def":
-          "A rating expressing the maximum power that a device can safely handle continuously.",
+      "def": "A rating expressing the maximum power that a device can safely handle continuously.",
     },
     {
       "id": 1,
@@ -14764,14 +13497,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wave soldering",
-      "def":
-          "An automatic soldering method whereby the molten solder is pumped from a reservoir through a spout to form a head or wave. The board is then passed over the wave by a conveyor.",
+      "def": "An automatic soldering method whereby the molten solder is pumped from a reservoir through a spout to form a head or wave. The board is then passed over the wave by a conveyor.",
     },
     {
       "id": 1,
       "word": "Waveform",
-      "def":
-          "The geometric shape of one period of an electric signal when it is plotted or displayed versus time or some other variable.",
+      "def": "The geometric shape of one period of an electric signal when it is plotted or displayed versus time or some other variable.",
     },
     {
       "id": 1,
@@ -14805,14 +13536,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wedge bond",
-      "def":
-          "A metal to metal lead bond formed with a wedge-shaped tool. The bond itself may be a cold weld, an ultrasonic or a thermal compression bond.",
+      "def": "A metal to metal lead bond formed with a wedge-shaped tool. The bond itself may be a cold weld, an ultrasonic or a thermal compression bond.",
     },
     {
       "id": 1,
       "word": "welded circuit",
-      "def":
-          "A circuit made up of electronic parts which have their leads interconnected by welding techniques.",
+      "def": "A circuit made up of electronic parts which have their leads interconnected by welding techniques.",
     },
     {
       "id": 1,
@@ -14828,20 +13557,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "White Noise",
-      "def":
-          "Noise with constant energy per unit bandwidth that is independent of the central frequency.",
+      "def": "Noise with constant energy per unit bandwidth that is independent of the central frequency.",
     },
     {
       "id": 1,
       "word": "wicking",
-      "def":
-          "Capillary absorption of liquid (including water) along the fibers of the base material. The flow of solder along the strands and under the insulation of stranded lead wire.",
+      "def": "Capillary absorption of liquid (including water) along the fibers of the base material. The flow of solder along the strands and under the insulation of stranded lead wire.",
     },
     {
       "id": 1,
       "word": "Wideband",
-      "def":
-          "A loosely used term that indicates a large bandwidth to center frequency ratio. A system is considered to be wideband if this ratio is greater than approximately 10 percent.",
+      "def": "A loosely used term that indicates a large bandwidth to center frequency ratio. A system is considered to be wideband if this ratio is greater than approximately 10 percent.",
     },
     {
       "id": 1,
@@ -14852,20 +13578,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Winchester disk",
-      "def":
-          "A type of hard disk drive in which the read/write head is held a few millionths of an inch above the disk whenever the disk is spinning.",
+      "def": "A type of hard disk drive in which the read/write head is held a few millionths of an inch above the disk whenever the disk is spinning.",
     },
     {
       "id": 1,
       "word": "Winding Factor (K)",
-      "def":
-          "The ratio of the total area of copper wire inside the center hole of a toroid to the window area of the toroid.",
+      "def": "The ratio of the total area of copper wire inside the center hole of a toroid to the window area of the toroid.",
     },
     {
       "id": 1,
       "word": "Window Area (Wa)",
-      "def":
-          "The area in and around a magnetic core which can be used for the placement of windings.",
+      "def": "The area in and around a magnetic core which can be used for the placement of windings.",
     },
     {
       "id": 1,
@@ -14876,8 +13599,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wire",
-      "def":
-          "A single bare or insulated metallic conductor having solid, stranded, or tinsel construction, designed to carry current in an electric circuit.",
+      "def": "A single bare or insulated metallic conductor having solid, stranded, or tinsel construction, designed to carry current in an electric circuit.",
     },
     {
       "id": 1,
@@ -14894,8 +13616,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wire crimp",
-      "def":
-          "The final configuration of a terminal barrel after the necessary compression forces have been applied to cause a functional union between the terminal barrel and wire.",
+      "def": "The final configuration of a terminal barrel after the necessary compression forces have been applied to cause a functional union between the terminal barrel and wire.",
     },
     {
       "id": 1,
@@ -14905,8 +13626,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wire nut",
-      "def":
-          "A form of closed end splice, that is screwed on instead of being crimped.",
+      "def": "A form of closed end splice, that is screwed on instead of being crimped.",
     },
     {
       "id": 1,
@@ -14916,20 +13636,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "wire stop",
-      "def":
-          "A stop at the end of a terminal wire barrel to prevent wire from passing completely through the barrel in such a way as to interfere with the function of the contact.",
+      "def": "A stop at the end of a terminal wire barrel to prevent wire from passing completely through the barrel in such a way as to interfere with the function of the contact.",
     },
     {
       "id": 1,
       "word": "Wire Wrap",
-      "def":
-          "Trademark of the Gardner-Denver Corp for a wrap-type termination. See also wrap type.",
+      "def": "Trademark of the Gardner-Denver Corp for a wrap-type termination. See also wrap type.",
     },
     {
       "id": 1,
       "word": "Wiring closet",
-      "def":
-          "Telecommunications closet. The area of the building that houses the termination of the horizontal cabling.May also contain LAN electronics.",
+      "def": "Telecommunications closet. The area of the building that houses the termination of the horizontal cabling.May also contain LAN electronics.",
     },
     {
       "id": 1,
@@ -14950,8 +13667,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "word",
-      "def":
-          "A set of bits constituting the smallest addressable unit of information in a programmable memory.",
+      "def": "A set of bits constituting the smallest addressable unit of information in a programmable memory.",
     },
     {
       "id": 1,
@@ -14961,26 +13677,22 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "word time",
-      "def":
-          "In reference to words stored serially, the time required to read one word from the main or central memory.",
+      "def": "In reference to words stored serially, the time required to read one word from the main or central memory.",
     },
     {
       "id": 1,
       "word": "Work area",
-      "def":
-          "Where the users' communications equipment resides.The part of the cabling system between the outlet and the equipment.",
+      "def": "Where the users' communications equipment resides.The part of the cabling system between the outlet and the equipment.",
     },
     {
       "id": 1,
       "word": "work harden",
-      "def":
-          "The hardening of metal from pressure or bending. When the metal gets too hard it becomes brittle.",
+      "def": "The hardening of metal from pressure or bending. When the metal gets too hard it becomes brittle.",
     },
     {
       "id": 1,
       "word": "wrap type",
-      "def":
-          "Method of connecting a solid wire to a square, rectangular, or V-shaped terminal post by tightly wrapping or winding the wire around it with a special automatic or hand-operated tool.",
+      "def": "Method of connecting a solid wire to a square, rectangular, or V-shaped terminal post by tightly wrapping or winding the wire around it with a special automatic or hand-operated tool.",
     },
     {
       "id": 1,
@@ -15000,8 +13712,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "xDSL",
-      "def":
-          "Refers to the various flavors of DSL (Digital Subscriber Loop). All encompassing term.",
+      "def": "Refers to the various flavors of DSL (Digital Subscriber Loop). All encompassing term.",
     },
     {
       "id": 1,
@@ -15033,8 +13744,7 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Y",
-      "def":
-          "The ratio of current to voltage, the reciprocal of impedance. The unit of admittance is the siemens (S). Admittance is typically abbreviated as 'y' or 'Y.'",
+      "def": "The ratio of current to voltage, the reciprocal of impedance. The unit of admittance is the siemens (S). Admittance is typically abbreviated as 'y' or 'Y.'",
     },
     {
       "id": 1,
@@ -15044,14 +13754,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "yield",
-      "def":
-          "The ratio of usable components, at the end of a manufacturing process, to the number of components initially submitted for processing.",
+      "def": "The ratio of usable components, at the end of a manufacturing process, to the number of components initially submitted for processing.",
     },
     {
       "id": 1,
       "word": "y-Parameter",
-      "def":
-          "The set of parameters for a two port device that relates the input and output currents to the input and output voltages.",
+      "def": "The set of parameters for a two port device that relates the input and output currents to the input and output voltages.",
     },
     {
       "id": 1,
@@ -15066,14 +13774,12 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "Zener Diode",
-      "def":
-          "A diode that maintains a relatively constant voltage when the reverse voltage across it is increased passed a specific point, called the zener voltage.",
+      "def": "A diode that maintains a relatively constant voltage when the reverse voltage across it is increased passed a specific point, called the zener voltage.",
     },
     {
       "id": 1,
       "word": "zero voltage switch",
-      "def":
-          "A circuit designed to switch 'on' at the moment the ac supply voltage crosses zero. This technique minimizes the radio frequency interference generated at switch closure.",
+      "def": "A circuit designed to switch 'on' at the moment the ac supply voltage crosses zero. This technique minimizes the radio frequency interference generated at switch closure.",
     },
     {
       "id": 1,
@@ -15083,20 +13789,17 @@ class SearchState extends State<Search> {
     {
       "id": 1,
       "word": "ZIF",
-      "def":
-          "Zero Insertion Force - A component designed to eliminate the insertion and withdrawal forces during engaging and separating.",
+      "def": "Zero Insertion Force - A component designed to eliminate the insertion and withdrawal forces during engaging and separating.",
     },
     {
       "id": 1,
       "word": "Zone cabling",
-      "def":
-          "An architectural concept which splits the horizontal cabling into two sections. Eliminates the need to replace the entire horizontal cable in moves, adds and changes.",
+      "def": "An architectural concept which splits the horizontal cabling into two sections. Eliminates the need to replace the entire horizontal cable in moves, adds and changes.",
     },
     {
       "id": 1,
       "word": "z-Parameter",
-      "def":
-          "The set of parameters for a two port device that relates the input and output voltages to the input and output currents.",
+      "def": "The set of parameters for a two port device that relates the input and output voltages to the input and output currents.",
     },
   ];
 }
